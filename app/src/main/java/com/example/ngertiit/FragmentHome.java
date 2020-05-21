@@ -3,8 +3,10 @@ package com.example.ngertiit;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -20,6 +22,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ngertiit.Adapter.DictionaryAdapter;
 import com.example.ngertiit.Adapter.LifeHackAdapterMenu;
@@ -219,6 +222,50 @@ public class FragmentHome extends Fragment {
         @Override
         public void setImageForPosition(int position, ImageView imageView) {
             imageView.setImageResource(sampleImages[position]);
+
+            if (position == 0) {
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Uri uri = Uri.parse("https://www.instagram.com/famfir_/");
+                        Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
+
+                        likeIng.setPackage("com.instagram.android");
+
+                        try {
+                            startActivity(likeIng);
+                        } catch (ActivityNotFoundException e) {
+                            startActivity(new Intent(Intent.ACTION_VIEW,
+                                    Uri.parse("http://instagram.com/famfir_/")));
+                        }
+                    }
+                });
+            } else if (position == 1) {
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(context, SolutionAct.class);
+                        startActivity(i);
+                    }
+                });
+
+            } else if (position ==2 ) {
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        sharePlayStore();
+                    }
+                });
+            }
         }
     };
+
+    private void sharePlayStore() {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Ayo jadi pinter komputer biar ga bego2 banget, download sekarang di pornhub ");
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
+
+    }
 }
