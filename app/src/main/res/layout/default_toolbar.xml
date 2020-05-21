@@ -4,10 +4,7 @@
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     app:layout_scrollFlags="scroll"
-    android:layout_marginRight="10dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginTop="10dp"
-    android:background="@drawable/bg_toolbar"
+    android:background="#FFF"
     app:expandedTitleGravity="top"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -17,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
-        android:background="@drawable/bg_toolbar"
         android:theme="@style/ToolbarTheme"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
