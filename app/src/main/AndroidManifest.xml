@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.ngertiit">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@drawable/icon"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".BrowserAct"></activity>
+        <activity android:name=".KontenSolusiAct" />
+        <activity android:name=".DonasiAct" />
+        <activity android:name=".TestApiSDG" />
+        <activity android:name=".KritikAct" />
+        <activity android:name=".TentangAct" />
+        <activity android:name=".KamusAct" />
+        <activity android:name=".LifeHackAct" />
+        <activity android:name=".SolutionAct" />
+        <activity android:name=".CategorySolution" />
+        <activity android:name=".WelcomeActivity" />
+        <activity
+            android:name=".Splashscreen"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>

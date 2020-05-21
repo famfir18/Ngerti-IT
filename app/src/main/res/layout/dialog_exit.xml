@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="300dp"
+    android:layout_gravity="center"
+    android:background="#CD222424"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="120dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_exit"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/montserrat"
+            android:gravity="center_vertical"
+            android:text="Mau Keluar Aplikasi?"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnNo"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:text="Nanti"
+                android:textColor="@color/white"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/bg_button_accent"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btnYes"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:text="Iya"
+                android:background="@drawable/bg_button"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

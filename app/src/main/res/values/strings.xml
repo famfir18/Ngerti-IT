@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Ngerti IT</string>
+
+    <string name="intro">Intro Slider</string>
+    <string name="title_activity_welcome">Home Screen</string>
+    <string name="next">LANJUT</string>
+    <string name="skip">LEWATI</string>
+    <string name="start">MULAI</string>
+
+    <string name="slide_1_title">Gak Perlu Lagi Ke Tempat Servis</string>
+    <string name="slide_1_desc">Kita tau waktu lo berharga, jadi buat apa capek-capek?</string>
+
+    <string name="slide_2_title">Cukup Gunakan Jarimu</string>
+    <string name="slide_2_desc">Scroll-scroll aja sampe ketemu solusi dari problem lo</string>
+
+    <string name="slide_3_title">Jadi Tunggu Apa Lagi?</string>
+    <string name="slide_3_desc">Destinasi Menarik Menantimu. Segera Pilih Destinasi Wisatamu</string>
+
+    <string name="slide_4_title">GUIDE</string>
+    <string name="slide_4_desc">Cari Guide Untuk Menemani Perjalananmu Agar  semakin asyik </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
