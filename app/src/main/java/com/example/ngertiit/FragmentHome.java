@@ -128,8 +128,8 @@ public class FragmentHome extends Fragment {
         tvAllDiction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.startAnimation(animScalein);
-                Intent i = new Intent(context, TestApiSDG.class);
+//                v.startAnimation(animScalein);
+                Intent i = new Intent(context, KamusAct.class);
                 startActivity(i);
             }
         });

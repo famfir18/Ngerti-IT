@@ -83,6 +83,14 @@
         android:background="@drawable/bg_button_accent"
         android:text="Kirim"
         android:textAllCaps="false" />
+
+        <ImageView
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="50dp"
+            android:alpha=".50"
+            android:src="@drawable/ic_ic_critic"/>
     </LinearLayout>
 
 

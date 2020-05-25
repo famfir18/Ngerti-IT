@@ -3,6 +3,7 @@
     <color name="colorPrimary">#30C5FF</color>
     <color name="colorPrimaryDark">#204674</color>
     <color name="colorAccent">#FE4A49</color>
+    <color name="putih">#FFF</color>
 
     <!-- Screens background color-->
     <color name="bg_screen1">#800000</color>

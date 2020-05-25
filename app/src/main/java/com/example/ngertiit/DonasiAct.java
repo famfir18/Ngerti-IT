@@ -58,7 +58,6 @@ public class DonasiAct extends AppCompatActivity {
             text.setText(eventName);
         }
 
-        text.setText(eventName);
         Toolbar toolbars = findViewById(R.id.toolbar);
         setSupportActionBar(toolbars);
 

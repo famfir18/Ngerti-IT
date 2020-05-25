@@ -41,7 +41,7 @@ public class CategorySolution extends AppCompatActivity {
         macos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.startAnimation(animScalein);
+//                v.startAnimation(animScalein);
                 Intent i = new Intent(CategorySolution.this,SolutionAct.class);
                 startActivity(i);
             }
@@ -50,7 +50,7 @@ public class CategorySolution extends AppCompatActivity {
         windows.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.startAnimation(animScalein);
+//                v.startAnimation(animScalein);
                 Intent i = new Intent(CategorySolution.this,SolutionAct.class);
                 startActivity(i);
             }

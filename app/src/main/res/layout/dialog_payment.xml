@@ -5,9 +5,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="50dp"
+    app:cardCornerRadius="40dp"
     android:layout_gravity="center"
-    android:background="@drawable/bg_dialog"
     app:cardElevation="5dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 

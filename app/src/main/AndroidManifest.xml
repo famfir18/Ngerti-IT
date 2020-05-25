@@ -12,17 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BrowserAct"></activity>
-        <activity android:name=".KontenSolusiAct" />
-        <activity android:name=".DonasiAct" />
-        <activity android:name=".TestApiSDG" />
-        <activity android:name=".KritikAct" />
-        <activity android:name=".TentangAct" />
-        <activity android:name=".KamusAct" />
-        <activity android:name=".LifeHackAct" />
-        <activity android:name=".SolutionAct" />
-        <activity android:name=".CategorySolution" />
-        <activity android:name=".WelcomeActivity" />
+        <activity android:name=".BrowserAct"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".KontenSolusiAct" android:screenOrientation="portrait"/>
+        <activity android:name=".DonasiAct" android:screenOrientation="portrait"/>
+        <activity android:name=".TestApiSDG" android:screenOrientation="portrait"/>
+        <activity android:name=".KritikAct" android:screenOrientation="portrait"/>
+        <activity android:name=".TentangAct" android:screenOrientation="portrait"/>
+        <activity android:name=".KamusAct" android:screenOrientation="portrait"/>
+        <activity android:name=".LifeHackAct" android:screenOrientation="portrait"/>
+        <activity android:name=".SolutionAct" android:screenOrientation="portrait"/>
+        <activity android:name=".CategorySolution" android:screenOrientation="portrait"/>
+        <activity android:name=".WelcomeActivity" android:screenOrientation="portrait"/>
         <activity
             android:name=".Splashscreen"
             android:noHistory="true">
