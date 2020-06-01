@@ -12,18 +12,40 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BrowserAct"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".KontenSolusiAct" android:screenOrientation="portrait"/>
-        <activity android:name=".DonasiAct" android:screenOrientation="portrait"/>
-        <activity android:name=".TestApiSDG" android:screenOrientation="portrait"/>
-        <activity android:name=".KritikAct" android:screenOrientation="portrait"/>
-        <activity android:name=".TentangAct" android:screenOrientation="portrait"/>
-        <activity android:name=".KamusAct" android:screenOrientation="portrait"/>
-        <activity android:name=".LifeHackAct" android:screenOrientation="portrait"/>
-        <activity android:name=".SolutionAct" android:screenOrientation="portrait"/>
-        <activity android:name=".CategorySolution" android:screenOrientation="portrait"/>
-        <activity android:name=".WelcomeActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".CategoryLifehack"></activity>
+        <activity
+            android:name=".BrowserAct"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".KontenSolusiAct"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DonasiAct"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TestApiSDG"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".KritikAct"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TentangAct"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".KamusAct"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LifeHackAct"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SolutionAct"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CategorySolution"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".WelcomeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Splashscreen"
             android:noHistory="true">

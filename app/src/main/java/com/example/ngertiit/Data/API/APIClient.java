@@ -6,6 +6,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class APIClient {
     public static final String BASE_URL = "https://swaradarmagita.gunadarma.ac.id/";
 
+    public static final String URL_BASE = "https://banyakngerti.id/apis/semogacepetkaya/";
+
     public static Retrofit retrofit = null;
 
     public static Retrofit getClient() {
@@ -19,6 +21,14 @@ public class APIClient {
         return retrofit;
     }
 
-    public static final String POST_URL = "http://twohgo.appspot.com/v1/";
+    public static Retrofit getAPI() {
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(URL_BASE)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
 
+        return retrofit;
+    }
 }

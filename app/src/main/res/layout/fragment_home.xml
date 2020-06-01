@@ -7,7 +7,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".FragmentHome">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroller"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -26,6 +27,32 @@
             android:layout_margin="20dp"
             app:cardCornerRadius="10dp">
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ProgressBar
+                        android:id="@+id/simpleProgressBar"
+                        android:layout_width="40dp"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:indeterminateDrawable="@drawable/custom_progressbar" />
+
+                   <!-- <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Loading..."
+                        android:layout_gravity="center"
+                        android:gravity="center"/>-->
+
+                </LinearLayout>
+
             <com.synnapps.carouselview.CarouselView
                 android:id="@+id/carouselView"
                 android:layout_width="match_parent"
@@ -35,9 +62,11 @@
                 app:radius="6dp"
                 app:indicatorMarginHorizontal="50dp"
                 app:slideInterval="5000"
+                app:indicatorVisibility="invisible"
                 app:strokeColor="#FF777777"
                 app:strokeWidth="1dp" />
 
+            </FrameLayout>
         </androidx.cardview.widget.CardView>
 
         <RelativeLayout
@@ -166,6 +195,6 @@
 
     </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

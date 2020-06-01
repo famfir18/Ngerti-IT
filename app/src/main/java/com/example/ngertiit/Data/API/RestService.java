@@ -1,5 +1,6 @@
 package com.example.ngertiit.Data.API;
 
+import com.example.ngertiit.Data.JSON.DataCarousels;
 import com.example.ngertiit.Data.JSON.DataTestSDG;
 
 
@@ -18,7 +19,6 @@ public interface RestService {
     @GET("SDG4Lyfe/sdg_api.php")
     Call<List<DataTestSDG>> getDataSDG();
 
-    @FormUrlEncoded
-    @POST("post_message")
-    Call<ResponseBody> postMessage(@FieldMap HashMap<String, String> params);
+    @GET("carousels")
+    Call<List<DataCarousels>> getDataCarousels();
 }

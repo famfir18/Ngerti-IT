@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -60,6 +61,7 @@
             android:layout_marginBottom="16dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="5dp"
+            app:cardBackgroundColor="@color/putih"
             app:cardUseCompatPadding="true">
 
             <LinearLayout
@@ -67,29 +69,183 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_solution"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="15dp" />
+                    android:textSize="15dp"
+                    android:layout_margin="10dp"
+                    android:text="Ini Deskripsinya Jancoook"/>
 
-                <net.cachapa.expandablelayout.ExpandableLayout
-                    android:id="@+id/expandable_layout"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:el_duration="1000"
-                    app:el_expanded="true"
-                    app:el_parallax="0.5">
+                    android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/expand_button_0"
+                        style="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/putih"
+                        android:elevation="6dp"
+                        android:gravity="center"
                         android:padding="16dp"
-                        android:text="Fixed height" />
+                        android:textStyle="bold"
+                        android:text="Cara Pertama"
+                        android:textColor="@color/black" />
 
-                </net.cachapa.expandablelayout.ExpandableLayout>
+                    <net.cachapa.expandablelayout.ExpandableLayout
+                        android:id="@+id/expandable_layout_0"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:el_duration="500"
+                        app:el_expanded="false">
+
+                        <TextView
+                            android:id="@+id/content_pertama"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:clipToPadding="false"
+                            android:elevation="4dp"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:textSize="15sp"
+                            android:text="Loading..."
+                            android:textColor="@color/black" />
+
+                    </net.cachapa.expandablelayout.ExpandableLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/expand_button_1"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/putih"
+                        android:elevation="6dp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:padding="16dp"
+                        android:text="Cara Kedua"
+                        android:textColor="@color/black" />
+
+                    <net.cachapa.expandablelayout.ExpandableLayout
+                        android:id="@+id/expandable_layout_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:el_duration="500"
+                        app:el_expanded="false">
+
+                        <TextView
+                            android:id="@+id/content_kedua"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:clipToPadding="false"
+                            android:elevation="4dp"
+                            android:textSize="15sp"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:text="Loading..."
+                            android:textColor="@color/black"/>
+
+                    </net.cachapa.expandablelayout.ExpandableLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/expand_button_2"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/putih"
+                        android:elevation="6dp"
+                        android:gravity="center"
+                        android:padding="16dp"
+                        android:textStyle="bold"
+                        android:text="Cara Ketiga"
+                        android:textColor="@color/black" />
+
+                    <net.cachapa.expandablelayout.ExpandableLayout
+                        android:id="@+id/expandable_layout_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:el_duration="500"
+                        app:el_expanded="false">
+
+                        <TextView
+                            android:id="@+id/content_ketiga"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:clipToPadding="false"
+                            android:elevation="4dp"
+                            android:textSize="15sp"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:text="Loading..."
+                            android:textColor="@color/black"/>
+
+                    </net.cachapa.expandablelayout.ExpandableLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/expand_button_3"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/putih"
+                        android:elevation="6dp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:padding="16dp"
+                        android:text="Cara Keempat"
+                        android:textColor="@color/black" />
+
+                    <net.cachapa.expandablelayout.ExpandableLayout
+                        android:id="@+id/expandable_layout_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:el_duration="500"
+                        app:el_expanded="false">
+
+                        <TextView
+                            android:id="@+id/content_keempat"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:clipToPadding="false"
+                            android:elevation="4dp"
+                            android:textSize="15sp"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:text="Loading..."
+                            android:textColor="@color/black"/>
+
+                    </net.cachapa.expandablelayout.ExpandableLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
+
 
         </androidx.cardview.widget.CardView>
     </androidx.core.widget.NestedScrollView>

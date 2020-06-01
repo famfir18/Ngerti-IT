@@ -88,4 +88,12 @@ dependencies {
 
     implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
 
+    implementation 'com.ethanhua:skeleton:1.1.2'
+    implementation 'io.supercharge:shimmerlayout:2.1.0'
+
+    //svg image loader
+//    implementation 'com.github.ar-android:AndroidSvgLoader:1.0.2'
+
+    //Svg image loader
+    implementation 'com.github.corouteam:GlideToVectorYou:v1.2.0'
 }
