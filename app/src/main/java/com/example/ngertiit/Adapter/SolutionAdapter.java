@@ -79,14 +79,14 @@ public class SolutionAdapter extends RecyclerView.Adapter<SolutionAdapter.MyView
     @Override
     public void onBindViewHolder(final MyView holder, final int position)
     {
-        if (holder.getAdapterPosition() > lastPosition) {
+        /*if (holder.getAdapterPosition() > lastPosition) {
 
             AnimationUtilDown.animate(holder, true);
         }else {
             AnimationUtilDown.animate(holder, false);
 
         }
-        lastPosition = holder.getAdapterPosition();
+        lastPosition = holder.getAdapterPosition();*/
 
 
         // Set the text of each item of

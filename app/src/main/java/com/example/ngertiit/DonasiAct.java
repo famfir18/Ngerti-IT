@@ -89,7 +89,7 @@ public class DonasiAct extends AppCompatActivity {
                 tvVa.setText("Tekan lama nomor diatas untuk copy ke clipboard");
                 tvPayment.setText("085920024574");
                 ivQR.setImageDrawable(getResources().getDrawable(R.drawable.qr_ovo));
-                Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.color.transparent);
                 dialog.show();
 
                 tvPayment.setOnLongClickListener(new View.OnLongClickListener() {

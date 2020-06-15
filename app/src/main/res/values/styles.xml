@@ -4,7 +4,6 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 <!--        <item name="colorAccent">@color/colorAccent</item>-->
         <item name="android:homeAsUpIndicator">@drawable/ic_back</item>
         <item name="android:fontFamily">@font/montserrat</item>
@@ -14,10 +13,11 @@
         <!-- Customize your theme here. -->
         <item name="android:parentActivityName">Kamus</item>
         <item name="colorPrimary">#FFF</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_back</item>
         <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:windowTranslucentStatus">true</item>
+<!--        <item name="android:windowTranslucentNavigation">true</item>-->
     </style>
 
     <style name="HeaderBar">
@@ -32,6 +32,12 @@
         <item name="colorControlActivated">@color/colorAccent</item>
         <item name="colorControlHighlight">@color/colorAccent</item>
         <item name="android:fontFamily">@font/helvetica</item>
+    </style>
+
+    <style name="CollapsedAppBar" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/transparent</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>

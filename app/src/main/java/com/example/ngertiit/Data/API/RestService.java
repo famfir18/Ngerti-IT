@@ -1,6 +1,8 @@
 package com.example.ngertiit.Data.API;
 
 import com.example.ngertiit.Data.JSON.DataCarousels;
+import com.example.ngertiit.Data.JSON.DataLifehacks;
+import com.example.ngertiit.Data.JSON.DataSolution;
 import com.example.ngertiit.Data.JSON.DataTestSDG;
 
 
@@ -21,4 +23,10 @@ public interface RestService {
 
     @GET("carousels")
     Call<List<DataCarousels>> getDataCarousels();
+
+    @GET("lifehacks")
+    Call<List<DataLifehacks>> getDataLifehacks();
+
+    @GET("solutions")
+    Call<List<DataSolution>> getDataSolutions();
 }

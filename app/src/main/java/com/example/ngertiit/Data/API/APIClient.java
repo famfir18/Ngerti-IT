@@ -31,4 +31,15 @@ public class APIClient {
 
         return retrofit;
     }
+
+    public static Retrofit getDataLifehacks() {
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(URL_BASE)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+
+        return retrofit;
+    }
 }

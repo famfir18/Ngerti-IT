@@ -11,35 +11,30 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.ScrollView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
-import com.ethanhua.skeleton.Skeleton;
-import com.ethanhua.skeleton.SkeletonScreen;
 import com.example.ngertiit.Adapter.DictionaryAdapter;
 import com.example.ngertiit.Adapter.LifeHackAdapterMenu;
 import com.example.ngertiit.Adapter.SolutionAdapterMenu;
 import com.example.ngertiit.Data.API.APIClient;
 import com.example.ngertiit.Data.API.RestService;
 import com.example.ngertiit.Data.JSON.DataCarousels;
+import com.example.ngertiit.Data.JSON.DataLifehacks;
+import com.example.ngertiit.Data.JSON.DataSolution;
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
-import com.squareup.picasso.Cache;
-import com.squareup.picasso.Picasso;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
@@ -53,7 +48,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentHome extends Fragment {
+public class FragmentHome extends Fragment
+        implements LifeHackAdapterMenu.OnItemSelected, SolutionAdapterMenu.OnItemSelected {
 
     @BindView(R.id.carouselView)
     CarouselView carouselView;
@@ -77,6 +73,8 @@ public class FragmentHome extends Fragment {
     // Array list for recycler view data source
     ArrayList<String> source;
     ArrayList<String> kamuz;
+    List<DataLifehacks> myList;
+    List<DataSolution> myLizt;
 
     RecyclerView.LayoutManager SolutionRecyclerViewLayoutManager;
     RecyclerView.LayoutManager LifeHackRecyclerViewLayoutManager;
@@ -89,7 +87,7 @@ public class FragmentHome extends Fragment {
 
     // Linear Layout Manager
     LinearLayoutManager SolutionHorizontalLayout;
-    LinearLayoutManager LifeHackHorizontalLayout;
+//    LinearLayoutManager LifeHackHorizontalLayout;
     LinearLayoutManager KamusHorizontalLayout;
 
     Context context;
@@ -113,30 +111,65 @@ public class FragmentHome extends Fragment {
         context = getContext();
         final View toolbar = getActivity().findViewById(R.id.toolbar);
 
-        /*toolbar.setVisibility(View.GONE);
-        scroller.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-
-                if (scrollY > oldScrollY) {
-                    toolbar.setVisibility(View.VISIBLE);
-                }
-                if (scrollY == 0) {
-                    toolbar.setVisibility(View.GONE);
-                }
-            }
-        });*/
-
-      /*  carouselView.setPageCount(3);
-
-        carouselView.setImageListener(imageListeners);*/
-
         showImageCarousel();
+        getDataLifehacks();
+        getDataSolutions();
         
         
         initView();
         initEvent();
         return view;
+    }
+
+    private void getDataSolutions() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        rv_solution.setLayoutManager(layoutManager);
+        solutionAdapterMenu = new SolutionAdapterMenu(context, myLizt, this);
+        rv_solution.setAdapter(solutionAdapterMenu);
+
+        RestService apiService = APIClient.getClient().create(RestService.class);
+        Call<List<DataSolution>> call = apiService.getDataSolutions();
+
+        call.enqueue(new Callback<List<DataSolution>>() {
+            @Override
+            public void onResponse(Call<List<DataSolution>> call, Response<List<DataSolution>> response) {
+                myLizt = response.body();
+                Log.d("TAG","Response = "+ myLizt);
+                solutionAdapterMenu.setMovieList(myLizt);
+            }
+
+            @Override
+            public void onFailure(Call<List<DataSolution>> call, Throwable t) {
+                System.out.println("gagalz");
+                Log.d("TAG","Response = "+t.toString());
+            }
+        });
+
+    }
+
+    private void getDataLifehacks() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        rv_lifehack.setLayoutManager(layoutManager);
+        lifeHackAdapterMenu = new LifeHackAdapterMenu(context, myList,this);
+        rv_lifehack.setAdapter(lifeHackAdapterMenu);
+
+        RestService apiService = APIClient.getClient().create(RestService.class);
+        Call<List<DataLifehacks>> call = apiService.getDataLifehacks();
+
+        call.enqueue(new Callback<List<DataLifehacks>>() {
+            @Override
+            public void onResponse(Call<List<DataLifehacks>> call, Response<List<DataLifehacks>> response) {
+                myList = response.body();
+                Log.d("TAG","Response = "+ myList);
+                lifeHackAdapterMenu.setMovieList(myList);
+            }
+
+            @Override
+            public void onFailure(Call<List<DataLifehacks>> call, Throwable t) {
+                System.out.println("gagalz");
+                Log.d("TAG","Response = "+t.toString());
+            }
+        });
     }
 
     List<String> imageUrls = new ArrayList<>();
@@ -289,13 +322,13 @@ public class FragmentHome extends Fragment {
 
     private void initView() {
         SolutionRecyclerViewLayoutManager = new LinearLayoutManager(context);
-        LifeHackRecyclerViewLayoutManager = new LinearLayoutManager(context);
+//        LifeHackRecyclerViewLayoutManager = new LinearLayoutManager(context);
         KamusRecyclerViewLayoutManager = new LinearLayoutManager(context);
 
         // Set LayoutManager on Recycler View
         rv_solution.setLayoutManager(SolutionRecyclerViewLayoutManager);
 
-        rv_lifehack.setLayoutManager(LifeHackRecyclerViewLayoutManager);
+//        rv_lifehack.setLayoutManager(LifeHackRecyclerViewLayoutManager);
         rv_dictionary.setLayoutManager(KamusRecyclerViewLayoutManager);
 
         // Adding items to RecyclerView.
@@ -304,23 +337,23 @@ public class FragmentHome extends Fragment {
 
         // calling constructor of adapter
         // with source list as a parameter
-        solutionAdapterMenu = new SolutionAdapterMenu(source);
-        lifeHackAdapterMenu = new LifeHackAdapterMenu(source);
+//        solutionAdapterMenu = new SolutionAdapterMenu(source);
+//        lifeHackAdapterMenu = new LifeHackAdapterMenu(source);
         dictionaryAdapter = new DictionaryAdapter(kamuz);
 
         // Set Horizontal Layout Manager
         // for Recycler view
         SolutionHorizontalLayout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-        LifeHackHorizontalLayout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+//        LifeHackHorizontalLayout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         KamusHorizontalLayout = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
 
         rv_solution.setLayoutManager(SolutionHorizontalLayout);
-        rv_lifehack.setLayoutManager(LifeHackHorizontalLayout);
+//        rv_lifehack.setLayoutManager(LifeHackHorizontalLayout);
         rv_dictionary.setLayoutManager(KamusHorizontalLayout);
 
         // Set adapter on recycler view
         rv_solution.setAdapter(solutionAdapterMenu);
-        rv_lifehack.setAdapter(lifeHackAdapterMenu);
+//        rv_lifehack.setAdapter(lifeHackAdapterMenu);
         rv_dictionary.setAdapter(dictionaryAdapter);
     }
 
@@ -362,5 +395,19 @@ public class FragmentHome extends Fragment {
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
 
+    }
+
+    @Override
+    public void onSelected(DataLifehacks dataLifehacks) {
+        Intent i = new Intent(context, KontenLifehackAct.class);
+        i.putExtra(KontenLifehackAct.ID_KONTEN, dataLifehacks.getId());
+        startActivity(i);
+    }
+
+    @Override
+    public void onSelected(DataSolution dataSolution) {
+        Intent i = new Intent(context, KontenSolusiAct.class);
+        i.putExtra(KontenSolusiAct.ID_KONTEN, dataSolution.getId());
+        startActivity(i);
     }
 }

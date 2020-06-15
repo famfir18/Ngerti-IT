@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/root"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
     android:layout_height="match_parent"
     android:background="@color/transparent"
     tools:context=".KontenSolusiAct">
@@ -11,30 +12,30 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
-        android:fitsSystemWindows="true"
-        android:theme="@style/KamusTheme">
+        android:theme="@style/KamusTheme"
+        android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsing"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
+            app:statusBarScrim="@color/transparent"
+            app:contentScrim="@color/putih"
             app:expandedTitleTextAppearance="@android:color/transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
             <ImageView
+                android:id="@+id/iv_banner_solution"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="30dp"
+                android:layout_height="228dp"
+                android:scaleType="centerCrop"
                 android:background="@color/white"
                 android:contentDescription="Kamus"
-                android:scaleType="centerInside"
-                android:src="@drawable/slide1"
-                app:layout_collapseMode="parallax" />
+                app:layout_collapseMode="parallax"/>
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -70,11 +71,12 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_solution_desc"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textSize="15dp"
-                    android:layout_margin="10dp"
-                    android:text="Ini Deskripsinya Jancoook"/>
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:layout_margin="10dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -97,7 +99,7 @@
                     <net.cachapa.expandablelayout.ExpandableLayout
                         android:id="@+id/expandable_layout_0"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         app:el_duration="500"
                         app:el_expanded="false">
 
@@ -110,9 +112,17 @@
                             android:elevation="4dp"
                             android:gravity="center"
                             android:padding="5dp"
+                            android:visibility="gone"
                             android:textSize="15sp"
                             android:text="Loading..."
                             android:textColor="@color/black" />
+
+                        <WebView
+                            android:id="@+id/web"
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_height="wrap_content"/>
 
                     </net.cachapa.expandablelayout.ExpandableLayout>
 
@@ -139,7 +149,7 @@
                     <net.cachapa.expandablelayout.ExpandableLayout
                         android:id="@+id/expandable_layout_1"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         app:el_duration="500"
                         app:el_expanded="false">
 
@@ -150,11 +160,19 @@
                             android:background="@color/white"
                             android:clipToPadding="false"
                             android:elevation="4dp"
+                            android:visibility="gone"
                             android:textSize="15sp"
                             android:gravity="center"
                             android:padding="8dp"
                             android:text="Loading..."
                             android:textColor="@color/black"/>
+
+                        <WebView
+                            android:id="@+id/web2"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
 
                     </net.cachapa.expandablelayout.ExpandableLayout>
 
@@ -181,7 +199,7 @@
                     <net.cachapa.expandablelayout.ExpandableLayout
                         android:id="@+id/expandable_layout_2"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         app:el_duration="500"
                         app:el_expanded="false">
 
@@ -192,11 +210,19 @@
                             android:background="@color/white"
                             android:clipToPadding="false"
                             android:elevation="4dp"
+                            android:visibility="gone"
                             android:textSize="15sp"
                             android:gravity="center"
                             android:padding="8dp"
                             android:text="Loading..."
                             android:textColor="@color/black"/>
+
+                        <WebView
+                            android:id="@+id/web3"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
 
                     </net.cachapa.expandablelayout.ExpandableLayout>
 
@@ -205,6 +231,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:orientation="vertical">
 
                     <TextView
@@ -223,7 +250,7 @@
                     <net.cachapa.expandablelayout.ExpandableLayout
                         android:id="@+id/expandable_layout_3"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         app:el_duration="500"
                         app:el_expanded="false">
 
@@ -234,11 +261,19 @@
                             android:background="@color/white"
                             android:clipToPadding="false"
                             android:elevation="4dp"
+                            android:visibility="gone"
                             android:textSize="15sp"
                             android:gravity="center"
                             android:padding="8dp"
                             android:text="Loading..."
                             android:textColor="@color/black"/>
+
+                            <WebView
+                            android:id="@+id/web4"
+                            android:layout_width="match_parent"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="8dp"
+                            android:layout_height="wrap_content"/>
 
                     </net.cachapa.expandablelayout.ExpandableLayout>
 
