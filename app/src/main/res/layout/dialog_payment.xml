@@ -2,45 +2,46 @@
 
 <androidx.cardview.widget.CardView
     android:id="@+id/card_dialog_payment"
-    android:layout_width="wrap_content"
+    android:layout_width="300dp"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="40dp"
     android:layout_gravity="center"
+    android:background="@color/transparent"
     app:cardElevation="5dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
             <LinearLayout
                 android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="280dp"
                 android:layout_margin="30dp"
+                android:background="@color/transparent"
                 android:layout_gravity="center"
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_qr"
                     android:layout_width="120dp"
-                    android:layout_marginTop="30dp"
                     android:layout_height="120dp"
-                    android:layout_gravity="center"
                     android:src="@drawable/ic_exit" />
 
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_gravity="center"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Faisal Amirul Firdaus"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_username"
-                        android:layout_gravity="center"
-                        android:textSize="20dp"
-                        android:textStyle="bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Faisal Amirul Firdaus"/>
+                    android:orientation="horizontal">
 
 
                     <TextView
@@ -50,7 +51,17 @@
                         android:layout_height="wrap_content"
                         android:text="085920024574"/>
 
-                    <TextView
+                    <ImageButton
+                        android:id="@+id/btn_copy"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center"
+                        android:background="@color/transparent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_copy"
+                        android:layout_marginLeft="10dp"/>
+
+                    <!--<TextView
                         android:id="@+id/tv_va"
                         android:layout_gravity="center"
                         android:layout_width="wrap_content"
@@ -60,7 +71,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="50dp"
                         android:textSize="12dp"
-                        android:text="Scan QR Code Untuk Transfer"/>
+                        android:text="Scan QR Code Untuk Transfer"/>-->
 
                 </LinearLayout>
 

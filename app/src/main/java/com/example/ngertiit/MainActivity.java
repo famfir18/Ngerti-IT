@@ -24,6 +24,7 @@ import android.widget.Button;
 import com.example.ngertiit.Data.API.APIClient;
 import com.example.ngertiit.Data.API.RestService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.onesignal.OneSignal;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,6 +59,12 @@ public class MainActivity extends AppCompatActivity
         ActivityCompat.requestPermissions(MainActivity.this,
                 new String[]{Manifest.permission.READ_PHONE_STATE},
                 1);
+
+        // OneSignal Initialization
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
 
     }
 

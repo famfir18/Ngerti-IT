@@ -6,11 +6,10 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.Dialog;
 import android.content.ClipboardManager;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,6 +30,8 @@ public class DonasiAct extends AppCompatActivity {
     LinearLayout layoutLinkAja;
     @BindView(R.id.layout_dana)
     LinearLayout layoutDana;
+    @BindView(R.id.layout_bca)
+    LinearLayout layoutBca;
     @BindView(R.id.layout_mandiri)
     LinearLayout layoutMandiri;
     @BindView(R.id.textz)
@@ -74,25 +75,40 @@ public class DonasiAct extends AppCompatActivity {
 
         ImageView ivQR;
         TextView tvPayment;
-        TextView tvVa;
+        ImageButton btnCopy;
+        TextView tvName;
+//        TextView tvVa;
 
         dialog.setContentView(R.layout.dialog_payment);
 
         ivQR = dialog.findViewById(R.id.iv_qr);
         tvPayment = dialog.findViewById(R.id.tv_payment);
-        tvVa = dialog.findViewById(R.id.tv_va);
+        btnCopy = dialog.findViewById(R.id.btn_copy);
+        tvName = dialog.findViewById(R.id.tv_name);
+//        tvVa = dialog.findViewById(R.id.tv_va);
 
         layoutOvo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                tvVa.setText("Tekan lama nomor diatas untuk copy ke clipboard");
+//                tvVa.setText("Tekan lama nomor diatas untuk copy ke clipboard");
                 tvPayment.setText("085920024574");
+                tvName.setText("Faisal Amirul Firdaus");
                 ivQR.setImageDrawable(getResources().getDrawable(R.drawable.qr_ovo));
                 Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.color.transparent);
                 dialog.show();
 
-                tvPayment.setOnLongClickListener(new View.OnLongClickListener() {
+                btnCopy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                        clipboard.setText(tvPayment.getText());
+
+                        Toast.makeText(getApplicationContext(), "Copied to clipboard", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+                /*tvPayment.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
 
@@ -103,7 +119,7 @@ public class DonasiAct extends AppCompatActivity {
 
                         return false;
                     }
-                });
+                });*/
 
             }
         });
@@ -112,12 +128,26 @@ public class DonasiAct extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                tvVa.setText("Tekan lama nomor diatas untuk copy ke clipboard");
+//                tvVa.setText("Tekan lama nomor diatas untuk copy ke clipboard");
                 tvPayment.setText("085920024574");
+                tvName.setText("Faisal Amirul Firdaus");
                 ivQR.setImageDrawable(getResources().getDrawable(R.drawable.qr_gopay));
+                Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.color.transparent);
+
                 dialog.show();
 
-                tvPayment.setOnLongClickListener(new View.OnLongClickListener() {
+                btnCopy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                        clipboard.setText(tvPayment.getText());
+
+                        Toast.makeText(getApplicationContext(), "Copied to clipboard", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+               /* tvPayment.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
 
@@ -128,7 +158,7 @@ public class DonasiAct extends AppCompatActivity {
 
                         return false;
                     }
-                });
+                });*/
 
             }
         });
@@ -137,12 +167,25 @@ public class DonasiAct extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                tvName.setText("Faisal Amirul Firdaus");
                 tvPayment.setText("085920024574");
-                tvVa.setText("Tekan lama nomor diatas untuk copy ke clipboard");
+//                tvVa.setText("Tekan lama nomor diatas untuk copy ke clipboard");
                 ivQR.setImageDrawable(getResources().getDrawable(R.drawable.qr_dana));
+                Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.color.transparent);
                 dialog.show();
 
-                tvPayment.setOnLongClickListener(new View.OnLongClickListener() {
+                btnCopy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                        clipboard.setText(tvPayment.getText());
+
+                        Toast.makeText(getApplicationContext(), "Copied to clipboard", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                /*tvPayment.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
 
@@ -153,7 +196,7 @@ public class DonasiAct extends AppCompatActivity {
 
                         return false;
                     }
-                });
+                });*/
 
             }
         });
@@ -162,14 +205,27 @@ public class DonasiAct extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                tvVa.setText("Tekan lama nomor diatas untuk copy ke clipboard");
-                ivQR.setImageDrawable(getResources().getDrawable(R.drawable.qr_gopay));
+//                tvVa.setText("Tekan lama nomor diatas untuk copy ke clipboard");
+                ivQR.setImageDrawable(getResources().getDrawable(R.drawable.qr_linkaja));
+                Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.color.transparent);
                 dialog.show();
 
-                tvPayment.setText("085920024574");
+                tvName.setText("Kevinn Ernest");
+                tvPayment.setText("087887077630");
+
+                btnCopy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                        clipboard.setText(tvPayment.getText());
+
+                        Toast.makeText(getApplicationContext(), "Copied to clipboard", Toast.LENGTH_LONG).show();
+                    }
+                });
 
 
-                tvPayment.setOnLongClickListener(new View.OnLongClickListener() {
+
+               /* tvPayment.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
 
@@ -181,7 +237,47 @@ public class DonasiAct extends AppCompatActivity {
                         return false;
                     }
                 });
+*/
+            }
+        });
 
+        layoutBca.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                tvVa.setText("Tekan lama nomor diatas untuk copy ke clipboard");
+                ivQR.setImageDrawable(getResources().getDrawable(R.drawable.logo_bca));
+                Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.color.transparent);
+                dialog.show();
+
+                tvName.setText("Mahendra Dwi Syathi");
+                tvPayment.setText("3701171045");
+
+                btnCopy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                        clipboard.setText(tvPayment.getText());
+
+                        Toast.makeText(getApplicationContext(), "Copied to clipboard", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+
+               /* tvPayment.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+
+                        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                        clipboard.setText(tvPayment.getText());
+
+                        Toast.makeText(getApplicationContext(), "Copied to clipboard", Toast.LENGTH_LONG).show();
+
+                        return false;
+                    }
+                });
+*/
             }
         });
 
@@ -189,13 +285,26 @@ public class DonasiAct extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                tvVa.setText("Tekan lama nomor diatas untuk copy ke clipboard");
+//                tvVa.setText("Tekan lama nomor diatas untuk copy ke clipboard");
                 ivQR.setImageDrawable(getResources().getDrawable(R.drawable.ic_mandiri));
+                Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.color.transparent);
                 dialog.show();
 
+                tvName.setText("Faisal Amirul Firdaus");
                 tvPayment.setText("1570005061693");
 
-                tvPayment.setOnLongClickListener(new View.OnLongClickListener() {
+                btnCopy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                        clipboard.setText(tvPayment.getText());
+
+                        Toast.makeText(getApplicationContext(), "Copied to clipboard", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                /*tvPayment.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
 
@@ -206,7 +315,7 @@ public class DonasiAct extends AppCompatActivity {
 
                         return false;
                     }
-                });
+                });*/
 
             }
         });
