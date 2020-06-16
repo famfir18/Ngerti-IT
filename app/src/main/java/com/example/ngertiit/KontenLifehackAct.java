@@ -69,6 +69,7 @@ public class KontenLifehackAct extends AppCompatActivity {
 
                 String div = "<div>";
                 String closeDiv = "</div>";
+                String nbsp = "&nbsp;";
                 int position = kontenId - 3;
                 String imageUrl = response.body().get(position).getImage();
                 String description = response.body().get(position).getDescription();
@@ -80,9 +81,10 @@ public class KontenLifehackAct extends AppCompatActivity {
                         getSupportActionBar().setTitle(response.body().get(position).getTitle());
                     }
 
-                if (description.contains(closeDiv) || description.contains(div)){
+                if (description.contains(closeDiv) || description.contains(div)  || description.contains(nbsp)) {
                     description = description.replaceAll(div, "");
                     description = description.replaceAll(closeDiv,"");
+                    description = description.replaceAll(nbsp,"");
                     tvDesc.setText(description);
                 } else {
                     tvDesc.setText(description);

@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 
+apply from: '../config/git-version.gradle'
+
+
 android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -11,9 +14,12 @@ android {
         applicationId "com.example.ngertiit"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        versionCode gitVersionCode
+        versionName gitVersionName
+
+        // Make generated archive contain version name and code.
+        archivesBaseName = "Ngerti IT-${gitVersionName}"
+        testInstrumentationRunner "androidFx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
