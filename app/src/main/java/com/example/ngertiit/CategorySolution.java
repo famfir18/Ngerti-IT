@@ -38,22 +38,18 @@ public class CategorySolution extends AppCompatActivity {
     private void initEvent() {
         Animation animScalein = AnimationUtils.loadAnimation(this, R.anim.anim_scale_in);
 
-        macos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        macos.setOnClickListener(v -> {
 //                v.startAnimation(animScalein);
-                Intent i = new Intent(CategorySolution.this,SolutionAct.class);
-                startActivity(i);
-            }
+            Intent i = new Intent(CategorySolution.this,SolutionAct.class);
+            i.putExtra("macOS", "macOS");
+            startActivity(i);
         });
 
-        windows.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        windows.setOnClickListener(v -> {
 //                v.startAnimation(animScalein);
-                Intent i = new Intent(CategorySolution.this,SolutionAct.class);
-                startActivity(i);
-            }
+            Intent i = new Intent(CategorySolution.this,SolutionAct.class);
+            i.putExtra("Windows", "Windows");
+            startActivity(i);
         });
     }
 

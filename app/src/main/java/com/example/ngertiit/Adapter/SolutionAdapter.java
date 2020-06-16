@@ -1,34 +1,123 @@
 package com.example.ngertiit.Adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ngertiit.Data.JSON.DataSolution;
 import com.example.ngertiit.R;
-import com.example.ngertiit.Util.AnimationUtilDown;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import butterknife.OnItemSelected;
+public class SolutionAdapter extends RecyclerView.Adapter<SolutionAdapter.MyviewHolder> {
+    Context context;
+    List<DataSolution> mylist;
+    OnItemSelected onItemSelected;
 
-public class SolutionAdapter extends RecyclerView.Adapter<SolutionAdapter.MyView> implements Filterable {
 
-    private List<String> list;
-    private int lastPosition = 0;
-
-    @Override
-    public Filter getFilter() {
-        return null;
+    public SolutionAdapter(Context context, List<DataSolution> mylist,
+                               OnItemSelected onItemSelected){
+        this.context = context;
+        this.mylist = mylist;
+        this.onItemSelected = onItemSelected;
     }
 
-    // View Holder class which
-    // extends RecyclerView.ViewHolder
-    public class MyView extends RecyclerView.ViewHolder {
+    public void setMovieList(List<DataSolution> myList) {
+        this.mylist = myList;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public SolutionAdapter.MyviewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.view_content,parent,false);
+        return new MyviewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(SolutionAdapter.MyviewHolder holder,
+                                 int position) {
+
+        DataSolution dataSolution = mylist.get(position);
+        String imageUrl = dataSolution.getImage();
+
+        holder.tvTitle.setText(dataSolution.getTitle());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemSelected.onSelected(dataSolution);
+            }
+        });
+
+        String em = "<em>";
+        String closeEm = "</em>";
+        String description = dataSolution.getDescription();
+        String descriptionSubs = description.substring(0,80) + "...";
+
+        if (descriptionSubs.contains(closeEm) || description.contains(em)){
+            descriptionSubs = descriptionSubs.replaceAll(em, "");
+            descriptionSubs = descriptionSubs.replaceAll(closeEm,"");
+            holder.tvDescription.setText(descriptionSubs);
+        } else {
+            holder.tvDescription.setText(descriptionSubs);
+        }
+
+        Picasso.with(context)
+                .load(imageUrl)
+                .into(holder.ivBanner);
+
+//        if (dataSolution.getCategory().equals("Windows")) {
+//            holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_windows_browser));
+//        } else if (dataSolution.getCategory().equals("macOS")) {
+//            holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_macos_browser));
+//        }
+    }
+
+    @Override
+    public int getItemCount() {
+        if(mylist != null){
+            return mylist.size();
+        }
+        return 0;
+
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    public interface OnItemSelected {
+        void onSelected(DataSolution DataSolution);
+    }
+
+    public class MyviewHolder extends RecyclerView.ViewHolder {
+
+        TextView tvDescription;
+        TextView tvTitle;
+        ImageView ivBanner;
+
+        public MyviewHolder(View itemView) {
+            super(itemView);
+
+            tvDescription = itemView.findViewById(R.id.tv_lifehack_desc);
+            tvTitle = itemView.findViewById(R.id.tv_lifehack);
+            ivBanner = itemView.findViewById(R.id.iv_banner);
+        }
+    }
+
+    /*public class MyView
+            extends RecyclerView.ViewHolder {
 
         // Text View
         TextView textView;
@@ -79,15 +168,15 @@ public class SolutionAdapter extends RecyclerView.Adapter<SolutionAdapter.MyView
     @Override
     public void onBindViewHolder(final MyView holder, final int position)
     {
-        /*if (holder.getAdapterPosition() > lastPosition) {
+     *//*   int lastPosition = 0;
+        if (holder.getAdapterPosition() > lastPosition) {
 
-            AnimationUtilDown.animate(holder, true);
+            AnimationUtilSide.animate(holder, true);
         }else {
-            AnimationUtilDown.animate(holder, false);
+            AnimationUtilSide.animate(holder, false);
 
         }
-        lastPosition = holder.getAdapterPosition();*/
-
+        lastPosition = holder.getAdapterPosition();*//*
 
         // Set the text of each item of
         // Recycler view with the list items
@@ -100,7 +189,6 @@ public class SolutionAdapter extends RecyclerView.Adapter<SolutionAdapter.MyView
     public int getItemCount()
     {
         return list.size();
-    }
-
+    }*/
 }
 

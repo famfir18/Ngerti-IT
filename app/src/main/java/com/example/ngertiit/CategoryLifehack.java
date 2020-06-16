@@ -42,6 +42,7 @@ public class CategoryLifehack extends AppCompatActivity {
             public void onClick(View v) {
 //                v.startAnimation(animScalein);
                 Intent i = new Intent(CategoryLifehack.this,LifeHackAct.class);
+                i.putExtra("macOS", "macOS");
                 startActivity(i);
             }
         });
@@ -51,6 +52,7 @@ public class CategoryLifehack extends AppCompatActivity {
             public void onClick(View v) {
 //                v.startAnimation(animScalein);
                 Intent i = new Intent(CategoryLifehack.this,LifeHackAct.class);
+                i.putExtra("Windows", "Windows");
                 startActivity(i);
             }
         });

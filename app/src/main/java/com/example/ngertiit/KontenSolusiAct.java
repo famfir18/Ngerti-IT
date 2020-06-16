@@ -3,10 +3,14 @@ package com.example.ngertiit;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
@@ -71,7 +75,7 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
     @BindView(R.id.collapsing)
     CollapsingToolbarLayout collapsing;
 
-    public  static  final String ID_KONTEN = "id";
+    public static final String ID_KONTEN = "id";
     private Integer kontenId;
 
     String langkahPertama;
@@ -102,6 +106,11 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
         if (getIntent().getExtras() != null) {
             kontenId = getIntent().getExtras().getInt(ID_KONTEN);
         }
+
+        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        String deviceID = telephonyManager.getDeviceId();
+        System.out.println("Device ID = " + deviceID);
+
 
 //        link = "https://www.google.com/";
 

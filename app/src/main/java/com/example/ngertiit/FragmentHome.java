@@ -223,29 +223,23 @@ public class FragmentHome extends Fragment
                                         startActivity(likeIng);
                                     } catch (ActivityNotFoundException e) {
                                         startActivity(new Intent(Intent.ACTION_VIEW,
-                                                Uri.parse("http://instagram.com/famfir_/")));
+                                                Uri.parse(link1)));
                                     }
                                 }
                             });
                         } else if (position == 2) {
-                            imageView.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Intent i = new Intent(context, SolutionAct.class);
-                                    startActivity(i);
-                                }
+                            imageView.setOnClickListener(v -> {
+                                Intent i = new Intent(context, SolutionAct.class);
+                                startActivity(i);
                             });
 
                         } else if (position ==1 ) {
-                            imageView.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Intent sendIntent = new Intent();
-                                    sendIntent.setAction(Intent.ACTION_SEND);
-                                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Ayo jadi pinter komputer biar ga bego2 banget, download sekarang di " + link3);
-                                    sendIntent.setType("text/plain");
-                                    startActivity(sendIntent);
-                                }
+                            imageView.setOnClickListener(v -> {
+                                Intent sendIntent = new Intent();
+                                sendIntent.setAction(Intent.ACTION_SEND);
+                                sendIntent.putExtra(Intent.EXTRA_TEXT, "Ayo jadi pinter komputer biar ga bego2 banget, download sekarang di " + link3);
+                                sendIntent.setType("text/plain");
+                                startActivity(sendIntent);
                             });
                         }
 

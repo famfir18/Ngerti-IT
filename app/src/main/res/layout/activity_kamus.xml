@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:background="@color/transparent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".KamusAct">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -29,7 +30,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="228dp"
-                android:scaleType="centerInside"
+                android:scaleType="centerCrop"
                 android:background="@color/white"
                 android:contentDescription="Kamus"
                 android:src="@drawable/ic_banner_kamus"

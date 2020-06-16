@@ -2,9 +2,11 @@ package com.example.ngertiit;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -52,6 +54,11 @@ public class MainActivity extends AppCompatActivity
         loadFragment(new FragmentHome());
 
         dialogExit = new Dialog(this);
+
+        ActivityCompat.requestPermissions(MainActivity.this,
+                new String[]{Manifest.permission.READ_PHONE_STATE},
+                1);
+
     }
 
 
