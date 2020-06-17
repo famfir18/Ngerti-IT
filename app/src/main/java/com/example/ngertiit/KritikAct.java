@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +42,9 @@ public class KritikAct extends AppCompatActivity {
 
     DataKritikSaran dataKritikSaran;
     Animation shake;
+
+    Handler delay = new Handler();
+    final static int DELAYS = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +87,12 @@ public class KritikAct extends AppCompatActivity {
                         .show();
             } else {
                 submitKritikSaran();
-                finish();
+                etNama.getText().clear();
+                etKritikSaran.getText().clear();
+                etEmail.getText().clear();
+                Snackbar.make(v, "Terima kasih kritik dan sarannya", Snackbar.LENGTH_INDEFINITE)
+                        .show();
+                delay.postDelayed(this::finish, DELAYS);
             }
 
         });

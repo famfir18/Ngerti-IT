@@ -56,7 +56,7 @@
         android:background="@drawable/bg_finder"
         android:ems="10"
         android:hint="Nama / username IG juga boleh..."
-        android:inputType="textPersonName"
+        android:inputType="textCapWords"
         android:paddingLeft="10dp"
         android:textSize="14sp" />
 
