@@ -181,7 +181,7 @@ public class SolutionAct extends AppCompatActivity implements SolutionAdapter.On
     @Override
     public void onSelected(DataSolution dataSolution) {
         Intent i = new Intent(SolutionAct.this, KontenSolusiAct.class);
-        i.putExtra(KontenSolusiAct.ID_KONTEN, dataSolution.getId());
+        i.putExtra(KontenSolusiAct.ID_KONTEN, myLizt.indexOf(dataSolution));
         startActivity(i);
     }
 }

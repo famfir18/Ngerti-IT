@@ -62,7 +62,6 @@
                         android:paddingRight="6dp"
                         android:layout_marginBottom="4dp"
                         android:fontFamily="@font/montserrat"
-                        android:text="fijwifjweifwjeifjwiefjwifjwifjwf"
                         android:textColor="#fff"
                         android:textSize="11dp" />
 

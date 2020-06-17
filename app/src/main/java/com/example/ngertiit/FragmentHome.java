@@ -425,14 +425,15 @@ public class FragmentHome extends Fragment
     @Override
     public void onSelected(DataLifehacks dataLifehacks) {
         Intent i = new Intent(context, KontenLifehackAct.class);
-        i.putExtra(KontenLifehackAct.ID_KONTEN, dataLifehacks.getId());
+        i.putExtra(KontenLifehackAct.ID_KONTEN, myList.indexOf(dataLifehacks));
+        System.out.println("Berhasil? " + myList.indexOf(dataLifehacks));
         startActivity(i);
     }
 
     @Override
     public void onSelected(DataSolution dataSolution) {
         Intent i = new Intent(context, KontenSolusiAct.class);
-        i.putExtra(KontenSolusiAct.ID_KONTEN, dataSolution.getId());
+        i.putExtra(KontenSolusiAct.ID_KONTEN, myLizt.indexOf(dataSolution));
         startActivity(i);
     }
 

@@ -182,7 +182,7 @@ public class LifeHackAct extends AppCompatActivity implements LifeHackAdapter.On
     @Override
     public void onSelected(DataLifehacks dataLifehacks) {
         Intent i = new Intent(LifeHackAct.this, KontenLifehackAct.class);
-        i.putExtra(KontenLifehackAct.ID_KONTEN, dataLifehacks.getId());
+        i.putExtra(KontenLifehackAct.ID_KONTEN, myLizt.indexOf(dataLifehacks));
         startActivity(i);
     }
 }

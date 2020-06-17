@@ -127,7 +127,7 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
 
                 String em = "<em>";
                 String closeEm = "</em>";
-                int position = kontenId -1;
+                int position = kontenId;
                 String description = response.body().get(position).getDescription();
                 String imageUrl = response.body().get(position).getImage();
 
