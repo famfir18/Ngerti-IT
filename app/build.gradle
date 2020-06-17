@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        maven { url 'https://plugins.gradle.org/m2/'}
+        maven { url 'https://plugins.gradle.org/m2/' }
     }
     dependencies {
         classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.12.3'
@@ -26,7 +26,7 @@ android {
         applicationId "com.example.ngertiit"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 10
+        versionCode 11
         versionName "0.0"
 
         // Make generated archive contain version name and code.
@@ -34,7 +34,7 @@ android {
         testInstrumentationRunner "androidFx.test.runner.AndroidJUnitRunner"
 
         manifestPlaceholders = [
-                onesignal_app_id: 'b595c9ff-db01-4633-8416-76b30da34f27',
+                onesignal_app_id               : 'b595c9ff-db01-4633-8416-76b30da34f27',
                 // Project number pulled from dashboard, local value is ignored.
                 onesignal_google_project_number: 'REMOTE'
         ]

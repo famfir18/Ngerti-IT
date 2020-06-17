@@ -3,14 +3,18 @@ package com.example.ngertiit;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.Toolbar;
 
 import butterknife.BindView;
@@ -30,6 +34,8 @@ public class FragmentSetting extends Fragment {
     LinearLayout layoutTentang;
     @BindView(R.id.layout_update)
     LinearLayout layoutUpdate;
+    @BindView(R.id.switch_notif)
+    Switch switchNotif;
 
     Context context;
 
@@ -53,6 +59,14 @@ public class FragmentSetting extends Fragment {
         context = getContext();
 
         initView();
+
+        if (switchNotif.isChecked()){
+            Intent intent = new Intent("INTENT_NAME").putExtra("Yess", "yess");
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+        } else {
+            Intent intent = new Intent("INTENT_NAME").putExtra("Noo", "noo");
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+        }
 
 
         return view;

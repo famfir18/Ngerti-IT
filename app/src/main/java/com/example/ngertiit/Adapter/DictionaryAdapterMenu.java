@@ -16,14 +16,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class DictionaryAdapter extends RecyclerView.Adapter<DictionaryAdapter.MyviewHolder> {
+public class DictionaryAdapterMenu extends RecyclerView.Adapter<DictionaryAdapterMenu.MyviewHolder> {
     Context context;
     List<DataDictionary> mylist;
     OnItemSelected onItemSelected;
 
 
-    public DictionaryAdapter(Context context, List<DataDictionary> mylist,
-                                 OnItemSelected onItemSelected){
+    public DictionaryAdapterMenu(Context context, List<DataDictionary> mylist,
+                               OnItemSelected onItemSelected){
         this.context = context;
         this.mylist = mylist;
         this.onItemSelected = onItemSelected;
@@ -35,13 +35,13 @@ public class DictionaryAdapter extends RecyclerView.Adapter<DictionaryAdapter.My
     }
 
     @Override
-    public DictionaryAdapter.MyviewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public DictionaryAdapterMenu.MyviewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.view_kamus,parent,false);
         return new MyviewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(DictionaryAdapter.MyviewHolder holder,
+    public void onBindViewHolder(DictionaryAdapterMenu.MyviewHolder holder,
                                  int position) {
 
         DataDictionary dataDictionary = mylist.get(position);
@@ -71,7 +71,7 @@ public class DictionaryAdapter extends RecyclerView.Adapter<DictionaryAdapter.My
     @Override
     public int getItemCount() {
         if(mylist != null){
-            return mylist.size();
+            return 3;
         }
         return 0;
 
@@ -124,7 +124,7 @@ public class DictionaryAdapter extends RecyclerView.Adapter<DictionaryAdapter.My
 
     // Constructor for adapter class
     // which takes a list of String type
-    public DictionaryAdapter(List<String> horizontalList)
+    public DictionaryAdapterMenu(List<String> horizontalList)
     {
         this.list = horizontalList;
     }

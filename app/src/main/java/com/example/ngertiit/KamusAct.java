@@ -5,29 +5,42 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.example.ngertiit.Adapter.DictionaryAdapter;
+import com.example.ngertiit.Adapter.DictionaryAdapterMenu;
+import com.example.ngertiit.Data.API.APIClient;
+import com.example.ngertiit.Data.API.RestService;
+import com.example.ngertiit.Data.JSON.DataDictionary;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class KamusAct extends AppCompatActivity {
+public class KamusAct extends AppCompatActivity implements DictionaryAdapter.OnItemSelected{
 
     ArrayList<String> source;
-    @BindView(R.id.rv_solution)
-    RecyclerView rv_solution;
+    @BindView(R.id.rv_dictionary)
+    RecyclerView rv_dictionary;
 
     RecyclerView.LayoutManager SolutionRecyclerViewLayoutManager;
 
     LinearLayoutManager SolutionHorizontalLayout;
 
     DictionaryAdapter adapter;
+    List<DataDictionary> dictionaries;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +52,11 @@ public class KamusAct extends AppCompatActivity {
         Toolbar toolbars = findViewById(R.id.toolbar);
         setSupportActionBar(toolbars);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow();
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
+
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -48,6 +66,32 @@ public class KamusAct extends AppCompatActivity {
         toolbarTitleCollaps();
 
         initView();
+        getDataDictionary();
+    }
+
+    private void getDataDictionary() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        rv_dictionary.setLayoutManager(layoutManager);
+        adapter = new DictionaryAdapter(this, dictionaries, this);
+        rv_dictionary.setAdapter(adapter);
+
+        RestService apiService = APIClient.getClient().create(RestService.class);
+        Call<List<DataDictionary>> call = apiService.getDataDictionary();
+
+        call.enqueue(new Callback<List<DataDictionary>>() {
+            @Override
+            public void onResponse(Call<List<DataDictionary>> call, Response<List<DataDictionary>> response) {
+                dictionaries = response.body();
+                Log.d("TAG","Response = "+ dictionaries);
+                adapter.setMovieList(dictionaries);
+            }
+
+            @Override
+            public void onFailure(Call<List<DataDictionary>> call, Throwable t) {
+                System.out.println("gagalz");
+                Log.d("TAG","Response = "+t.toString());
+            }
+        });
     }
 
     private void toolbarTitleCollaps() {
@@ -76,15 +120,15 @@ public class KamusAct extends AppCompatActivity {
 
     private void initView() {
         SolutionRecyclerViewLayoutManager = new LinearLayoutManager(this);
-        rv_solution.setLayoutManager(SolutionRecyclerViewLayoutManager);
+//        rv_solution.setLayoutManager(SolutionRecyclerViewLayoutManager);
 
-        AddItemsToRecyclerViewArrayList();
-        adapter = new DictionaryAdapter(source);
+//        AddItemsToRecyclerViewArrayList();
+//        adapter = new DictionaryAdapter(source);
 
         SolutionHorizontalLayout = new LinearLayoutManager(this);
-        rv_solution.setLayoutManager(SolutionHorizontalLayout);
+//        rv_solution.setLayoutManager(SolutionHorizontalLayout);
 
-        rv_solution.setAdapter(adapter);
+//        rv_solution.setAdapter(adapter);
     }
 
     private void AddItemsToRecyclerViewArrayList() {
@@ -118,5 +162,10 @@ public class KamusAct extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSelected(DataDictionary dataDictionary) {
+
     }
 }

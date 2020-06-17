@@ -27,11 +27,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.ngertiit.Adapter.DictionaryAdapter;
+import com.example.ngertiit.Adapter.DictionaryAdapterMenu;
 import com.example.ngertiit.Adapter.LifeHackAdapterMenu;
 import com.example.ngertiit.Adapter.SolutionAdapterMenu;
 import com.example.ngertiit.Data.API.APIClient;
 import com.example.ngertiit.Data.API.RestService;
 import com.example.ngertiit.Data.JSON.DataCarousels;
+import com.example.ngertiit.Data.JSON.DataDictionary;
 import com.example.ngertiit.Data.JSON.DataLifehacks;
 import com.example.ngertiit.Data.JSON.DataSolution;
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
@@ -49,7 +51,9 @@ import retrofit2.Response;
 
 
 public class FragmentHome extends Fragment
-        implements LifeHackAdapterMenu.OnItemSelected, SolutionAdapterMenu.OnItemSelected {
+        implements LifeHackAdapterMenu.OnItemSelected,
+        SolutionAdapterMenu.OnItemSelected,
+        DictionaryAdapterMenu.OnItemSelected {
 
     @BindView(R.id.carouselView)
     CarouselView carouselView;
@@ -75,6 +79,7 @@ public class FragmentHome extends Fragment
     ArrayList<String> kamuz;
     List<DataLifehacks> myList;
     List<DataSolution> myLizt;
+    List<DataDictionary> dictionaries;
 
     RecyclerView.LayoutManager SolutionRecyclerViewLayoutManager;
     RecyclerView.LayoutManager LifeHackRecyclerViewLayoutManager;
@@ -83,7 +88,7 @@ public class FragmentHome extends Fragment
     // adapter class object
     SolutionAdapterMenu solutionAdapterMenu;
     LifeHackAdapterMenu lifeHackAdapterMenu;
-    DictionaryAdapter dictionaryAdapter;
+    DictionaryAdapterMenu dictionaryAdapterMenu;
 
     // Linear Layout Manager
     LinearLayoutManager SolutionHorizontalLayout;
@@ -114,11 +119,37 @@ public class FragmentHome extends Fragment
         showImageCarousel();
         getDataLifehacks();
         getDataSolutions();
+        getDataDictionary();
         
         
         initView();
         initEvent();
         return view;
+    }
+
+    private void getDataDictionary() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        rv_dictionary.setLayoutManager(layoutManager);
+        dictionaryAdapterMenu = new DictionaryAdapterMenu(context, dictionaries, this);
+        rv_dictionary.setAdapter(dictionaryAdapterMenu);
+
+        RestService apiService = APIClient.getClient().create(RestService.class);
+        Call<List<DataDictionary>> call = apiService.getDataDictionary();
+
+        call.enqueue(new Callback<List<DataDictionary>>() {
+            @Override
+            public void onResponse(Call<List<DataDictionary>> call, Response<List<DataDictionary>> response) {
+                dictionaries = response.body();
+                Log.d("TAG","Response = "+ dictionaries);
+                dictionaryAdapterMenu.setMovieList(dictionaries);
+            }
+
+            @Override
+            public void onFailure(Call<List<DataDictionary>> call, Throwable t) {
+                System.out.println("gagalz");
+                Log.d("TAG","Response = "+t.toString());
+            }
+        });
     }
 
     private void getDataSolutions() {
@@ -333,7 +364,7 @@ public class FragmentHome extends Fragment
         // with source list as a parameter
 //        solutionAdapterMenu = new SolutionAdapterMenu(source);
 //        lifeHackAdapterMenu = new LifeHackAdapterMenu(source);
-        dictionaryAdapter = new DictionaryAdapter(kamuz);
+//        dictionaryAdapter = new DictionaryAdapter(kamuz);
 
         // Set Horizontal Layout Manager
         // for Recycler view
@@ -348,7 +379,7 @@ public class FragmentHome extends Fragment
         // Set adapter on recycler view
         rv_solution.setAdapter(solutionAdapterMenu);
 //        rv_lifehack.setAdapter(lifeHackAdapterMenu);
-        rv_dictionary.setAdapter(dictionaryAdapter);
+//        rv_dictionary.setAdapter(dictionaryAdapter);
     }
 
     public void AddItemsToRecyclerViewArrayList()
@@ -403,5 +434,12 @@ public class FragmentHome extends Fragment
         Intent i = new Intent(context, KontenSolusiAct.class);
         i.putExtra(KontenSolusiAct.ID_KONTEN, dataSolution.getId());
         startActivity(i);
+    }
+
+    @Override
+    public void onSelected(DataDictionary dataDictionary) {
+        /*Intent i = new Intent(context, KontenKamusAct.class);
+        i.putExtra(KontenSolusiAct.ID_KONTEN, dataDictionary.getId());
+        startActivity(i);*/
     }
 }

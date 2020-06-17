@@ -3,7 +3,7 @@
     package="com.example.ngertiit">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".KontenLifehackAct"></activity>
+        <activity android:name=".KontenKamusAct"></activity>
+        <activity android:name=".KontenLifehackAct" />
         <activity android:name=".CategoryLifehack" />
         <activity
             android:name=".BrowserAct"
