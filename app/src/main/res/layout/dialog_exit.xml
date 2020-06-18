@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_dialog_exit"
     android:layout_width="250dp"
     android:layout_height="300dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
     android:background="#CD222424"
+    app:cardCornerRadius="20dp"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -15,9 +18,9 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="120dp"
-            android:layout_height="80dp"
+            android:layout_height="120dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_exit"/>
+            android:src="@drawable/asking"/>
 
         <TextView
             android:id="@+id/textView"
@@ -28,7 +31,7 @@
             android:gravity="center_vertical"
             android:text="Mau Keluar Aplikasi?"
             android:textAlignment="center"
-            android:textColor="@android:color/white"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -61,4 +64,4 @@
     </LinearLayout>
 
 
-</LinearLayout>
+</androidx.cardview.widget.CardView>

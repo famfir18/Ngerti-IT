@@ -2,12 +2,14 @@ package com.example.ngertiit;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Notification;
@@ -21,17 +23,24 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AbsoluteLayout;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 
 import com.example.ngertiit.Data.API.APIClient;
 import com.example.ngertiit.Data.API.RestService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.onesignal.OneSignal;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +53,11 @@ public class MainActivity extends AppCompatActivity
 
     @BindView(R.id.bn_main)
     BottomNavigationView bnMain;
+    @BindView(R.id.switch_notif)
+    Switch switchNotif;
+    @BindView(R.id.layout_update)
+    LinearLayout layoutNotif;
+
 
     Dialog dialogExit;
     String updateYes;
@@ -69,11 +83,37 @@ public class MainActivity extends AppCompatActivity
                 new String[]{Manifest.permission.READ_PHONE_STATE},
                 1);
 
-        // OneSignal Initialization
-        OneSignal.startInit(this)
-                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-                .unsubscribeWhenNotificationsAreDisabled(true)
-                .init();
+        ActivityCompat.requestPermissions(MainActivity.this,
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                1);
+
+
+
+        if (switchNotif.isChecked()){
+            // OneSignal Initialization
+            OneSignal.startInit(this)
+                    .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                    .unsubscribeWhenNotificationsAreDisabled(true)
+                    .autoPromptLocation(true)
+                    .init();
+            OneSignal.setSubscription(true);
+        }else if (!switchNotif.isChecked()){
+            System.out.println("Ga kekirim notifnya");
+            OneSignal.setSubscription(false);
+        }
+
+        switchNotif.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (switchNotif.isChecked()){
+                OneSignal.startInit(this)
+                        .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                        .unsubscribeWhenNotificationsAreDisabled(true)
+                        .autoPromptLocation(true)
+                        .init();
+                OneSignal.setSubscription(true);
+            } else if (!switchNotif.isChecked()){
+                System.out.println("Ga kekirim notifnya");
+                OneSignal.setSubscription(false);
+            }});
 
     }
 
@@ -81,13 +121,21 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
 
+        final Animation animScaleTitle = AnimationUtils.loadAnimation(this, R.anim.anim_scale_dialog);
+
         Button yes;
         Button no;
+        CardView cardExit;
 
         dialogExit.setContentView(R.layout.dialog_exit);
 
+        Objects.requireNonNull(dialogExit.getWindow()).setBackgroundDrawableResource(R.color.transparent);
+
         yes = dialogExit.findViewById(R.id.btnYes);
         no = dialogExit.findViewById(R.id.btnNo);
+        cardExit = dialogExit.findViewById(R.id.card_dialog_exit);
+
+        cardExit.startAnimation(animScaleTitle);
 
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,12 +202,15 @@ public class MainActivity extends AppCompatActivity
 
         switch (item.getItemId()){
             case R.id.home_menu:
+                layoutNotif.setVisibility(View.GONE);
                 fragment = new FragmentHome();
                 break;
             case R.id.history_menu:
+                layoutNotif.setVisibility(View.GONE);
                 fragment = new FragmentHistory();
                 break;
             case R.id.setting_menu:
+                layoutNotif.setVisibility(View.VISIBLE);
                 fragment = new FragmentSetting();
                 break;
         }

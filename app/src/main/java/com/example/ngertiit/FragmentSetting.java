@@ -13,9 +13,12 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.Toolbar;
+
+import com.onesignal.OneSignal;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +38,7 @@ public class FragmentSetting extends Fragment {
     @BindView(R.id.layout_update)
     LinearLayout layoutUpdate;
     @BindView(R.id.switch_notif)
-    Switch switchNotif;
+    public Switch switchNotif;
 
     Context context;
 
@@ -60,13 +63,27 @@ public class FragmentSetting extends Fragment {
 
         initView();
 
-        if (switchNotif.isChecked()){
-            Intent intent = new Intent("INTENT_NAME").putExtra("Yess", "yess");
-            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-        } else {
-            Intent intent = new Intent("INTENT_NAME").putExtra("Noo", "noo");
-            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+       /* // OneSignal Initialization
+        OneSignal.startInit(context)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
+
+        if (!switchNotif.isChecked()){
+            OneSignal.setSubscription(false);
         }
+
+        switchNotif.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (switchNotif.isChecked()){
+                OneSignal.startInit(context)
+                        .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                        .unsubscribeWhenNotificationsAreDisabled(true)
+                        .init();
+                OneSignal.setSubscription(true);
+            } else if (!switchNotif.isChecked()){
+                System.out.println("Ga kekirim notifnya");
+                OneSignal.setSubscription(false);
+            }});*/
 
 
         return view;

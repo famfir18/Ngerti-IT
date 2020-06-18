@@ -29,13 +29,16 @@ import android.widget.TextView;
 import com.example.ngertiit.Adapter.DictionaryAdapter;
 import com.example.ngertiit.Adapter.DictionaryAdapterMenu;
 import com.example.ngertiit.Adapter.LifeHackAdapterMenu;
+import com.example.ngertiit.Adapter.MyListData;
 import com.example.ngertiit.Adapter.SolutionAdapterMenu;
+import com.example.ngertiit.Adapter.SolutionAdapterMenuShimmer;
 import com.example.ngertiit.Data.API.APIClient;
 import com.example.ngertiit.Data.API.RestService;
 import com.example.ngertiit.Data.JSON.DataCarousels;
 import com.example.ngertiit.Data.JSON.DataDictionary;
 import com.example.ngertiit.Data.JSON.DataLifehacks;
 import com.example.ngertiit.Data.JSON.DataSolution;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
@@ -73,6 +76,7 @@ public class FragmentHome extends Fragment
     NestedScrollView scroller;
 //    int[] sampleImages = {R.drawable.carousel_1, R.drawable.carousel_2, R.drawable.carousel_3};
 
+    ShimmerFrameLayout shimmerCarousel;
 
     // Array list for recycler view data source
     ArrayList<String> source;
@@ -115,6 +119,8 @@ public class FragmentHome extends Fragment
         ButterKnife.bind(this, view);
         context = getContext();
         final View toolbar = getActivity().findViewById(R.id.toolbar);
+
+        shimmerCarousel = view.findViewById(R.id.shimmer_carousel);
 
         showImageCarousel();
         getDataLifehacks();
@@ -241,6 +247,8 @@ public class FragmentHome extends Fragment
                                 imageView
                         );
 
+                        shimmerCarousel.hideShimmer();
+
                         if (position == 0) {
                             imageView.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -346,6 +354,22 @@ public class FragmentHome extends Fragment
 
 
     private void initView() {
+
+        /*myListData = new MyListData[] {
+                new MyListData("Email", android.R.drawable.ic_dialog_email),
+                new MyListData("Info", android.R.drawable.ic_dialog_info),
+                new MyListData("Delete", android.R.drawable.ic_delete),
+                new MyListData("Dialer", android.R.drawable.ic_dialog_dialer),
+                new MyListData("Alert", android.R.drawable.ic_dialog_alert),
+                new MyListData("Map", android.R.drawable.ic_dialog_map),
+                new MyListData("Email", android.R.drawable.ic_dialog_email),
+                new MyListData("Info", android.R.drawable.ic_dialog_info),
+                new MyListData("Delete", android.R.drawable.ic_delete),
+                new MyListData("Dialer", android.R.drawable.ic_dialog_dialer),
+                new MyListData("Alert", android.R.drawable.ic_dialog_alert),
+                new MyListData("Map", android.R.drawable.ic_dialog_map),
+        };*/
+
         SolutionRecyclerViewLayoutManager = new LinearLayoutManager(context);
 //        LifeHackRecyclerViewLayoutManager = new LinearLayoutManager(context);
         KamusRecyclerViewLayoutManager = new LinearLayoutManager(context);
