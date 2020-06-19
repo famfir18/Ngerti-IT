@@ -60,7 +60,6 @@ public class FragmentHistory extends Fragment implements HistoryAdapter.OnItemSe
     String idDevice;
     List<DataHistory> historyList;
 
-    CardView cardLoading;
 
     Handler delay = new Handler();
     final static int DELAY_DIALOG = 1000;
@@ -84,13 +83,11 @@ public class FragmentHistory extends Fragment implements HistoryAdapter.OnItemSe
 
         assert context != null;
         dialogLoading = new Dialog(context);
-        dialogLoading.setContentView(R.layout.dialog_kritik);
+        dialogLoading.setContentView(R.layout.dialog_loading);
         dialogLoading.setCancelable(false);
 
         Objects.requireNonNull(dialogLoading.getWindow()).setBackgroundDrawableResource(R.color.transparent);
 
-        cardLoading = dialogLoading.findViewById(R.id.card_kritik);
-        cardLoading.startAnimation(animScaleTitle);
         dialogLoading.show();
 
         telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
