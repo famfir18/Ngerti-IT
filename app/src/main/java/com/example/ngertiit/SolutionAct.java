@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -16,7 +18,9 @@ import com.example.ngertiit.Adapter.SolutionAdapter;
 import com.example.ngertiit.Adapter.SolutionAdapterMenu;
 import com.example.ngertiit.Data.API.APIClient;
 import com.example.ngertiit.Data.API.RestService;
+import com.example.ngertiit.Data.JSON.DataHistory;
 import com.example.ngertiit.Data.JSON.DataSolution;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +28,12 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.ngertiit.Data.API.APIClient.URL_BASE;
 
 public class SolutionAct extends AppCompatActivity implements SolutionAdapter.OnItemSelected {
 
@@ -46,6 +53,9 @@ public class SolutionAct extends AppCompatActivity implements SolutionAdapter.On
 
     SolutionAdapter solutionAdapter;
 
+    TelephonyManager telephonyManager;
+    String idDevice;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +63,9 @@ public class SolutionAct extends AppCompatActivity implements SolutionAdapter.On
         setContentView(R.layout.activity_solution);
 
         ButterKnife.bind(this);
+
+        telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        idDevice = telephonyManager.getDeviceId();
 
         initView();
         getDataSolutions();
@@ -180,6 +193,37 @@ public class SolutionAct extends AppCompatActivity implements SolutionAdapter.On
 
     @Override
     public void onSelected(DataSolution dataSolution) {
+        Gson gson = new Gson();
+
+        int idArtikel = dataSolution.getId();
+        String idUser = idDevice;
+        String judul = dataSolution.getTitle();
+
+        DataHistory dataHistory = new DataHistory();
+
+        dataHistory.setIdArtikel(idArtikel);
+        dataHistory.setIdUser(idUser);
+        dataHistory.setJudulArtikel(judul);
+        dataHistory.setLinkArtikel("Solusi");
+
+        Log.d("TAG","Data History = "+ gson.toJson(dataHistory));
+
+        RestService apiService = APIClient.getAPI().create(RestService.class);
+        Call<ResponseBody> call = apiService.postHistory(dataHistory);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+
+                Log.d("TAG","Response Berhasil = "+ gson.toJson(response.code()));
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("TAG","Response Gagal= "+t.toString());
+            }
+        });
         Intent i = new Intent(SolutionAct.this, KontenSolusiAct.class);
         i.putExtra(KontenSolusiAct.ID_KONTEN, myLizt.indexOf(dataSolution));
         startActivity(i);

@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -15,17 +17,22 @@ import com.example.ngertiit.Adapter.LifeHackAdapter;
 import com.example.ngertiit.Adapter.SolutionAdapter;
 import com.example.ngertiit.Data.API.APIClient;
 import com.example.ngertiit.Data.API.RestService;
+import com.example.ngertiit.Data.JSON.DataHistory;
 import com.example.ngertiit.Data.JSON.DataLifehacks;
 import com.example.ngertiit.Data.JSON.DataLifehacks;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.ngertiit.Data.API.APIClient.URL_BASE;
 
 public class LifeHackAct extends AppCompatActivity implements LifeHackAdapter.OnItemSelected{
 
@@ -43,6 +50,9 @@ public class LifeHackAct extends AppCompatActivity implements LifeHackAdapter.On
     String windows;
     String macOS;
 
+    TelephonyManager telephonyManager;
+    String idDevice;
+
     RecyclerView.LayoutManager SolutionRecyclerViewLayoutManager;
     LifeHackAdapter lifeHackAdapter;
 
@@ -54,6 +64,9 @@ public class LifeHackAct extends AppCompatActivity implements LifeHackAdapter.On
         setContentView(R.layout.activity_life_hack);
 
         ButterKnife.bind(this);
+
+        telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        idDevice = telephonyManager.getDeviceId();
 
         initView();
         getDataLifehacks();
@@ -181,6 +194,38 @@ public class LifeHackAct extends AppCompatActivity implements LifeHackAdapter.On
 
     @Override
     public void onSelected(DataLifehacks dataLifehacks) {
+
+        Gson gson = new Gson();
+
+        int idArtikel = dataLifehacks.getId();
+        String idUser = idDevice;
+        String judul = dataLifehacks.getTitle();
+
+        DataHistory dataHistory = new DataHistory();
+
+        dataHistory.setIdArtikel(idArtikel);
+        dataHistory.setIdUser(idUser);
+        dataHistory.setJudulArtikel(judul);
+        dataHistory.setLinkArtikel("Life-hack");
+
+        Log.d("TAG","Data History = "+ gson.toJson(dataHistory));
+
+        RestService apiService = APIClient.getAPI().create(RestService.class);
+        Call<ResponseBody> call = apiService.postHistory(dataHistory);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+
+                Log.d("TAG","Response Berhasil = "+ gson.toJson(response.code()));
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("TAG","Response Gagal= "+t.toString());
+            }
+        });
         Intent i = new Intent(LifeHackAct.this, KontenLifehackAct.class);
         i.putExtra(KontenLifehackAct.ID_KONTEN, myLizt.indexOf(dataLifehacks));
         startActivity(i);

@@ -1,23 +1,98 @@
 package com.example.ngertiit.Adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ngertiit.Data.JSON.DataHistory;
+import com.example.ngertiit.Data.JSON.DataLifehacks;
 import com.example.ngertiit.R;
-import com.example.ngertiit.Util.AnimationUtilDown;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyView> {
-    private List<String> list;
+public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyviewHolder> {
+    Context context;
+    List<DataHistory> mylist;
+    OnItemSelected onItemSelected;
 
-    // View Holder class which
-    // extends RecyclerView.ViewHolder
-    public class MyView
+
+    public HistoryAdapter(Context context, List<DataHistory> mylist,
+                             OnItemSelected onItemSelected){
+        this.context = context;
+        this.mylist = mylist;
+        this.onItemSelected = onItemSelected;
+    }
+
+    public void setMovieList(List<DataHistory> myList) {
+        this.mylist = myList;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public HistoryAdapter.MyviewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.view_history,parent,false);
+        return new MyviewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(HistoryAdapter.MyviewHolder holder,
+                                 int position) {
+
+        DataHistory dataHistory = mylist.get(position);
+
+        holder.tvTitle.setText(dataHistory.getJudulArtikel());
+        holder.tvCategory.setText(dataHistory.getLinkArtikel());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemSelected.onSelected(dataHistory);
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        if(mylist != null){
+            return mylist.size();
+        }
+        return 0;
+
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    public interface OnItemSelected {
+        void onSelected(DataHistory dataHistory);
+    }
+
+    public class MyviewHolder extends RecyclerView.ViewHolder {
+
+        TextView tvCategory;
+        TextView tvTitle;
+
+        public MyviewHolder(View itemView) {
+            super(itemView);
+
+            tvCategory = itemView.findViewById(R.id.tv_category);
+            tvTitle = itemView.findViewById(R.id.tv_kamus);
+        }
+    }
+
+    /*public class MyView
             extends RecyclerView.ViewHolder {
 
         // Text View
@@ -30,7 +105,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyView> 
             super(view);
 
             // initialise TextView with id
-            textView = view.findViewById(R.id.tv_lifehack);
+            textView = (TextView)view
+                    .findViewById(R.id.tv_lifehack);
         }
     }
 
@@ -41,7 +117,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyView> 
         this.list = horizontalList;
     }
 
-
+    // Override onCreateViewHolder which deals
+    // with the inflation of the card layout
+    // as an item for the RecyclerView.
     @Override
     public MyView onCreateViewHolder(ViewGroup parent,
                                      int viewType)
@@ -51,7 +129,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyView> 
         View itemView
                 = LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.view_kamus,
+                .inflate(R.layout.view_content,
                         parent,
                         false);
 
@@ -66,18 +144,16 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyView> 
     @Override
     public void onBindViewHolder(final MyView holder, final int position)
     {
-    /*    int lastPosition = 0;
-
+     *//*   int lastPosition = 0;
         if (holder.getAdapterPosition() > lastPosition) {
 
-            AnimationUtilDown.animate(holder, true);
+            AnimationUtilSide.animate(holder, true);
         }else {
-            AnimationUtilDown.animate(holder, false);
+            AnimationUtilSide.animate(holder, false);
 
         }
+        lastPosition = holder.getAdapterPosition();*//*
 
-        lastPosition = holder.getAdapterPosition();
-*/
         // Set the text of each item of
         // Recycler view with the list items
         holder.textView.setText(list.get(position));
@@ -89,6 +165,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyView> 
     public int getItemCount()
     {
         return list.size();
-    }
+    }*/
 }
 

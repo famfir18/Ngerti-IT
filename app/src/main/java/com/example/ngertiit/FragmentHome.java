@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,10 +37,12 @@ import com.example.ngertiit.Data.API.APIClient;
 import com.example.ngertiit.Data.API.RestService;
 import com.example.ngertiit.Data.JSON.DataCarousels;
 import com.example.ngertiit.Data.JSON.DataDictionary;
+import com.example.ngertiit.Data.JSON.DataHistory;
 import com.example.ngertiit.Data.JSON.DataLifehacks;
 import com.example.ngertiit.Data.JSON.DataSolution;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
+import com.google.gson.Gson;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
@@ -48,9 +51,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.ngertiit.Data.API.APIClient.BASE_URL;
+import static com.example.ngertiit.Data.API.APIClient.URL_BASE;
 
 
 public class FragmentHome extends Fragment
@@ -81,6 +88,7 @@ public class FragmentHome extends Fragment
     // Array list for recycler view data source
     ArrayList<String> source;
     ArrayList<String> kamuz;
+
     List<DataLifehacks> myList;
     List<DataSolution> myLizt;
     List<DataDictionary> dictionaries;
@@ -100,6 +108,9 @@ public class FragmentHome extends Fragment
     LinearLayoutManager KamusHorizontalLayout;
 
     Context context;
+
+    TelephonyManager telephonyManager;
+    String idDevice;
 
 
     public FragmentHome() {}
@@ -126,8 +137,11 @@ public class FragmentHome extends Fragment
         getDataLifehacks();
         getDataSolutions();
         getDataDictionary();
-        
-        
+
+        telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        idDevice = telephonyManager.getDeviceId();
+
+                System.out.println("Device ID = " + idDevice);
         initView();
         initEvent();
         return view;
@@ -325,33 +339,6 @@ public class FragmentHome extends Fragment
         });
     }
 
-    private void addNotification() {
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.icon)
-                .setContentTitle("New Life-Hack Updates!")
-                .setContentText("PSM Swara Darmagita diundang sebagai Pengisi Acara dalam acara Wisuda Gelar Profesional Asuransi XXVIII Ahli dan Ajun Ahli Asuransi Indonesia, Asosiasi Ahli Manajemen Asuransi Indonesia (AAMAI) yang bertempat di Birawa Assembly hall, Hotel Bidakara Jakarta");
-
-        Intent notificationIntent = new Intent(context, MainActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(context, 0 , notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(contentIntent);
-        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-        {
-            String channelId = "Your_channel_id";
-            NotificationChannel channel = new NotificationChannel(
-                    channelId,
-                    "Channel human readable title",
-                    NotificationManager.IMPORTANCE_HIGH);
-            manager.createNotificationChannel(channel);
-            mBuilder.setChannelId(channelId);
-        }
-
-        manager.notify(0,mBuilder.build());
-    }
-
 
     private void initView() {
 
@@ -437,17 +424,41 @@ public class FragmentHome extends Fragment
         }
     };*/
 
-    private void sharePlayStore() {
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, "Ayo jadi pinter komputer biar ga bego2 banget, download sekarang di pornhub ");
-            sendIntent.setType("text/plain");
-            startActivity(sendIntent);
-
-    }
-
     @Override
     public void onSelected(DataLifehacks dataLifehacks) {
+
+        Gson gson = new Gson();
+
+        int idArtikel = dataLifehacks.getId();
+        String idUser = idDevice;
+        String judul = dataLifehacks.getTitle();
+
+        DataHistory dataHistory = new DataHistory();
+
+        dataHistory.setIdArtikel(idArtikel);
+        dataHistory.setIdUser(idUser);
+        dataHistory.setJudulArtikel(judul);
+        dataHistory.setLinkArtikel("Life-hack");
+
+        Log.d("TAG","Data History = "+ gson.toJson(dataHistory));
+
+        RestService apiService = APIClient.getAPI().create(RestService.class);
+        Call<ResponseBody> call = apiService.postHistory(dataHistory);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+
+                Log.d("TAG","Response Berhasil = "+ gson.toJson(response.code()));
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("TAG","Response Gagal= "+t.toString());
+            }
+        });
+
         Intent i = new Intent(context, KontenLifehackAct.class);
         i.putExtra(KontenLifehackAct.ID_KONTEN, myList.indexOf(dataLifehacks));
         System.out.println("Berhasil? " + myList.indexOf(dataLifehacks));
@@ -456,9 +467,45 @@ public class FragmentHome extends Fragment
 
     @Override
     public void onSelected(DataSolution dataSolution) {
+
+        Gson gson = new Gson();
+
+        int idArtikel = dataSolution.getId();
+        String idUser = idDevice;
+        String judul = dataSolution.getTitle();
+
+        System.out.println("id Device =" + idDevice);
+
+        DataHistory dataHistory = new DataHistory();
+
+        dataHistory.setIdArtikel(idArtikel);
+        dataHistory.setIdUser(idUser);
+        dataHistory.setJudulArtikel(judul);
+        dataHistory.setLinkArtikel("Solusi");
+
+        Log.d("TAG","Data History = "+ gson.toJson(dataHistory));
+
+        RestService apiService = APIClient.getAPI().create(RestService.class);
+        Call<ResponseBody> call = apiService.postHistory(dataHistory);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+
+                Log.d("TAG","Response Berhasil = "+ gson.toJson(response.code()));
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("TAG","Response Gagal= "+t.toString());
+            }
+        });
+
         Intent i = new Intent(context, KontenSolusiAct.class);
         i.putExtra(KontenSolusiAct.ID_KONTEN, myLizt.indexOf(dataSolution));
         startActivity(i);
+
     }
 
     @Override
