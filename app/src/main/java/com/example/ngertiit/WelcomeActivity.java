@@ -1,7 +1,10 @@
 package com.example.ngertiit;
 
+import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,12 +16,19 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -31,6 +41,10 @@ public class WelcomeActivity extends AppCompatActivity {
     private int[] layouts;
     private Button btnSkip, btnNext;
     private PrefManager prefManager;
+
+    Dialog dialogConfirm;
+    CardView carDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +69,39 @@ public class WelcomeActivity extends AppCompatActivity {
         btnSkip = (Button) findViewById(R.id.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
 
+        dialogConfirm = new Dialog(this);
+        Button yes;
+        Button no;
+        TextView tv;
+        ImageView iv;
+
+        dialogConfirm.setContentView(R.layout.dialog_exit);
+        dialogConfirm.setCancelable(false);
+        yes = dialogConfirm.findViewById(R.id.btnYes);
+        no =  dialogConfirm.findViewById(R.id.btnNo);
+        tv = dialogConfirm.findViewById(R.id.textView);
+        iv = dialogConfirm.findViewById(R.id.image);
+        carDialog = dialogConfirm.findViewById(R.id.card_dialog_exit);
+
+        carDialog.setVisibility(View.GONE);
+
+        tv.setText("History Lo gabakal kesimpen, tetep mau lanjutin?");
+        iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_alert));
+
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(WelcomeActivity.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
+
+        no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogConfirm.dismiss();
+            }
+        });
 
         // layout xml slide 1 sampai 4
         // add few more layouts if you want
@@ -90,10 +137,37 @@ public class WelcomeActivity extends AppCompatActivity {
                     // move to next screen
                     viewPager.setCurrentItem(current);
                 } else {
-                    launchHomeScreen();
+                    ActivityCompat.requestPermissions(WelcomeActivity.this,
+                            new String[]{Manifest.permission.READ_PHONE_STATE},
+                            1);
+
+                    int permissionCheck = ContextCompat.checkSelfPermission(WelcomeActivity.this, Manifest.permission.READ_PHONE_STATE);
+
+                    if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(WelcomeActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
+                    } else {
+                        //TODO
+                    }
                 }
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1:
+                if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    launchHomeScreen();
+                } /*else {
+                        dialogConfirm.show();
+                        carDialog.setVisibility(View.VISIBLE);
+                        break;
+                    }*/
+                break;
+          /*  default:
+                break;*/
+        }
     }
 
     private void addBottomDots(int currentPage) {

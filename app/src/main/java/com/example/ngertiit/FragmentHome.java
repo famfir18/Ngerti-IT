@@ -430,6 +430,7 @@ public class FragmentHome extends Fragment
         Gson gson = new Gson();
 
         int idArtikel = dataLifehacks.getId();
+        String idArtikelString = String.valueOf(idArtikel);
         String idUser = idDevice;
         String judul = dataLifehacks.getTitle();
 
@@ -460,8 +461,7 @@ public class FragmentHome extends Fragment
         });
 
         Intent i = new Intent(context, KontenLifehackAct.class);
-        i.putExtra(KontenLifehackAct.ID_KONTEN, myList.indexOf(dataLifehacks));
-        System.out.println("Berhasil? " + myList.indexOf(dataLifehacks));
+        i.putExtra("idArtikel", idArtikelString);
         startActivity(i);
     }
 
@@ -471,6 +471,7 @@ public class FragmentHome extends Fragment
         Gson gson = new Gson();
 
         int idArtikel = dataSolution.getId();
+        String idArtikelString = String.valueOf(idArtikel);
         String idUser = idDevice;
         String judul = dataSolution.getTitle();
 
@@ -503,7 +504,7 @@ public class FragmentHome extends Fragment
         });
 
         Intent i = new Intent(context, KontenSolusiAct.class);
-        i.putExtra(KontenSolusiAct.ID_KONTEN, myLizt.indexOf(dataSolution));
+        i.putExtra("idArtikel", idArtikelString);
         startActivity(i);
 
     }

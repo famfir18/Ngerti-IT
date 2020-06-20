@@ -122,10 +122,19 @@ public class FragmentHistory extends Fragment implements HistoryAdapter.OnItemSe
             @Override
             public void onResponse(Call<List<DataHistory>> call, Response<List<DataHistory>> response) {
 
-                dialogLoading.dismiss();
-                historyList = response.body();
-                Log.d("TAG","Response Berhasil = "+ gson.toJson(historyList));
-                adapter.setMovieList(historyList);
+                if (response.isSuccessful()){
+                    dialogLoading.dismiss();
+                    historyList = response.body();
+                    Log.d("TAG","Response Berhasil = "+ gson.toJson(historyList));
+                    adapter.setMovieList(historyList);
+                } else if (historyList == null){
+                    dialogLoading.setCancelable(true);
+                    TextView gagal = dialogLoading.findViewById(R.id.tv_status);
+                    ImageView imageGagal = dialogLoading.findViewById(R.id.iv_status);
+                    gagal.setText("Lo belom membuat sejarah");
+                    imageGagal.setImageDrawable(getResources().getDrawable(R.drawable.ic_alert));
+                    imageGagal.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -156,38 +165,6 @@ public class FragmentHistory extends Fragment implements HistoryAdapter.OnItemSe
 //        rvHistory.setLayoutManager(layoutManager);
     }
 
-    private void content() {
-        source = new ArrayList<>();
-        source.add("Cara install Ms. Office pada Windows (..terusan judul)");
-        source.add("Google Chrome terasa lemot? Begini caranya (..terusan judul)");
-        source.add("Wifi mati. Ga bisa konek ke internet. (..terusan judul)");
-        source.add("Tombol FN gak bisa berfungsi. (..terusan judul)");
-        source.add("Mau beli laptop tapi bingung seperti apa? (..terusan judul)");
-        source.add("Cara install Ms. Office pada Windows (..terusan judul)");
-        source.add("Google Chrome terasa lemot? Begini caranya (..terusan judul)");
-        source.add("Wifi mati. Ga bisa konek ke internet. (..terusan judul)");
-        source.add("Tombol FN gak bisa berfungsi. (..terusan judul)");
-        source.add("Mau beli laptop tapi bingung seperti apa? (..terusan judul)");
-        source.add("Mau beli laptop tapi bingung seperti apa? (..terusan judul)");
-        source.add("Cara install Ms. Office pada Windows (..terusan judul)");
-        source.add("Google Chrome terasa lemot? Begini caranya (..terusan judul)");
-        source.add("Wifi mati. Ga bisa konek ke internet. (..terusan judul)");
-        source.add("Tombol FN gak bisa berfungsi. (..terusan judul)");
-        source.add("Mau beli laptop tapi bingung seperti apa? (..terusan judul)");
-        source.add("Mau beli laptop tapi bingung seperti apa? (..terusan judul)");
-        source.add("Cara install Ms. Office pada Windows (..terusan judul)");
-        source.add("Google Chrome terasa lemot? Begini caranya (..terusan judul)");
-        source.add("Mau beli laptop tapi bingung seperti apa? (..terusan judul)");
-        source.add("Cara install Ms. Office pada Windows (..terusan judul)");
-        source.add("Google Chrome terasa lemot? Begini caranya (..terusan judul)");
-        source.add("Wifi mati. Ga bisa konek ke internet. (..terusan judul)");
-        source.add("Tombol FN gak bisa berfungsi. (..terusan judul)");
-        source.add("Mau beli laptop tapi bingung seperti apa? (..terusan judul)");
-        source.add("Wifi mati. Ga bisa konek ke internet. (..terusan judul)");
-        source.add("Tombol FN gak bisa berfungsi. (..terusan judul)");
-        source.add("Mau beli laptop tapi bingung seperti apa? (..terusan judul)");
-    }
-
     @Override
     public void onSelected(DataHistory dataHistory) {
 
@@ -195,21 +172,23 @@ public class FragmentHistory extends Fragment implements HistoryAdapter.OnItemSe
         String link = dataHistory.getLinkArtikel();
         String idArtikel = String.valueOf(dataHistory.getIdArtikel());
 
+        System.out.println("ID Artikel = " + idArtikel);
+
         if (link.equals("Life-hack")) {
 
 //            RestService apiService = APIClient.getAPI().create(RestService.class);
 //            Call<DataLifehacks> call = apiService.getDataLifehacksFiltered(idArtikel);
 
             Intent intent = new Intent(context, KontenLifehackAct.class);
-            intent.putExtra(KontenLifehackAct.ID_KONTEN, idArtikel);
+            intent.putExtra("idArtikel", idArtikel);
             startActivity(intent);
 
-        } else if (link.contains("Solution")){
+        } else if (link.equals("Solusi")){
 //            RestService apiService = APIClient.getAPI().create(RestService.class);
 //            Call<DataLifehacks> call = apiService.getDataLifehacksFiltered(idArtikel);
 
             Intent intent = new Intent(context, KontenSolusiAct.class);
-            intent.putExtra(KontenSolusiAct.ID_KONTEN, idArtikel);
+            intent.putExtra("idArtikel", idArtikel);
             startActivity(intent);
         }
 

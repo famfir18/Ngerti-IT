@@ -198,6 +198,7 @@ public class LifeHackAct extends AppCompatActivity implements LifeHackAdapter.On
         Gson gson = new Gson();
 
         int idArtikel = dataLifehacks.getId();
+        String idArtikelString = String.valueOf(idArtikel);
         String idUser = idDevice;
         String judul = dataLifehacks.getTitle();
 
@@ -227,7 +228,7 @@ public class LifeHackAct extends AppCompatActivity implements LifeHackAdapter.On
             }
         });
         Intent i = new Intent(LifeHackAct.this, KontenLifehackAct.class);
-        i.putExtra(KontenLifehackAct.ID_KONTEN, myLizt.indexOf(dataLifehacks));
+        i.putExtra("idArtikel", idArtikelString);
         startActivity(i);
     }
 }

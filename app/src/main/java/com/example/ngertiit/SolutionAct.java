@@ -196,6 +196,7 @@ public class SolutionAct extends AppCompatActivity implements SolutionAdapter.On
         Gson gson = new Gson();
 
         int idArtikel = dataSolution.getId();
+        String idArtikelString = String.valueOf(idArtikel);
         String idUser = idDevice;
         String judul = dataSolution.getTitle();
 
@@ -225,7 +226,7 @@ public class SolutionAct extends AppCompatActivity implements SolutionAdapter.On
             }
         });
         Intent i = new Intent(SolutionAct.this, KontenSolusiAct.class);
-        i.putExtra(KontenSolusiAct.ID_KONTEN, myLizt.indexOf(dataSolution));
+        i.putExtra("idArtikel", idArtikelString);
         startActivity(i);
     }
 }

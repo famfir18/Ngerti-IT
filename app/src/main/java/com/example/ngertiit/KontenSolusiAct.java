@@ -32,6 +32,7 @@ import com.example.ngertiit.Data.JSON.DataCarousels;
 import com.example.ngertiit.Data.JSON.DataSolution;
 import com.example.ngertiit.Data.JSON.DataTestSDG;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
@@ -75,7 +76,8 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
     CollapsingToolbarLayout collapsing;
 
     public static final String ID_KONTEN = "id";
-    private Integer kontenId;
+    String kontenId;
+    String kontenIdString;
 
     String langkahPertama;
     String langkahKedua;
@@ -103,7 +105,8 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
         }
 
         if (getIntent().getExtras() != null) {
-            kontenId = getIntent().getExtras().getInt(ID_KONTEN);
+            kontenId = getIntent().getStringExtra("idArtikel");
+            System.out.println("id Artikel asu " + kontenId);
         }
 
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
@@ -116,24 +119,25 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
 //        loadPage();
 
         RestService restService = APIClient.getAPI().create(RestService.class);
-        Call<List<DataSolution>> call = restService.getDataSolutions();
+        Call<List<DataSolution>> call = restService.getDataSolutionsFiltered(kontenId);
 
         call.enqueue(new Callback<List<DataSolution>>() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<List<DataSolution>> call, Response<List<DataSolution>> response) {
 
+                Gson gson = new Gson();
+                System.out.println("Response nyaaa " + gson.toJson(response));
                 String em = "<em>";
                 String closeEm = "</em>";
-                int position = kontenId;
-                String description = response.body().get(position).getDescription();
-                String imageUrl = response.body().get(position).getImage();
+                String description = response.body().get(0).getDescription();
+                String imageUrl = response.body().get(0).getImage();
 
                 Toolbar toolbars = findViewById(R.id.toolbar);
                 setSupportActionBar(toolbars);
                 if(getSupportActionBar() != null){
                     getSupportActionBar().setDisplayShowTitleEnabled(true);
-                    getSupportActionBar().setTitle(response.body().get(position).getTitle());
+                    getSupportActionBar().setTitle(response.body().get(0).getTitle());
                 }
 
                 if (description.contains(closeEm) || description.contains(em)){
@@ -144,9 +148,9 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
                     tvDescription.setText(description);
                 }
 
-                langkahPertama = response.body().get(position).getMethodOne();
-                langkahKedua = response.body().get(position).getMethodTwo();
-                langkahKetiga = response.body().get(position).getMethodThree();
+                langkahPertama = response.body().get(0).getMethodOne();
+                langkahKedua = response.body().get(0).getMethodTwo();
+                langkahKetiga = response.body().get(0).getMethodThree();
 //                langkahKeempat = response.body().get(3).getDeskripsi();
 
                 Picasso.with(getApplicationContext())
@@ -171,6 +175,8 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onFailure(Call<List<DataSolution>> call, Throwable t) {
 
+                Gson gson = new Gson();
+                Log.d("TAG","Response gagalnya = "+ gson.toJson(t.getCause()));
             }
         });
 

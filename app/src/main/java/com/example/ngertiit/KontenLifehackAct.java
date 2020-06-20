@@ -38,7 +38,7 @@ public class KontenLifehackAct extends AppCompatActivity {
     TextView tvTitle;
 
     public  static  final String ID_KONTEN = "id";
-    private Integer kontenId;
+    String kontenId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +56,12 @@ public class KontenLifehackAct extends AppCompatActivity {
         collapsing.setExpandedTitleTextAppearance(R.style.CollapsedAppBar);
 
         if (getIntent().getExtras() != null) {
-            kontenId = getIntent().getExtras().getInt(ID_KONTEN);
+            kontenId = getIntent().getStringExtra("idArtikel");
         }
 
 
         RestService apiService = APIClient.getAPI().create(RestService.class);
-        Call<List<DataLifehacks>> call = apiService.getDataLifehacks();
+        Call<List<DataLifehacks>> call = apiService.getDataLifehacksFiltered(kontenId);
 
         call.enqueue(new Callback<List<DataLifehacks>>() {
             @Override
@@ -70,15 +70,14 @@ public class KontenLifehackAct extends AppCompatActivity {
                 String div = "<div>";
                 String closeDiv = "</div>";
                 String nbsp = "&nbsp;";
-                int position = kontenId;
-                String imageUrl = response.body().get(position).getImage();
-                String description = response.body().get(position).getDescription();
+                String imageUrl = response.body().get(0).getImage();
+                String description = response.body().get(0).getDescription();
 
                 Toolbar toolbars = findViewById(R.id.toolbar);
                     setSupportActionBar(toolbars);
                     if(getSupportActionBar() != null){
                         getSupportActionBar().setDisplayShowTitleEnabled(true);
-                        getSupportActionBar().setTitle(response.body().get(position).getTitle());
+                        getSupportActionBar().setTitle(response.body().get(0).getTitle());
                     }
 
                 if (description.contains(closeDiv) || description.contains(div)  || description.contains(nbsp)) {
@@ -90,7 +89,7 @@ public class KontenLifehackAct extends AppCompatActivity {
                     tvDesc.setText(description);
                 }
 
-                tvTitle.setText(response.body().get(position).getTitle());
+                tvTitle.setText(response.body().get(0).getTitle());
 
 
                 Picasso.with(getApplicationContext())

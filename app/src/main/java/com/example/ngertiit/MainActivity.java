@@ -33,6 +33,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Switch;
 
 import com.example.ngertiit.Data.API.APIClient;
@@ -45,6 +46,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import maes.tech.intentanim.CustomIntent;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -57,6 +59,16 @@ public class MainActivity extends AppCompatActivity
     Switch switchNotif;
     @BindView(R.id.layout_update)
     LinearLayout layoutNotif;
+    @BindView(R.id.layout_fragment_setting)
+    ScrollView layoutFragmentSetting;
+    @BindView(R.id.layout_donasi)
+    LinearLayout layoutDonasi;
+    @BindView(R.id.layout_kritik)
+    LinearLayout layoutKritik;
+    @BindView(R.id.layout_sumber_link)
+    LinearLayout layoutSumberLink;
+    @BindView(R.id.layout_tentang)
+    LinearLayout layoutTentang;
 
 
     Dialog dialogExit;
@@ -78,14 +90,6 @@ public class MainActivity extends AppCompatActivity
         loadFragment(new FragmentHome());
 
         dialogExit = new Dialog(this);
-
-        ActivityCompat.requestPermissions(MainActivity.this,
-                new String[]{Manifest.permission.READ_PHONE_STATE},
-                1);
-
-        ActivityCompat.requestPermissions(MainActivity.this,
-                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                1);
 
 
 
@@ -115,6 +119,43 @@ public class MainActivity extends AppCompatActivity
                 OneSignal.setSubscription(false);
             }});
 
+        initView();
+
+    }
+
+    private void initView() {
+        layoutTentang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, TentangAct.class);
+                startActivity(i);
+            }
+        });
+
+        layoutKritik.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, KritikAct.class);
+                startActivity(i);
+            }
+        });
+
+        layoutDonasi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, DonasiAct.class);
+                startActivity(i);
+            }
+        });
+
+        layoutSumberLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, BrowserAct.class);
+                startActivity(i);
+                CustomIntent.customType(MainActivity.this,"bottom-to-up");
+            }
+        });
     }
 
 
@@ -156,34 +197,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void addNotification() {
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.icon)
-                .setContentTitle("New Life-Hack Updates!")
-                .setContentText("PSM Swara Darmagita diundang sebagai Pengisi Acara dalam acara Wisuda Gelar Profesional Asuransi XXVIII Ahli dan Ajun Ahli Asuransi Indonesia, Asosiasi Ahli Manajemen Asuransi Indonesia (AAMAI) yang bertempat di Birawa Assembly hall, Hotel Bidakara Jakarta");
-
-        Intent notificationIntent = new Intent(this, MainActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0 , notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(contentIntent);
-        mBuilder.setAutoCancel(true);
-        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-        {
-            String channelId = "Your_channel_id";
-            NotificationChannel channel = new NotificationChannel(
-                    channelId,
-                    "Channel human readable title",
-                    NotificationManager.IMPORTANCE_HIGH);
-            manager.createNotificationChannel(channel);
-            mBuilder.setChannelId(channelId);
-        }
-
-        manager.notify(0,mBuilder.build());
-    }
-
 
     private boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
@@ -202,15 +215,15 @@ public class MainActivity extends AppCompatActivity
 
         switch (item.getItemId()){
             case R.id.home_menu:
-                layoutNotif.setVisibility(View.GONE);
+                layoutFragmentSetting.setVisibility(View.GONE);
                 fragment = new FragmentHome();
                 break;
             case R.id.history_menu:
-                layoutNotif.setVisibility(View.GONE);
+                layoutFragmentSetting.setVisibility(View.GONE);
                 fragment = new FragmentHistory();
                 break;
             case R.id.setting_menu:
-                layoutNotif.setVisibility(View.VISIBLE);
+                layoutFragmentSetting.setVisibility(View.VISIBLE);
                 fragment = new FragmentSetting();
                 break;
         }
