@@ -81,7 +81,7 @@ public class SearchAll extends AppCompatActivity implements DictionaryAdapter.On
         });
     }
 
-    //Code Program pada Method dibawah ini akan Berjalan saat Option Menu Dibuat
+   /* //Code Program pada Method dibawah ini akan Berjalan saat Option Menu Dibuat
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //Memanggil/Memasang menu item pada toolbar dari layout menu_bar.xml
@@ -114,7 +114,7 @@ public class SearchAll extends AppCompatActivity implements DictionaryAdapter.On
             }
         });
         return true;
-    }
+    }*/
 
     @Override
     public void onSelected(DataDictionary dataDictionary) {

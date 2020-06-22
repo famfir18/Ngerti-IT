@@ -18,6 +18,15 @@
         android:theme="@style/ToolbarTheme"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
+        <EditText
+            android:layout_width="match_parent"
+            android:background="@drawable/bg_dialog"
+            android:textColorHint="@color/grey"
+            android:textColor="@color/black"
+            android:cursorVisible="true"
+            android:layout_height="match_parent"
+            android:hint="Cari apa aja..."/>
+
         <RelativeLayout
             android:visibility="gone"
             android:layout_width="match_parent"
