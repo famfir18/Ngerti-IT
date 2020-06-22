@@ -137,7 +137,9 @@ public class WelcomeActivity extends AppCompatActivity {
                     // move to next screen
                     viewPager.setCurrentItem(current);
                 } else {
-                    ActivityCompat.requestPermissions(WelcomeActivity.this,
+
+                    launchHomeScreen();
+                   /* ActivityCompat.requestPermissions(WelcomeActivity.this,
                             new String[]{Manifest.permission.READ_PHONE_STATE},
                             1);
 
@@ -147,28 +149,28 @@ public class WelcomeActivity extends AppCompatActivity {
                         ActivityCompat.requestPermissions(WelcomeActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
                     } else {
                         //TODO
-                    }
+                        dialogConfirm.show();
+                        carDialog.setVisibility(View.VISIBLE);
+                    }*/
                 }
             }
         });
     }
 
-    @Override
+    /*@Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case 1:
                 if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    launchHomeScreen();
-                } /*else {
-                        dialogConfirm.show();
-                        carDialog.setVisibility(View.VISIBLE);
-                        break;
-                    }*/
+
+                } *//*else {
+                      break
+                    }*//*
                 break;
-          /*  default:
-                break;*/
+          *//*  default:
+                break;*//*
         }
-    }
+    }*/
 
     private void addBottomDots(int currentPage) {
         dots = new TextView[layouts.length];

@@ -1,4 +1,4 @@
-package com.example.ngertiit.Util;
+package com.example.ngertiit.Adapter;
 
 public class DataFilter {
     private String Nama;

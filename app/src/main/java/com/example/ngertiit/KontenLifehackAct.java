@@ -3,14 +3,20 @@ package com.example.ngertiit;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ngertiit.Data.API.APIClient;
 import com.example.ngertiit.Data.API.RestService;
@@ -39,6 +45,10 @@ public class KontenLifehackAct extends AppCompatActivity {
 
     public  static  final String ID_KONTEN = "id";
     String kontenId;
+    ImageView imageView;
+
+    Dialog dialogImage;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,25 +69,36 @@ public class KontenLifehackAct extends AppCompatActivity {
             kontenId = getIntent().getStringExtra("idArtikel");
         }
 
+        dialogImage = new Dialog(this);
+        dialogImage.setContentView(R.layout.dialog_full_image);
+        dialogImage.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT);
+        dialogImage.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialogImage.setCanceledOnTouchOutside(true);
+        imageView = dialogImage.findViewById(R.id.picNewsFull);
+        progressBar = dialogImage.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
+
 
         RestService apiService = APIClient.getAPI().create(RestService.class);
-        Call<List<DataLifehacks>> call = apiService.getDataLifehacksFiltered(kontenId);
+        Call<DataLifehacks> call = apiService.getDataLifehacksFiltered(kontenId);
 
-        call.enqueue(new Callback<List<DataLifehacks>>() {
+        call.enqueue(new Callback<DataLifehacks>() {
             @Override
-            public void onResponse(Call<List<DataLifehacks>> call, Response<List<DataLifehacks>> response) {
+            public void onResponse(Call<DataLifehacks> call, Response<DataLifehacks> response) {
 
                 String div = "<div>";
                 String closeDiv = "</div>";
                 String nbsp = "&nbsp;";
-                String imageUrl = response.body().get(0).getImage();
-                String description = response.body().get(0).getDescription();
+                String imageUrl = response.body().getImage();
+                String description = response.body().getDescription();
 
                 Toolbar toolbars = findViewById(R.id.toolbar);
                     setSupportActionBar(toolbars);
                     if(getSupportActionBar() != null){
                         getSupportActionBar().setDisplayShowTitleEnabled(true);
-                        getSupportActionBar().setTitle(response.body().get(0).getTitle());
+                        getSupportActionBar().setTitle(response.body().getTitle());
+                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                     }
 
                 if (description.contains(closeDiv) || description.contains(div)  || description.contains(nbsp)) {
@@ -89,20 +110,51 @@ public class KontenLifehackAct extends AppCompatActivity {
                     tvDesc.setText(description);
                 }
 
-                tvTitle.setText(response.body().get(0).getTitle());
+                tvTitle.setText(response.body().getTitle());
 
 
                 Picasso.with(getApplicationContext())
                         .load(imageUrl)
                         .into(ivBanner);
 
+                Picasso.with(getApplicationContext())
+                        .load(imageUrl)
+                        .into(imageView, new com.squareup.picasso.Callback() {
+                            @Override
+                            public void onSuccess() {
+                                progressBar.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onError() {
+                                progressBar.setVisibility(View.GONE);
+                                Toast.makeText(KontenLifehackAct.this, "Gagal memuat gambar", Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+                        });
+
+                ivBanner.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialogImage.show();
+                    }
+                });
+
             }
 
             @Override
-            public void onFailure(Call<List<DataLifehacks>> call, Throwable t) {
+            public void onFailure(Call<DataLifehacks> call, Throwable t) {
 
             }
         });
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

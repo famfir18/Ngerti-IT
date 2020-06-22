@@ -50,12 +50,12 @@ public interface RestService {
     Call<List<DataHistory>> getHistory(@Path("id_pengguna") String idPengguna);
 
     @GET("lifehacks/{id_artikel}/")
-    Call<List<DataLifehacks>> getDataLifehacksFiltered(@Path("id_artikel") String id);
+    Call<DataLifehacks> getDataLifehacksFiltered(@Path("id_artikel") String id);
 
     @GET("solutions/{id_artikel}/")
-    Call<List<DataSolution>> getDataSolutionsFiltered(@Path("id_artikel") String id);
+    Call<DataSolution> getDataSolutionsFiltered(@Path("id_artikel") String id);
 
     @GET("dictionary/{id_artikel}/")
-    Call<List<DataDictionary>> getDataDictionaryFiltered(@Path("id_artikel") String id);
+    Call<DataDictionary> getDataDictionaryFiltered(@Path("id_artikel") String id);
 
 }

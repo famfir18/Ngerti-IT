@@ -14,6 +14,7 @@ import com.example.ngertiit.Data.JSON.DataLifehacks;
 import com.example.ngertiit.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DictionaryAdapter extends RecyclerView.Adapter<DictionaryAdapter.MyviewHolder> {
@@ -66,6 +67,12 @@ public class DictionaryAdapter extends RecyclerView.Adapter<DictionaryAdapter.My
         } else {
             holder.tvDescription.setText(descriptionSubs);
         }
+    }
+
+    public void setFilter(List<DataDictionary> filterList){
+        mylist = filterList;
+        mylist.addAll(filterList);
+        notifyDataSetChanged();
     }
 
     @Override

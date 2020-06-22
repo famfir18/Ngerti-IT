@@ -1,6 +1,8 @@
 package com.example.ngertiit;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -17,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -48,6 +52,7 @@ import com.synnapps.carouselview.ImageListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -112,6 +117,8 @@ public class FragmentHome extends Fragment
     TelephonyManager telephonyManager;
     String idDevice;
 
+    Dialog dialogLoading;
+
 
     public FragmentHome() {}
 
@@ -133,13 +140,17 @@ public class FragmentHome extends Fragment
 
         shimmerCarousel = view.findViewById(R.id.shimmer_carousel);
 
+        dialogLoading = new Dialog(context);
+        dialogLoading.setContentView(R.layout.dialog_loading);
+        dialogLoading.setCancelable(true);
+
         showImageCarousel();
         getDataLifehacks();
         getDataSolutions();
         getDataDictionary();
 
-        telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        idDevice = telephonyManager.getDeviceId();
+//        telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        idDevice = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
 
                 System.out.println("Device ID = " + idDevice);
         initView();
@@ -166,7 +177,7 @@ public class FragmentHome extends Fragment
 
             @Override
             public void onFailure(Call<List<DataDictionary>> call, Throwable t) {
-                System.out.println("gagalz");
+                System.out.println("gagalzKamus");
                 Log.d("TAG","Response = "+t.toString());
             }
         });
@@ -191,7 +202,7 @@ public class FragmentHome extends Fragment
 
             @Override
             public void onFailure(Call<List<DataSolution>> call, Throwable t) {
-                System.out.println("gagalz");
+                System.out.println("gagalzSolusi");
                 Log.d("TAG","Response = "+t.toString());
             }
         });
@@ -217,8 +228,16 @@ public class FragmentHome extends Fragment
 
             @Override
             public void onFailure(Call<List<DataLifehacks>> call, Throwable t) {
-                System.out.println("gagalz");
+                System.out.println("gagalzLifehack");
                 Log.d("TAG","Response = "+t.toString());
+
+                TextView gagal = dialogLoading.findViewById(R.id.tv_status);
+                ImageView imageGagal = dialogLoading.findViewById(R.id.iv_status);
+                gagal.setText("Loading gagal, mohon periksa koneksi anda lalu coba lagi");
+                imageGagal.setImageDrawable(getResources().getDrawable(R.drawable.ic_cross));
+                imageGagal.setVisibility(View.VISIBLE);
+                Objects.requireNonNull(dialogLoading.getWindow()).setBackgroundDrawableResource(R.color.transparent);
+                dialogLoading.show();
             }
         });
     }
@@ -438,6 +457,7 @@ public class FragmentHome extends Fragment
 
         dataHistory.setIdArtikel(idArtikel);
         dataHistory.setIdUser(idUser);
+        dataHistory.setStatus("Success");
         dataHistory.setJudulArtikel(judul);
         dataHistory.setLinkArtikel("Life-hack");
 
@@ -481,6 +501,7 @@ public class FragmentHome extends Fragment
 
         dataHistory.setIdArtikel(idArtikel);
         dataHistory.setIdUser(idUser);
+        dataHistory.setStatus("Success");
         dataHistory.setJudulArtikel(judul);
         dataHistory.setLinkArtikel("Solusi");
 

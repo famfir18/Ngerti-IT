@@ -32,6 +32,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsoluteLayout;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Switch;
@@ -69,6 +70,8 @@ public class MainActivity extends AppCompatActivity
     LinearLayout layoutSumberLink;
     @BindView(R.id.layout_tentang)
     LinearLayout layoutTentang;
+    @BindView(R.id.search)
+    ImageButton search;
 
 
     Dialog dialogExit;
@@ -124,6 +127,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initView() {
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, SearchAll.class);
+                startActivity(i);
+            }
+        });
+
         layoutTentang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,15 +226,18 @@ public class MainActivity extends AppCompatActivity
 
         switch (item.getItemId()){
             case R.id.home_menu:
+                search.setVisibility(View.VISIBLE);
                 layoutFragmentSetting.setVisibility(View.GONE);
                 fragment = new FragmentHome();
                 break;
             case R.id.history_menu:
                 layoutFragmentSetting.setVisibility(View.GONE);
+                search.setVisibility(View.GONE);
                 fragment = new FragmentHistory();
                 break;
             case R.id.setting_menu:
                 layoutFragmentSetting.setVisibility(View.VISIBLE);
+                search.setVisibility(View.GONE);
                 fragment = new FragmentSetting();
                 break;
         }

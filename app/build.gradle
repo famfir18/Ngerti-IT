@@ -30,7 +30,7 @@ android {
         versionName "0.0"
 
         // Make generated archive contain version name and code.
-        archivesBaseName = "Ngerti IT-${versionName}.${versionCode}"
+        archivesBaseName = "Ngerti IT (Alpha Version)-${versionName}.${versionCode}"
         testInstrumentationRunner "androidFx.test.runner.AndroidJUnitRunner"
 
         manifestPlaceholders = [
@@ -127,4 +127,7 @@ dependencies {
 
     //Shimmer Layout
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    //Zoom image
+    implementation 'com.otaliastudios:zoomlayout:1.7.0'
 }

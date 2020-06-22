@@ -1,5 +1,6 @@
 package com.example.ngertiit.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ngertiit.Data.JSON.DataHistory;
@@ -14,7 +16,13 @@ import com.example.ngertiit.Data.JSON.DataLifehacks;
 import com.example.ngertiit.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.SimpleTimeZone;
+import java.util.TimeZone;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyviewHolder> {
     Context context;
@@ -40,20 +48,39 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyviewHo
         return new MyviewHolder(view);
     }
 
+    @SuppressLint("SimpleDateFormat")
     @Override
     public void onBindViewHolder(HistoryAdapter.MyviewHolder holder,
                                  int position) {
 
-        DataHistory dataHistory = mylist.get(position);
+        try {
+            DataHistory dataHistory = mylist.get(position);
 
-        holder.tvTitle.setText(dataHistory.getJudulArtikel());
-        holder.tvCategory.setText(dataHistory.getLinkArtikel());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemSelected.onSelected(dataHistory);
+            @SuppressLint("SimpleDateFormat")
+            SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm");
+            formatter.setTimeZone(TimeZone.getTimeZone("Asia/Jakarta"));
+            String date = dataHistory.getTanggal();
+            Date date1= null;
+            try {
+                date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
-        });
+            assert date1 != null;
+            String dates = formatter.format(date1);
+
+            holder.tvTitle.setText(dataHistory.getJudulArtikel());
+            holder.tvCategory.setText(dataHistory.getLinkArtikel());
+            holder.tanggal.setText(dates);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemSelected.onSelected(dataHistory);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -83,12 +110,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyviewHo
 
         TextView tvCategory;
         TextView tvTitle;
+        TextView tanggal;
 
         public MyviewHolder(View itemView) {
             super(itemView);
 
             tvCategory = itemView.findViewById(R.id.tv_category);
             tvTitle = itemView.findViewById(R.id.tv_kamus);
+            tanggal = itemView.findViewById(R.id.tv_tanggal);
         }
     }
 

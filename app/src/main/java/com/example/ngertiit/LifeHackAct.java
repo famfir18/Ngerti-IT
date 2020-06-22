@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.MenuItem;
@@ -66,7 +67,7 @@ public class LifeHackAct extends AppCompatActivity implements LifeHackAdapter.On
         ButterKnife.bind(this);
 
         telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        idDevice = telephonyManager.getDeviceId();
+        idDevice = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
 
         initView();
         getDataLifehacks();
@@ -207,6 +208,7 @@ public class LifeHackAct extends AppCompatActivity implements LifeHackAdapter.On
         dataHistory.setIdArtikel(idArtikel);
         dataHistory.setIdUser(idUser);
         dataHistory.setJudulArtikel(judul);
+        dataHistory.setStatus("Success");
         dataHistory.setLinkArtikel("Life-hack");
 
         Log.d("TAG","Data History = "+ gson.toJson(dataHistory));

@@ -6,8 +6,10 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -15,6 +17,7 @@ import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -23,8 +26,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ngertiit.Data.API.APIClient;
 import com.example.ngertiit.Data.API.RestService;
@@ -88,6 +93,11 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
     String urlMethodThree;
     String urlMethodFour;
 
+    ImageView imageView;
+
+    Dialog dialogImage;
+    ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,8 +120,18 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
         }
 
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        String deviceID = telephonyManager.getDeviceId();
+        String deviceID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
         System.out.println("Device ID = " + deviceID);
+
+        dialogImage = new Dialog(this);
+        dialogImage.setContentView(R.layout.dialog_full_image);
+        dialogImage.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT);
+        dialogImage.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialogImage.setCanceledOnTouchOutside(true);
+        imageView = dialogImage.findViewById(R.id.picNewsFull);
+        progressBar = dialogImage.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
 
 
 //        link = "https://www.google.com/";
@@ -119,25 +139,26 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
 //        loadPage();
 
         RestService restService = APIClient.getAPI().create(RestService.class);
-        Call<List<DataSolution>> call = restService.getDataSolutionsFiltered(kontenId);
+        Call<DataSolution> call = restService.getDataSolutionsFiltered(kontenId);
 
-        call.enqueue(new Callback<List<DataSolution>>() {
+        call.enqueue(new Callback<DataSolution>() {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(Call<List<DataSolution>> call, Response<List<DataSolution>> response) {
+            public void onResponse(Call<DataSolution> call, Response<DataSolution> response) {
 
                 Gson gson = new Gson();
                 System.out.println("Response nyaaa " + gson.toJson(response));
                 String em = "<em>";
                 String closeEm = "</em>";
-                String description = response.body().get(0).getDescription();
-                String imageUrl = response.body().get(0).getImage();
+                String description = response.body().getDescription();
+                String imageUrl = response.body().getImage();
 
                 Toolbar toolbars = findViewById(R.id.toolbar);
                 setSupportActionBar(toolbars);
                 if(getSupportActionBar() != null){
                     getSupportActionBar().setDisplayShowTitleEnabled(true);
-                    getSupportActionBar().setTitle(response.body().get(0).getTitle());
+                    getSupportActionBar().setTitle(response.body().getTitle());
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 }
 
                 if (description.contains(closeEm) || description.contains(em)){
@@ -148,9 +169,9 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
                     tvDescription.setText(description);
                 }
 
-                langkahPertama = response.body().get(0).getMethodOne();
-                langkahKedua = response.body().get(0).getMethodTwo();
-                langkahKetiga = response.body().get(0).getMethodThree();
+                langkahPertama = response.body().getMethodOne();
+                langkahKedua = response.body().getMethodTwo();
+                langkahKetiga = response.body().getMethodThree();
 //                langkahKeempat = response.body().get(3).getDeskripsi();
 
                 Picasso.with(getApplicationContext())
@@ -170,10 +191,33 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
                 contentKetiga.setText(Html.fromHtml(getString(R.string.cobaan)));
                 contentKeempat.setText(langkahKeempat);*/
 
+                Picasso.with(getApplicationContext())
+                        .load(imageUrl)
+                        .into(imageView, new com.squareup.picasso.Callback() {
+                            @Override
+                            public void onSuccess() {
+                                progressBar.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onError() {
+                                progressBar.setVisibility(View.GONE);
+                                Toast.makeText(KontenSolusiAct.this, "Gagal memuat gambar", Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+                        });
+
+                ivBanner.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialogImage.show();
+                    }
+                });
+
             }
 
             @Override
-            public void onFailure(Call<List<DataSolution>> call, Throwable t) {
+            public void onFailure(Call<DataSolution> call, Throwable t) {
 
                 Gson gson = new Gson();
                 Log.d("TAG","Response gagalnya = "+ gson.toJson(t.getCause()));
@@ -247,5 +291,13 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
                 expandableLayout0.collapse();
                 break;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

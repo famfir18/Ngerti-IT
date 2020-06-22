@@ -2,6 +2,8 @@ package com.example.ngertiit.Data.JSON;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class DataHistory {
     @SerializedName("id_user")
     String idUser;
@@ -11,6 +13,26 @@ public class DataHistory {
     int idArtikel;
     @SerializedName("judul")
     String judulArtikel;
+    @SerializedName("created_at")
+    String tanggal;
+    @SerializedName("status")
+    String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getTanggal() {
+        return tanggal;
+    }
+
+    public void setTanggal(String tanggal) {
+        this.tanggal = tanggal;
+    }
 
     public String getIdUser() {
         return idUser;

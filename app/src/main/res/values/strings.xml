@@ -23,4 +23,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="coba"><![CDATA[1. <strong>Buka website CCleaner.com</strong> , klik tombol <br></br> <br></br>\'Free Download\' terus klik \'Download\' di bagian CCleaner Free]]></string>
     <string name="cobaan"><![CDATA[1. <strong>Buka website CCleaner.com</strong> , klik tombol <br></br> <br></br>\'Free Download\' terus klik \'Download\' di bagian CCleaner Free]]></string>
+    <string name="hintSearchMess">Cari apa aja...</string>
 </resources>

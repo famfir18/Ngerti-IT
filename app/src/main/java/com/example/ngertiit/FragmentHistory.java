@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.ngertiit.Adapter.DictionaryAdapterMenu;
@@ -50,6 +52,8 @@ public class FragmentHistory extends Fragment implements HistoryAdapter.OnItemSe
 
     @BindView(R.id.rv_history)
     RecyclerView rvHistory;
+    @BindView(R.id.layout_gagal)
+    RelativeLayout layoutGagal;
     ArrayList<String> source;
     Context context;
     RecyclerView.LayoutManager rvLayoutManager;
@@ -61,8 +65,8 @@ public class FragmentHistory extends Fragment implements HistoryAdapter.OnItemSe
     List<DataHistory> historyList;
 
 
-    Handler delay = new Handler();
-    final static int DELAY_DIALOG = 1000;
+//    Handler delay = new Handler();
+//    final static int DELAY_DIALOG = 500;
 
     Dialog dialogLoading;
 
@@ -91,11 +95,12 @@ public class FragmentHistory extends Fragment implements HistoryAdapter.OnItemSe
         dialogLoading.show();
 
         telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        idDevice = telephonyManager.getDeviceId();
+        idDevice = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         System.out.println("ID nya = " + idDevice);
 
 //        initView();
-        delay.postDelayed(this::getDataHistory, DELAY_DIALOG);
+        getDataHistory();
+//        delay.postDelayed(this::getDataHistory, DELAY_DIALOG);
 //        getDataHistory();
         return view;
 
@@ -122,18 +127,14 @@ public class FragmentHistory extends Fragment implements HistoryAdapter.OnItemSe
             @Override
             public void onResponse(Call<List<DataHistory>> call, Response<List<DataHistory>> response) {
 
-                if (response.isSuccessful()){
+                if (response.body().get(0).getStatus() == null){
                     dialogLoading.dismiss();
                     historyList = response.body();
                     Log.d("TAG","Response Berhasil = "+ gson.toJson(historyList));
                     adapter.setMovieList(historyList);
-                } else if (historyList == null){
-                    dialogLoading.setCancelable(true);
-                    TextView gagal = dialogLoading.findViewById(R.id.tv_status);
-                    ImageView imageGagal = dialogLoading.findViewById(R.id.iv_status);
-                    gagal.setText("Lo belom membuat sejarah");
-                    imageGagal.setImageDrawable(getResources().getDrawable(R.drawable.ic_alert));
-                    imageGagal.setVisibility(View.VISIBLE);
+                } else  if (response.body().get(0).getStatus().equals("1001")){
+                    dialogLoading.dismiss();
+                    layoutGagal.setVisibility(View.VISIBLE);
                 }
             }
 
