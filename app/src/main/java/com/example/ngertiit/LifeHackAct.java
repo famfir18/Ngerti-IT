@@ -1,17 +1,22 @@
 package com.example.ngertiit;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.text.Html;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.ngertiit.Adapter.LifeHackAdapter;
@@ -21,6 +26,7 @@ import com.example.ngertiit.Data.API.RestService;
 import com.example.ngertiit.Data.JSON.DataHistory;
 import com.example.ngertiit.Data.JSON.DataLifehacks;
 import com.example.ngertiit.Data.JSON.DataLifehacks;
+import com.example.ngertiit.Data.JSON.DataSolution;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -47,6 +53,7 @@ public class LifeHackAct extends AppCompatActivity implements LifeHackAdapter.On
     List<DataLifehacks> myLizt;
     List<DataLifehacks> listWindows;
     List<DataLifehacks> listMacOS;
+    List<DataLifehacks> listFiltered;
 
     String windows;
     String macOS;
@@ -139,6 +146,7 @@ public class LifeHackAct extends AppCompatActivity implements LifeHackAdapter.On
         myLizt = new ArrayList();
         listWindows = new ArrayList();
         listMacOS = new ArrayList();
+        listFiltered = new ArrayList();
 
         setSupportActionBar(toolbar);
 
@@ -183,6 +191,69 @@ public class LifeHackAct extends AppCompatActivity implements LifeHackAdapter.On
         source.add("Wifi mati. Ga bisa konek ke internet. (..terusan judul)");
         source.add("Tombol FN gak bisa berfungsi. (..terusan judul)");
         source.add("Mau beli laptop tapi bingung seperti apa? (..terusan judul)");
+    }
+
+    //Code Program pada Method dibawah ini akan Berjalan saat Option Menu Dibuat
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //Memanggil/Memasang menu item pada toolbar dari layout menu_bar.xml
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search, menu);
+        MenuItem searchItem = menu.findItem(R.id.search);
+        final SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint(Html.fromHtml("<font color = #666666>" + getResources().getString(R.string.hintSearchMess) + "</font>"));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String nextText) {
+                //Data akan berubah saat user menginputkan text/kata kunci pada SearchView
+
+                nextText = nextText.toLowerCase();
+                if (!nextText.equals("")) {
+                    listFiltered.clear();
+                } else {
+                    RestService apiService = APIClient.getClient().create(RestService.class);
+                    Call<List<DataLifehacks>> call = apiService.getDataLifehacks();
+
+                    call.enqueue(new Callback<List<DataLifehacks>>() {
+                        @Override
+                        public void onResponse(Call<List<DataLifehacks>> call, Response<List<DataLifehacks>> response) {
+                            myLizt = response.body();
+                            Log.d("TAG","Response = "+ myLizt);
+                            lifeHackAdapter.setMovieList(myLizt);
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<DataLifehacks>> call, Throwable t) {
+                            System.out.println("gagalz");
+                            Log.d("TAG","Response = "+t.toString());
+                        }
+                    });
+                }
+
+                for(int i = 0; i < myLizt.size(); i++){
+                    String title = myLizt.get(i).getTitle().toLowerCase();
+                    if(!nextText.equals("") && title.contains(nextText)){
+                        listFiltered.add(myLizt.get(i));
+                    }
+                }
+
+                if (listFiltered != null || !nextText.equals("")) {
+                    lifeHackAdapter.setMovieList(listFiltered);
+                } else {
+                    lifeHackAdapter.setMovieList(listFiltered);
+                }
+
+                return true;
+            }
+        });
+        return true;
     }
 
     @Override

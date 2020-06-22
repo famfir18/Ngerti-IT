@@ -1,13 +1,18 @@
 package com.example.ngertiit;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
@@ -41,6 +46,7 @@ public class KamusAct extends AppCompatActivity implements DictionaryAdapter.OnI
 
     DictionaryAdapter adapter;
     List<DataDictionary> dictionaries;
+    List<DataDictionary> dictionariesFiltered;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +58,10 @@ public class KamusAct extends AppCompatActivity implements DictionaryAdapter.OnI
         Toolbar toolbars = findViewById(R.id.toolbar);
         setSupportActionBar(toolbars);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window w = getWindow();
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        }
+        }*/
 
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -94,6 +100,71 @@ public class KamusAct extends AppCompatActivity implements DictionaryAdapter.OnI
         });
     }
 
+    //Code Program pada Method dibawah ini akan Berjalan saat Option Menu Dibuat
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //Memanggil/Memasang menu item pada toolbar dari layout menu_bar.xml
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search, menu);
+        MenuItem searchItem = menu.findItem(R.id.search);
+        final SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint(Html.fromHtml("<font color = #666666>" + getResources().getString(R.string.hintSearchMess) + "</font>"));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String nextText) {
+                //Data akan berubah saat user menginputkan text/kata kunci pada SearchView
+
+                nextText = nextText.toLowerCase();
+                if (!nextText.equals("")) {
+                    dictionariesFiltered.clear();
+                } else {
+                    RestService apiService = APIClient.getClient().create(RestService.class);
+                    Call<List<DataDictionary>> call = apiService.getDataDictionary();
+
+                    call.enqueue(new Callback<List<DataDictionary>>() {
+                        @Override
+                        public void onResponse(Call<List<DataDictionary>> call, Response<List<DataDictionary>> response) {
+                            dictionaries = response.body();
+                            Log.d("TAG","Response = "+ dictionaries);
+                            adapter.setMovieList(dictionaries);
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<DataDictionary>> call, Throwable t) {
+                            System.out.println("gagalz");
+                            Log.d("TAG","Response = "+t.toString());
+                        }
+                    });
+                }
+
+                for(int i = 0; i < dictionaries.size(); i++){
+                    String title = dictionaries.get(i).getTitle().toLowerCase();
+                    if(!nextText.equals("") && title.contains(nextText)){
+                        dictionariesFiltered.add(dictionaries.get(i));
+                    } else if (nextText.equals("")){
+                        adapter.setMovieList(dictionaries);
+                    }
+                }
+
+                if (dictionariesFiltered != null || !nextText.equals("")) {
+                    adapter.setMovieList(dictionariesFiltered);
+                } else {
+                    adapter.setMovieList(dictionaries);
+                }
+
+                return true;
+            }
+        });
+        return true;
+    }
+
     private void toolbarTitleCollaps() {
         final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing);
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
@@ -119,16 +190,9 @@ public class KamusAct extends AppCompatActivity implements DictionaryAdapter.OnI
     }
 
     private void initView() {
-        SolutionRecyclerViewLayoutManager = new LinearLayoutManager(this);
-//        rv_solution.setLayoutManager(SolutionRecyclerViewLayoutManager);
 
-//        AddItemsToRecyclerViewArrayList();
-//        adapter = new DictionaryAdapter(source);
-
-        SolutionHorizontalLayout = new LinearLayoutManager(this);
-//        rv_solution.setLayoutManager(SolutionHorizontalLayout);
-
-//        rv_solution.setAdapter(adapter);
+        dictionaries = new ArrayList();
+        dictionariesFiltered = new ArrayList();
     }
 
     private void AddItemsToRecyclerViewArrayList() {

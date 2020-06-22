@@ -1,17 +1,22 @@
 package com.example.ngertiit;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.text.Html;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 
@@ -19,6 +24,7 @@ import com.example.ngertiit.Adapter.SolutionAdapter;
 import com.example.ngertiit.Adapter.SolutionAdapterMenu;
 import com.example.ngertiit.Data.API.APIClient;
 import com.example.ngertiit.Data.API.RestService;
+import com.example.ngertiit.Data.JSON.DataDictionary;
 import com.example.ngertiit.Data.JSON.DataHistory;
 import com.example.ngertiit.Data.JSON.DataSolution;
 import com.google.gson.Gson;
@@ -48,6 +54,7 @@ public class SolutionAct extends AppCompatActivity implements SolutionAdapter.On
     List<DataSolution> myLizt;
     List<DataSolution> listWindows;
     List<DataSolution> listMacOS;
+    List<DataSolution> listFiltered;
 
     String windows;
     String macOS;
@@ -138,6 +145,7 @@ public class SolutionAct extends AppCompatActivity implements SolutionAdapter.On
         myLizt = new ArrayList();
         listWindows = new ArrayList();
         listMacOS = new ArrayList();
+        listFiltered = new ArrayList();
 
         setSupportActionBar(toolbar);
 
@@ -190,6 +198,69 @@ public class SolutionAct extends AppCompatActivity implements SolutionAdapter.On
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    //Code Program pada Method dibawah ini akan Berjalan saat Option Menu Dibuat
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //Memanggil/Memasang menu item pada toolbar dari layout menu_bar.xml
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search, menu);
+        MenuItem searchItem = menu.findItem(R.id.search);
+        final SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint(Html.fromHtml("<font color = #666666>" + getResources().getString(R.string.hintSearchMess) + "</font>"));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String nextText) {
+                //Data akan berubah saat user menginputkan text/kata kunci pada SearchView
+
+                nextText = nextText.toLowerCase();
+                if (!nextText.equals("")) {
+                    listFiltered.clear();
+                } else {
+                    RestService apiService = APIClient.getClient().create(RestService.class);
+                    Call<List<DataSolution>> call = apiService.getDataSolutions();
+
+                    call.enqueue(new Callback<List<DataSolution>>() {
+                        @Override
+                        public void onResponse(Call<List<DataSolution>> call, Response<List<DataSolution>> response) {
+                            myLizt = response.body();
+                            Log.d("TAG","Response = "+ myLizt);
+                            solutionAdapter.setMovieList(myLizt);
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<DataSolution>> call, Throwable t) {
+                            System.out.println("gagalz");
+                            Log.d("TAG","Response = "+t.toString());
+                        }
+                    });
+                }
+
+                for(int i = 0; i < myLizt.size(); i++){
+                    String title = myLizt.get(i).getTitle().toLowerCase();
+                    if(!nextText.equals("") && title.contains(nextText)){
+                        listFiltered.add(myLizt.get(i));
+                    }
+                }
+
+                if (listFiltered != null || !nextText.equals("")) {
+                    solutionAdapter.setMovieList(listFiltered);
+                } else {
+                    solutionAdapter.setMovieList(listFiltered);
+                }
+
+                return true;
+            }
+        });
+        return true;
     }
 
     @Override

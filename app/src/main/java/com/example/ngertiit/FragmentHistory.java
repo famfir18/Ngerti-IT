@@ -160,7 +160,7 @@ public class FragmentHistory extends Fragment implements HistoryAdapter.OnItemSe
 //        rvLayoutManager = new LinearLayoutManager(context);
 //        rvHistory.setLayoutManager(rvLayoutManager);
 
-//        rvHistory.setAdapter(adapter);
+//        rvHistory.setAdapter(dictionaryAdapter);
 
 //        layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
 //        rvHistory.setLayoutManager(layoutManager);

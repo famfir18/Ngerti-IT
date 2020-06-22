@@ -50,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_search"
                 android:layout_alignParentEnd="true"
+                android:visibility="gone"
                 android:layout_marginRight="10dp"
                 android:backgroundTint="@color/transparent"/>
 

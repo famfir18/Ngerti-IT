@@ -18,14 +18,6 @@
         android:theme="@style/ToolbarTheme"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:background="@drawable/bg_dialog"
-            android:textColorHint="@color/grey"
-            android:textColor="@color/black"
-            android:cursorVisible="true"
-            android:layout_height="match_parent"
-            android:hint="Cari apa aja..."/>
 
         <RelativeLayout
             android:visibility="gone"
@@ -68,13 +60,33 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_search"
+        android:id="@+id/rv_search_kamus"
         android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical">
+        android:scrollbars="vertical"/>
 
-    </androidx.recyclerview.widget.RecyclerView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_search_lifehack"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_search_solution"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"/>
+
+    </FrameLayout>
+
 
 </LinearLayout>

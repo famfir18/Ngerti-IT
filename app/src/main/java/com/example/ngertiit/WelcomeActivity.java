@@ -247,7 +247,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     /**
-     * View pager adapter
+     * View pager dictionaryAdapter
      */
     public class MyViewPagerAdapter extends PagerAdapter {
         private LayoutInflater layoutInflater;

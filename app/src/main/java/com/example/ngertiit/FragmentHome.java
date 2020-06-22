@@ -102,7 +102,7 @@ public class FragmentHome extends Fragment
     RecyclerView.LayoutManager LifeHackRecyclerViewLayoutManager;
     RecyclerView.LayoutManager KamusRecyclerViewLayoutManager;
 
-    // adapter class object
+    // dictionaryAdapter class object
     SolutionAdapterMenu solutionAdapterMenu;
     LifeHackAdapterMenu lifeHackAdapterMenu;
     DictionaryAdapterMenu dictionaryAdapterMenu;
@@ -390,7 +390,7 @@ public class FragmentHome extends Fragment
         AddItemsToRecyclerViewArrayList();
         Kamus();
 
-        // calling constructor of adapter
+        // calling constructor of dictionaryAdapter
         // with source list as a parameter
 //        solutionAdapterMenu = new SolutionAdapterMenu(source);
 //        lifeHackAdapterMenu = new LifeHackAdapterMenu(source);
@@ -406,10 +406,10 @@ public class FragmentHome extends Fragment
 //        rv_lifehack.setLayoutManager(LifeHackHorizontalLayout);
         rv_dictionary.setLayoutManager(KamusHorizontalLayout);
 
-        // Set adapter on recycler view
+        // Set dictionaryAdapter on recycler view
         rv_solution.setAdapter(solutionAdapterMenu);
 //        rv_lifehack.setAdapter(lifeHackAdapterMenu);
-//        rv_dictionary.setAdapter(dictionaryAdapter);
+//        rvSearchKamus.setAdapter(dictionaryAdapter);
     }
 
     public void AddItemsToRecyclerViewArrayList()
