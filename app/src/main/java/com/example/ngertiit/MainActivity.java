@@ -1,6 +1,7 @@
 package com.example.ngertiit;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
@@ -32,6 +33,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsoluteLayout;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -41,6 +43,8 @@ import com.example.ngertiit.Data.API.APIClient;
 import com.example.ngertiit.Data.API.RestService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.onesignal.OneSignal;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -117,10 +121,21 @@ public class MainActivity extends AppCompatActivity
                         .autoPromptLocation(true)
                         .init();
                 OneSignal.setSubscription(true);
+
+                SharedPreferences.Editor editor = getSharedPreferences("check", MODE_PRIVATE).edit();
+                editor.putBoolean("check", true);
+                editor.commit();
             } else if (!switchNotif.isChecked()){
                 System.out.println("Ga kekirim notifnya");
                 OneSignal.setSubscription(false);
+
+                SharedPreferences.Editor editor = getSharedPreferences("check", MODE_PRIVATE).edit();
+                editor.putBoolean("check", false);
+                editor.commit();
             }});
+
+        SharedPreferences sharedPrefs = getSharedPreferences("check", MODE_PRIVATE);
+        switchNotif.setChecked(sharedPrefs.getBoolean("check", true));
 
         initView();
 
@@ -221,7 +236,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    public boolean onNavigationItemSelected(MenuItem item) {
         Fragment fragment = null;
 
         switch (item.getItemId()){
