@@ -3,12 +3,12 @@ package com.example.ngertiit;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
@@ -24,6 +24,7 @@ import com.example.ngertiit.Data.API.RestService;
 import com.example.ngertiit.Data.JSON.DataDictionary;
 import com.example.ngertiit.Data.JSON.DataLifehacks;
 import com.example.ngertiit.Data.JSON.DataSolution;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,27 +35,28 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchAll extends AppCompatActivity implements DictionaryAdapter.OnItemSelected,
-        SolutionAdapter.OnItemSelected,
-        LifeHackAdapter.OnItemSelected, SearchAdapter.OnItemSelected {
+public class SearchAll extends AppCompatActivity implements SearchAdapter.OnItemSelected {
 
-    @BindView(R.id.rv_search_kamus)
-    RecyclerView rvSearchKamus;
-    @BindView(R.id.rv_search_solution)
-    RecyclerView rvSearchSolution;
-    @BindView(R.id.rv_search_lifehack)
-    RecyclerView rvSearchLifehack;
+    @BindView(R.id.rv_search_all)
+    RecyclerView rvSearchAll;
 
     DictionaryAdapter dictionaryAdapter;
     LifeHackAdapter lifeHackAdapter;
     SolutionAdapter solutionAdapter;
+
+    SearchAdapter searchAdapter;
+
+
     List<DataSolution> solutions;
     List<DataLifehacks> lifehacks;
     List<DataDictionary> dictionaries;
-    List<DataDictionary> dictionariesFiltered;
-    List<DataSolution> solutionsFiltered;
-    List<DataLifehacks> lifehacksFiltered;
 
+    ArrayList<Object> listSemua;
+
+    Gson gson = new Gson();
+
+    Handler delayDialog = new Handler();
+    final static int DELAYS = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,25 +68,22 @@ public class SearchAll extends AppCompatActivity implements DictionaryAdapter.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getDataDictionary();
-        getDataLifehack();
-        getDataSolution();
-
 
         lifehacks = new ArrayList();
         solutions = new ArrayList();
         dictionaries = new ArrayList();
-        dictionariesFiltered = new ArrayList();
-        lifehacksFiltered = new ArrayList();
-        solutionsFiltered = new ArrayList();
+        listSemua = new ArrayList<>();
+
+        getDataDictionary();
+        getDataLifehack();
+        getDataSolution();
+
+        delayDialog.postDelayed(() ->{
+            getDataAll();
+        }, DELAYS);
     }
 
-
     private void getDataSolution() {
-        LinearLayoutManager layoutManager = new GridLayoutManager(this, 2);
-        rvSearchSolution.setLayoutManager(layoutManager);
-        solutionAdapter = new SolutionAdapter(this, solutions, this);
-        rvSearchSolution.setAdapter(solutionAdapter);
 
         RestService apiService = APIClient.getClient().create(RestService.class);
         Call<List<DataSolution>> call = apiService.getDataSolutions();
@@ -94,6 +93,14 @@ public class SearchAll extends AppCompatActivity implements DictionaryAdapter.On
             public void onResponse(Call<List<DataSolution>> call, Response<List<DataSolution>> response) {
                 solutions = response.body();
                 Log.d("TAG","Response = "+ dictionaries);
+
+                for (int i = 0; i < solutions.size(); i++){
+                    String titleSolution = solutions.get(i).getTitle();
+                    listSemua.add(titleSolution);
+                }
+
+                System.out.println("Semua dari Solution " + gson.toJson(listSemua));
+
             }
 
             @Override
@@ -105,10 +112,6 @@ public class SearchAll extends AppCompatActivity implements DictionaryAdapter.On
     }
 
     private void getDataLifehack() {
-        LinearLayoutManager layoutManager = new GridLayoutManager(this,2);
-        rvSearchLifehack.setLayoutManager(layoutManager);
-        lifeHackAdapter = new LifeHackAdapter(this, lifehacks, this);
-        rvSearchLifehack.setAdapter(lifeHackAdapter);
 
         RestService apiService = APIClient.getClient().create(RestService.class);
         Call<List<DataLifehacks>> call = apiService.getDataLifehacks();
@@ -118,7 +121,13 @@ public class SearchAll extends AppCompatActivity implements DictionaryAdapter.On
             public void onResponse(Call<List<DataLifehacks>> call, Response<List<DataLifehacks>> response) {
                 lifehacks = response.body();
                 Log.d("TAG","Response = "+ dictionaries);
-//                dictionaryAdapter.setMovieList(dictionaries);
+
+                for (int i = 0; i < lifehacks.size(); i++){
+                    String titleLifehacks = lifehacks.get(i).getTitle();
+                    listSemua.add(titleLifehacks);
+                }
+
+                System.out.println("Semua dari Lifehack " + gson.toJson(listSemua));
             }
 
             @Override
@@ -130,10 +139,6 @@ public class SearchAll extends AppCompatActivity implements DictionaryAdapter.On
     }
 
     private void getDataDictionary() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        rvSearchKamus.setLayoutManager(layoutManager);
-        dictionaryAdapter = new DictionaryAdapter(this, dictionaries, this);
-        rvSearchKamus.setAdapter(dictionaryAdapter);
 
         RestService apiService = APIClient.getClient().create(RestService.class);
         Call<List<DataDictionary>> call = apiService.getDataDictionary();
@@ -142,16 +147,35 @@ public class SearchAll extends AppCompatActivity implements DictionaryAdapter.On
             @Override
             public void onResponse(Call<List<DataDictionary>> call, Response<List<DataDictionary>> response) {
                 dictionaries = response.body();
-                Log.d("TAG","Response = "+ dictionaries);
+                Log.d("TAG", "Response = " + dictionaries);
+
+                for (int i = 0; i < dictionaries.size(); i++){
+                    String titleDictionary = dictionaries.get(i).getTitle();
+                    listSemua.add(titleDictionary);
+                }
+
+                System.out.println("Semua dari Dictionary " + gson.toJson(listSemua));
 //                dictionaryAdapter.setMovieList(dictionaries);
             }
 
             @Override
             public void onFailure(Call<List<DataDictionary>> call, Throwable t) {
                 System.out.println("gagalz");
-                Log.d("TAG","Response = "+t.toString());
+                Log.d("TAG", "Response = " + t.toString());
             }
         });
+    }
+
+    private void getDataAll() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        rvSearchAll.setLayoutManager(layoutManager);
+        searchAdapter = new SearchAdapter(this, dictionaries, listSemua,this);
+        rvSearchAll.setAdapter(searchAdapter);
+
+        System.out.println("isi list semua = " + gson.toJson(listSemua));
+
+
+        searchAdapter.setMovieList(listSemua);
     }
 
     //Code Program pada Method dibawah ini akan Berjalan saat Option Menu Dibuat
@@ -175,11 +199,9 @@ public class SearchAll extends AppCompatActivity implements DictionaryAdapter.On
             public boolean onQueryTextChange(String nextText) {
                 //Data akan berubah saat user menginputkan text/kata kunci pada SearchView
                 nextText = nextText.toLowerCase();
-                dictionariesFiltered.clear();
-                lifehacksFiltered.clear();
-                solutionsFiltered.clear();
 
-                for(int i = 0; i < dictionaries.size(); i++){
+
+                /*for(int i = 0; i < dictionaries.size(); i++){
                     String title = dictionaries.get(i).getTitle().toLowerCase();
                     if(!nextText.equals("") && title.contains(nextText)){
                         dictionariesFiltered.add(dictionaries.get(i));
@@ -198,7 +220,7 @@ public class SearchAll extends AppCompatActivity implements DictionaryAdapter.On
                     if(!nextText.equals("") && title.contains(nextText)){
                         solutionsFiltered.add(solutions.get(i));
                     }
-                }
+                }*/
 
                 /*for(int i = 0; i < lifehacks.size(); i++){
                     String title = lifehacks.get(i).getTitle().toLowerCase();
@@ -216,11 +238,13 @@ public class SearchAll extends AppCompatActivity implements DictionaryAdapter.On
 
                /* if (dictionariesFiltered != null) {
                     dictionaryAdapter.setMovieList(dictionariesFiltered);
-                } else  */if (solutionsFiltered != null) {
+                } else  */
+
+               /*if (solutionsFiltered != null) {
                     solutionAdapter.setMovieList(solutionsFiltered);
                 } else if (lifehacksFiltered != null) {
                     lifeHackAdapter.setMovieList(lifehacksFiltered);
-                }
+                }*/
                 return true;
             }
         });
@@ -229,21 +253,6 @@ public class SearchAll extends AppCompatActivity implements DictionaryAdapter.On
 
     @Override
     public void onSelected(DataDictionary dataDictionary) {
-
-    }
-
-    @Override
-    public void onSelected(DataLifehacks dataLifehacks) {
-
-    }
-
-    @Override
-    public void onSelected(DataSolution DataSolution) {
-
-    }
-
-    @Override
-    public void onSelected(DataDictionary dataDictionary, DataSolution dataSolution, DataLifehacks dataLifehacks) {
 
     }
 }

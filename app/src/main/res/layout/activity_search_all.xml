@@ -60,33 +60,12 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_search_kamus"
+        android:id="@+id/rv_search_all"
         android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_search_lifehack"
-        android:layout_margin="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_search_solution"
-        android:layout_margin="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"/>
-
-    </FrameLayout>
 
 
 </LinearLayout>

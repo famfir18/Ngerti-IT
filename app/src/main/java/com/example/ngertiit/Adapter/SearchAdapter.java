@@ -13,35 +13,28 @@ import com.example.ngertiit.Data.JSON.DataLifehacks;
 import com.example.ngertiit.Data.JSON.DataSolution;
 import com.example.ngertiit.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyviewHolder> {
 
         Context context;
         List<DataDictionary> dictionaryList;
-        List<DataLifehacks> lifehacksList;
-        List<DataSolution> solutionList;
         OnItemSelected onItemSelected;
+        ArrayList<Object> arrayList;
 
-        public SearchAdapter(Context context, List<DataDictionary> dictionaryList,
-                             List<DataLifehacks> lifehacksList,
-                             List<DataSolution> solutionList,
+        public SearchAdapter(Context context, List<DataDictionary> dictionaryList, ArrayList<Object> arrayList,
                                 OnItemSelected onItemSelected){
 
+            this.arrayList = arrayList;
             this.context = context;
-            this.lifehacksList = lifehacksList;
-            this.solutionList = solutionList;
             this.dictionaryList = dictionaryList;
             this.onItemSelected = onItemSelected;
         }
 
-        public void setMovieList(List<DataDictionary> dictionaryList,
-                                 List<DataLifehacks> lifehacksList,
-                                 List<DataSolution> solutionList) {
+        public void setMovieList(ArrayList<Object> searchList) {
 
-            this.lifehacksList = lifehacksList;
-            this.dictionaryList = dictionaryList;
-            this.solutionList = solutionList;
+            this.arrayList = searchList;
             notifyDataSetChanged();
         }
 
@@ -57,14 +50,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyviewHold
 
             try {
                 DataDictionary dataDictionary = dictionaryList.get(position);
-                DataLifehacks dataLifehacks = lifehacksList.get(position);
-                DataSolution dataSolution = solutionList.get(position);
 
                 holder.tvTitle.setText(dataDictionary.getTitle());
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onItemSelected.onSelected(dataDictionary, dataSolution, dataLifehacks);
+                        onItemSelected.onSelected(dataDictionary);
                     }
                 });
             } catch (Exception e) {
@@ -80,12 +71,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyviewHold
 
         @Override
         public int getItemCount() {
-            if(dictionaryList != null){
-                return dictionaryList.size();
-            } else if(lifehacksList != null){
-                return lifehacksList.size();
-            } else if(solutionList != null){
-                return solutionList.size();
+            if(arrayList != null){
+                return arrayList.size();
             }
             return 0;
 
@@ -102,18 +89,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyviewHold
         }
 
         public interface OnItemSelected {
-            void onSelected(DataDictionary dataDictionary, DataSolution dataSolution, DataLifehacks dataLifehacks);
+            void onSelected(DataDictionary dataDictionary);
         }
 
         public class MyviewHolder extends RecyclerView.ViewHolder {
 
             TextView tvTitle;
-            TextView tvCategory;
 
             public MyviewHolder(View itemView) {
                 super(itemView);
 
-                tvCategory = itemView.findViewById(R.id.tv_category);
                 tvTitle = itemView.findViewById(R.id.tv_kamus);
             }
         }

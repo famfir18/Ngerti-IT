@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.example.ngertiit.Adapter.DictionaryAdapter;
 import com.example.ngertiit.Adapter.DictionaryAdapterMenu;
@@ -103,12 +104,25 @@ public class KamusAct extends AppCompatActivity implements DictionaryAdapter.OnI
     //Code Program pada Method dibawah ini akan Berjalan saat Option Menu Dibuat
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
+        final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing);
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
+
+        boolean fullyExpanded =
+                (appBarLayout.getHeight() - appBarLayout.getBottom()) == 0;
+
         //Memanggil/Memasang menu item pada toolbar dari layout menu_bar.xml
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search, menu);
         MenuItem searchItem = menu.findItem(R.id.search);
         final SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setQueryHint(Html.fromHtml("<font color = #666666>" + getResources().getString(R.string.hintSearchMess) + "</font>"));
+
+        if (fullyExpanded){
+            searchItem.setIcon(getResources().getDrawable(R.drawable.ic_search_black));
+        } else {
+            searchItem.setIcon(getResources().getDrawable(R.drawable.ic_search));
+        }
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @SuppressLint("SetTextI18n")
@@ -119,6 +133,9 @@ public class KamusAct extends AppCompatActivity implements DictionaryAdapter.OnI
 
             @Override
             public boolean onQueryTextChange(String nextText) {
+                final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing);
+                AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
+                appBarLayout.setExpanded(false);
                 //Data akan berubah saat user menginputkan text/kata kunci pada SearchView
 
                 nextText = nextText.toLowerCase();
