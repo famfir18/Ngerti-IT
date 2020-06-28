@@ -14,9 +14,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.example.ngertiit.Adapter.DictionaryAdapter;
 import com.example.ngertiit.Adapter.DictionaryAdapterMenu;
@@ -40,6 +42,8 @@ public class KamusAct extends AppCompatActivity implements DictionaryAdapter.OnI
     ArrayList<String> source;
     @BindView(R.id.rv_dictionary)
     RecyclerView rv_dictionary;
+    @BindView(R.id.layout_not_found)
+    LinearLayout layoutNotFound;
 
     RecyclerView.LayoutManager SolutionRecyclerViewLayoutManager;
 
@@ -164,10 +168,14 @@ public class KamusAct extends AppCompatActivity implements DictionaryAdapter.OnI
                 for(int i = 0; i < dictionaries.size(); i++){
                     String title = dictionaries.get(i).getTitle().toLowerCase();
                     if(!nextText.equals("") && title.contains(nextText)){
+//                        layoutNotFound.setVisibility(View.GONE);
                         dictionariesFiltered.add(dictionaries.get(i));
                     } else if (nextText.equals("")){
+//                        layoutNotFound.setVisibility(View.GONE);
                         adapter.setMovieList(dictionaries);
-                    }
+                    }/* else if (!title.contains(nextText)){
+                        layoutNotFound.setVisibility(View.VISIBLE);
+                    }*/
                 }
 
                 if (dictionariesFiltered != null || !nextText.equals("")) {

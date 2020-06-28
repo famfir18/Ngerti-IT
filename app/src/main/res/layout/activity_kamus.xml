@@ -66,11 +66,39 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_dictionary"
-                    android:layout_margin="15dp"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/layout_not_found"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:visibility="invisible"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/ic_not_found"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="Pencarian Tidak Ditemukan"/>
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_dictionary"
+                        android:layout_margin="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </FrameLayout>
+
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

@@ -256,7 +256,7 @@ public class FragmentHome extends Fragment
 //                dataCarousels = dataCarousel.toArray
 
                     for (int i = 0; i < dataCarousel.body().size(); i++){
-                        String bannerUrl = dataCarousel.body().get(i).getImage();
+                        String bannerUrl = "https:banyakngerti.id" + dataCarousel.body().get(i).getImage();
                         imageUrls.add(bannerUrl);
                         System.out.println("banner = " + bannerUrl);
                     }

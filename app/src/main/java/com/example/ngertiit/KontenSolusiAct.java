@@ -151,7 +151,7 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
                 String em = "<em>";
                 String closeEm = "</em>";
                 String description = response.body().getDescription();
-                String imageUrl = response.body().getImage();
+                String imageUrl = "https:banyakngerti.id" + response.body().getImage();
 
                 Toolbar toolbars = findViewById(R.id.toolbar);
                 setSupportActionBar(toolbars);

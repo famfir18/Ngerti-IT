@@ -44,7 +44,7 @@ public class SolutionAdapterMenu extends RecyclerView.Adapter<SolutionAdapterMen
                                  int position) {
 
         DataSolution dataSolution = mylist.get(position);
-        String imageUrl = dataSolution.getImage();
+        String imageUrl = "https:banyakngerti.id" + dataSolution.getImage();
 
         holder.tvTitle.setText(dataSolution.getTitle());
         holder.itemView.setOnClickListener(new View.OnClickListener() {

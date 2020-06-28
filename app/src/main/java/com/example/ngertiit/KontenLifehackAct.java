@@ -90,7 +90,7 @@ public class KontenLifehackAct extends AppCompatActivity {
                 String div = "<div>";
                 String closeDiv = "</div>";
                 String nbsp = "&nbsp;";
-                String imageUrl = response.body().getImage();
+                String imageUrl = "https:banyakngerti.id" + response.body().getImage();
                 String description = response.body().getDescription();
 
                 Toolbar toolbars = findViewById(R.id.toolbar);

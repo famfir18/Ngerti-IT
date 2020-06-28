@@ -18,6 +18,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
 
 import com.example.ngertiit.Adapter.SolutionAdapter;
@@ -48,6 +50,8 @@ public class SolutionAct extends AppCompatActivity implements SolutionAdapter.On
     RecyclerView rv_solution;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.layout_not_found)
+    LinearLayout layoutNotFound;
 
     ArrayList<String> source;
 
@@ -247,7 +251,12 @@ public class SolutionAct extends AppCompatActivity implements SolutionAdapter.On
                 for(int i = 0; i < myLizt.size(); i++){
                     String title = myLizt.get(i).getTitle().toLowerCase();
                     if(!nextText.equals("") && title.contains(nextText)){
+                        layoutNotFound.setVisibility(View.GONE);
                         listFiltered.add(myLizt.get(i));
+                    } else if (!title.contains(nextText)){
+//                        layoutNotFound.setVisibility(View.VISIBLE);
+                    } else if (nextText.equals("")){
+                        layoutNotFound.setVisibility(View.GONE);
                     }
                 }
 

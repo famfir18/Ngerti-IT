@@ -98,8 +98,6 @@ public class MainActivity extends AppCompatActivity
 
         dialogExit = new Dialog(this);
 
-
-
         if (switchNotif.isChecked()){
             // OneSignal Initialization
             OneSignal.startInit(this)
@@ -137,8 +135,21 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences sharedPrefs = getSharedPreferences("check", MODE_PRIVATE);
         switchNotif.setChecked(sharedPrefs.getBoolean("check", true));
 
+        createShortCut();
         initView();
 
+    }
+
+    private void createShortCut() {
+
+        Intent shortcutIntent = new Intent(getApplicationContext(),MainActivity.class);
+        shortcutIntent.setAction(Intent.ACTION_MAIN);
+        Intent intent = new Intent();
+        intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+        intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, R.string.app_name);
+        intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,Intent.ShortcutIconResource.fromContext(getApplicationContext(), R.mipmap.ic_launcher));
+        intent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+        getApplicationContext().sendBroadcast(intent);
     }
 
     private void initView() {
@@ -241,7 +252,7 @@ public class MainActivity extends AppCompatActivity
 
         switch (item.getItemId()){
             case R.id.home_menu:
-                search.setVisibility(View.VISIBLE);
+                search.setVisibility(View.GONE);
                 layoutFragmentSetting.setVisibility(View.GONE);
                 fragment = new FragmentHome();
                 break;
