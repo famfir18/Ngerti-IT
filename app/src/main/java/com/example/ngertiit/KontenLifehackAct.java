@@ -89,7 +89,10 @@ public class KontenLifehackAct extends AppCompatActivity {
 
                 String div = "<div>";
                 String closeDiv = "</div>";
+                String p = "<p>";
+                String closeP = "</p>";
                 String nbsp = "&nbsp;";
+                String iamgeUrl = response.body().getImage();
                 String imageUrl = "https:banyakngerti.id" + response.body().getImage();
                 String description = response.body().getDescription();
 
@@ -101,10 +104,12 @@ public class KontenLifehackAct extends AppCompatActivity {
                         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                     }
 
-                if (description.contains(closeDiv) || description.contains(div)  || description.contains(nbsp)) {
+                if (description.contains(closeDiv) || description.contains(div)  || description.contains(nbsp) || description.contains(p) || description.contains(closeP)) {
                     description = description.replaceAll(div, "");
                     description = description.replaceAll(closeDiv,"");
                     description = description.replaceAll(nbsp,"");
+                    description = description.replaceAll(p, "");
+                    description = description.replaceAll(closeP, "");
                     tvDesc.setText(description);
                 } else {
                     tvDesc.setText(description);
@@ -112,26 +117,49 @@ public class KontenLifehackAct extends AppCompatActivity {
 
                 tvTitle.setText(response.body().getTitle());
 
+                if (!iamgeUrl.contains("http")){
+                    Picasso.with(getApplicationContext())
+                            .load(imageUrl)
+                            .into(ivBanner);
+                } else if (iamgeUrl.contains("http")){
+                    Picasso.with(getApplicationContext())
+                            .load(iamgeUrl)
+                            .into(ivBanner);
+                }
 
-                Picasso.with(getApplicationContext())
-                        .load(imageUrl)
-                        .into(ivBanner);
+                if (!iamgeUrl.contains("http")){
+                    Picasso.with(getApplicationContext())
+                            .load(imageUrl)
+                            .into(imageView, new com.squareup.picasso.Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    progressBar.setVisibility(View.GONE);
+                                }
 
-                Picasso.with(getApplicationContext())
-                        .load(imageUrl)
-                        .into(imageView, new com.squareup.picasso.Callback() {
-                            @Override
-                            public void onSuccess() {
-                                progressBar.setVisibility(View.GONE);
-                            }
+                                @Override
+                                public void onError() {
+                                    progressBar.setVisibility(View.GONE);
+                                    Toast.makeText(KontenLifehackAct.this, "Gagal memuat gambar", Toast.LENGTH_SHORT)
+                                            .show();
+                                }
+                            });
+                } else if (iamgeUrl.contains("http")){
+                    Picasso.with(getApplicationContext())
+                            .load(iamgeUrl)
+                            .into(imageView, new com.squareup.picasso.Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    progressBar.setVisibility(View.GONE);
+                                }
 
-                            @Override
-                            public void onError() {
-                                progressBar.setVisibility(View.GONE);
-                                Toast.makeText(KontenLifehackAct.this, "Gagal memuat gambar", Toast.LENGTH_SHORT)
-                                        .show();
-                            }
-                        });
+                                @Override
+                                public void onError() {
+                                    progressBar.setVisibility(View.GONE);
+                                    Toast.makeText(KontenLifehackAct.this, "Gagal memuat gambar", Toast.LENGTH_SHORT)
+                                            .show();
+                                }
+                            });
+                }
 
                 ivBanner.setOnClickListener(new View.OnClickListener() {
                     @Override

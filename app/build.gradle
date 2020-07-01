@@ -26,7 +26,7 @@ android {
         applicationId "com.example.ngertiit"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 18
+        versionCode 19
         versionName "0.0"
 
         // Make generated archive contain version name and code.

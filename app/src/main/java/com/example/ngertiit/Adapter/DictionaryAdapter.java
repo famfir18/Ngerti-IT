@@ -1,12 +1,16 @@
 package com.example.ngertiit.Adapter;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ngertiit.Data.JSON.DataDictionary;
@@ -17,10 +21,15 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.ContentValues.TAG;
+
 public class DictionaryAdapter extends RecyclerView.Adapter<DictionaryAdapter.MyviewHolder> {
     Context context;
     List<DataDictionary> mylist;
     OnItemSelected onItemSelected;
+
+    long DURATION = 250;
+    private boolean on_attach = true;
 
 
     public DictionaryAdapter(Context context, List<DataDictionary> mylist,
@@ -45,6 +54,8 @@ public class DictionaryAdapter extends RecyclerView.Adapter<DictionaryAdapter.My
     public void onBindViewHolder(DictionaryAdapter.MyviewHolder holder,
                                  int position) {
 
+        setAnimation(holder.itemView, position);
+
         DataDictionary dataDictionary = mylist.get(position);
 
         holder.tvTitle.setText(dataDictionary.getTitle());
@@ -67,6 +78,37 @@ public class DictionaryAdapter extends RecyclerView.Adapter<DictionaryAdapter.My
         } else {
             holder.tvDescription.setText(descriptionSubs);
         }
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                Log.d(TAG, "onScrollStateChanged: Called " + newState);
+                on_attach = false;
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
+        super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    private void setAnimation(View itemView, int i) {
+        if(!on_attach){
+            i = -1;
+        }
+        boolean isNotFirstItem = i == -1;
+        i++;
+        itemView.setAlpha(0.f);
+        AnimatorSet animatorSet = new AnimatorSet();
+        ObjectAnimator animator = ObjectAnimator.ofFloat(itemView, "alpha", 0.f, 0.5f, 1.0f);
+        ObjectAnimator.ofFloat(itemView, "alpha", 0.f).start();
+        animator.setStartDelay(isNotFirstItem ? DURATION / 2 : (i * DURATION / 3));
+        animator.setDuration(500);
+        animatorSet.play(animator);
+        animator.start();
     }
 
     public void setFilter(List<DataDictionary> filterList){
