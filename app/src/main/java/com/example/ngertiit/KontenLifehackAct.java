@@ -96,6 +96,16 @@ public class KontenLifehackAct extends AppCompatActivity {
                 String imageUrl = "https:banyakngerti.id" + response.body().getImage();
                 String description = response.body().getDescription();
 
+                if (!iamgeUrl.contains("http")){
+                    Picasso.with(getApplicationContext())
+                            .load(imageUrl)
+                            .into(ivBanner);
+                } else if (iamgeUrl.contains("http")){
+                    Picasso.with(getApplicationContext())
+                            .load(iamgeUrl)
+                            .into(ivBanner);
+                }
+
                 Toolbar toolbars = findViewById(R.id.toolbar);
                     setSupportActionBar(toolbars);
                     if(getSupportActionBar() != null){
@@ -116,16 +126,6 @@ public class KontenLifehackAct extends AppCompatActivity {
                 }
 
                 tvTitle.setText(response.body().getTitle());
-
-                if (!iamgeUrl.contains("http")){
-                    Picasso.with(getApplicationContext())
-                            .load(imageUrl)
-                            .into(ivBanner);
-                } else if (iamgeUrl.contains("http")){
-                    Picasso.with(getApplicationContext())
-                            .load(iamgeUrl)
-                            .into(ivBanner);
-                }
 
                 if (!iamgeUrl.contains("http")){
                     Picasso.with(getApplicationContext())

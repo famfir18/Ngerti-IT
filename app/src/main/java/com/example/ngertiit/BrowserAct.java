@@ -39,7 +39,7 @@ public class BrowserAct extends AppCompatActivity {
 
         ButterKnife.bind(this);
         context = getApplication();
-        link = "https://www.google.com/";
+        link = "http://banyakngerti.id/sumber";
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
