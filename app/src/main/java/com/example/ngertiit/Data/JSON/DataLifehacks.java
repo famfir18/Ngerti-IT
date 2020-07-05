@@ -13,6 +13,16 @@ public class DataLifehacks {
     String category;
     @SerializedName("image")
     String image;
+    @SerializedName("urls")
+    String urls;
+
+    public String getUrls() {
+        return urls;
+    }
+
+    public void setUrls(String urls) {
+        this.urls = urls;
+    }
 
     public int getId() {
         return id;

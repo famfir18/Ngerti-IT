@@ -77,7 +77,7 @@ public class LifeHackAdapterMenu extends RecyclerView.Adapter<LifeHackAdapterMen
     @Override
     public int getItemCount() {
         if(mylist != null){
-            return mylist.size();
+            return 5;
         }
         return 0;
 

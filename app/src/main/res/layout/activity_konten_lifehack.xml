@@ -81,7 +81,15 @@
                     android:textSize="18sp"
                     android:id="@+id/tv_lifehack_desc"
                     android:layout_width="match_parent"
+                    android:visibility="gone"
                     android:layout_height="match_parent"/>
+
+                <WebView
+                    android:id="@+id/webViewLifehack"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

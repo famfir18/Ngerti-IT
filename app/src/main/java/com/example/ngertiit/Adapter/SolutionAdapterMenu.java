@@ -81,7 +81,7 @@ public class SolutionAdapterMenu extends RecyclerView.Adapter<SolutionAdapterMen
     @Override
     public int getItemCount() {
         if(mylist != null){
-            return mylist.size();
+            return 5;
         }
         return 0;
 

@@ -12,6 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -42,6 +45,8 @@ public class KontenLifehackAct extends AppCompatActivity {
     CollapsingToolbarLayout collapsing;
     @BindView(R.id.tv_lifehack_title)
     TextView tvTitle;
+    @BindView(R.id.webViewLifehack)
+    WebView webViewLifehack;
 
     public  static  final String ID_KONTEN = "id";
     String kontenId;
@@ -87,6 +92,9 @@ public class KontenLifehackAct extends AppCompatActivity {
             @Override
             public void onResponse(Call<DataLifehacks> call, Response<DataLifehacks> response) {
 
+                WebSettings webSetting = webViewLifehack.getSettings();
+                webSetting.setBuiltInZoomControls(false);
+
                 String div = "<div>";
                 String closeDiv = "</div>";
                 String p = "<p>";
@@ -95,6 +103,7 @@ public class KontenLifehackAct extends AppCompatActivity {
                 String iamgeUrl = response.body().getImage();
                 String imageUrl = "https:banyakngerti.id" + response.body().getImage();
                 String description = response.body().getDescription();
+                String urlDesc = response.body().getUrls();
 
                 if (!iamgeUrl.contains("http")){
                     Picasso.with(getApplicationContext())
@@ -105,6 +114,9 @@ public class KontenLifehackAct extends AppCompatActivity {
                             .load(iamgeUrl)
                             .into(ivBanner);
                 }
+
+                webViewLifehack.setWebViewClient(new WebViewClient());
+                webViewLifehack.loadUrl(urlDesc);
 
                 Toolbar toolbars = findViewById(R.id.toolbar);
                     setSupportActionBar(toolbars);
