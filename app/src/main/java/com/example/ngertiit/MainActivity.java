@@ -35,9 +35,11 @@ import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.example.ngertiit.Data.API.APIClient;
 import com.example.ngertiit.Data.API.RestService;
@@ -47,6 +49,7 @@ import com.onesignal.OneSignal;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -199,10 +202,16 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
 
+        Random random = new Random();
+        int randomz = random.nextInt(5);
+
         final Animation animScaleTitle = AnimationUtils.loadAnimation(this, R.anim.anim_scale_dialog);
+        final Animation animShake = AnimationUtils.loadAnimation(this, R.anim.anim_shake);
 
         Button yes;
         Button no;
+        ImageView imageView;
+        TextView textView;
         CardView cardExit;
 
         dialogExit.setContentView(R.layout.dialog_exit);
@@ -211,14 +220,40 @@ public class MainActivity extends AppCompatActivity
 
         yes = dialogExit.findViewById(R.id.btnYes);
         no = dialogExit.findViewById(R.id.btnNo);
+        textView = dialogExit.findViewById(R.id.textView);
+        imageView = dialogExit.findViewById(R.id.image);
         cardExit = dialogExit.findViewById(R.id.card_dialog_exit);
+
+        imageView.setClickable(false);
 
         cardExit.startAnimation(animScaleTitle);
 
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                if (randomz == 3){
+                    imageView.setClickable(true);
+                    imageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            imageView.setImageDrawable(getDrawable(R.drawable.alone));
+                            textView.setText("Ampuuuun Bosss :(");
+                            yes.setVisibility(View.VISIBLE);
+                            yes.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    finish();
+                                }
+                            });
+                        }
+                    });
+                    textView.setText("Yhaaa Kena Deeehh! :v");
+                    imageView.setImageDrawable(getResources().getDrawable(R.drawable.lol));
+                    cardExit.startAnimation(animShake);
+                    yes.setVisibility(View.GONE);
+                } else {
+                    finish();
+                }
             }
         });
 
@@ -232,6 +267,16 @@ public class MainActivity extends AppCompatActivity
 
         dialogExit.show();
 
+    }
+
+    private static int getRandomNumberInRange(int min, int max) {
+
+        if (min >= max) {
+            throw new IllegalArgumentException("max must be greater than min");
+        }
+
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
     }
 
 

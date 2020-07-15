@@ -35,7 +35,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyviewHo
     List<DataHistory> mylist;
     OnItemSelected onItemSelected;
 
-    long DURATION = 250;
+    long DURATION = 150;
     private boolean on_attach = true;
 
     public HistoryAdapter(Context context, List<DataHistory> mylist,

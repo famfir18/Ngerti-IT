@@ -26,6 +26,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -79,6 +80,10 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
     WebView webView4;
     @BindView(R.id.collapsing)
     CollapsingToolbarLayout collapsing;
+    @BindView(R.id.layout_cara2)
+    LinearLayout layoutCara2;
+    @BindView(R.id.layout_cara3)
+    LinearLayout layoutCara3;
 
     public static final String ID_KONTEN = "id";
     String kontenId;
@@ -177,6 +182,13 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
                 Picasso.with(getApplicationContext())
                         .load(imageUrl)
                         .into(ivBanner);
+
+                if (langkahKedua.equals("")){
+                    layoutCara2.setVisibility(View.GONE);
+                    layoutCara3.setVisibility(View.GONE);
+                } else if (langkahKetiga.equals("")){
+                    layoutCara3.setVisibility(View.GONE);
+                }
 
                 WebSettings webSetting = webView.getSettings();
                 webSetting.setBuiltInZoomControls(false);
