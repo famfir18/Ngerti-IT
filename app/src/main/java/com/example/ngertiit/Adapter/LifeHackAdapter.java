@@ -67,14 +67,25 @@ public class LifeHackAdapter extends RecyclerView.Adapter<LifeHackAdapter.Myview
         String div = "<div>";
         String closeDiv = "</div>";
         String description = dataLifehacks.getDescription();
-        String descriptionSubs = description.substring(0,80) + "...";
 
-        if (descriptionSubs.contains(closeDiv) || description.contains(div)){
-            descriptionSubs = descriptionSubs.replaceAll(div, "");
-            descriptionSubs = descriptionSubs.replaceAll(closeDiv,"");
-            holder.tvDescription.setText(descriptionSubs);
+        if (description.length() >= 80) {
+            String descriptionSubs = description.substring(0,80) + "...";
+
+            if (descriptionSubs.contains(closeDiv) || description.contains(div)){
+                descriptionSubs = descriptionSubs.replaceAll(div, "");
+                descriptionSubs = descriptionSubs.replaceAll(closeDiv,"");
+                holder.tvDescription.setText(descriptionSubs);
+            } else {
+                holder.tvDescription.setText(descriptionSubs);
+            }
         } else {
-            holder.tvDescription.setText(descriptionSubs);
+            if (description.contains(closeDiv) || description.contains(div)){
+                description = description.replaceAll(div, "");
+                description = description.replaceAll(div,"");
+                holder.tvDescription.setText(description);
+            } else {
+                holder.tvDescription.setText(description);
+            }
         }
 
         if (dataLifehacks.getCategory().equals("Windows")) {
