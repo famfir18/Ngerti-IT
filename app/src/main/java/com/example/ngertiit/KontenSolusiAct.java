@@ -183,10 +183,10 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
                         .load(imageUrl)
                         .into(ivBanner);
 
-                if (langkahKedua.equals("")){
+                if (langkahKedua == null){
                     layoutCara2.setVisibility(View.GONE);
                     layoutCara3.setVisibility(View.GONE);
-                } else if (langkahKetiga.equals("")){
+                } else if (langkahKetiga == null){
                     layoutCara3.setVisibility(View.GONE);
                 }
 

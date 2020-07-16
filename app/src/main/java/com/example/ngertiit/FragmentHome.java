@@ -309,7 +309,7 @@ public class FragmentHome extends Fragment
                             imageView.setOnClickListener(v -> {
                                 Intent sendIntent = new Intent();
                                 sendIntent.setAction(Intent.ACTION_SEND);
-                                sendIntent.putExtra(Intent.EXTRA_TEXT, "Ayo jadi pinter komputer biar ga bego2 banget, download sekarang di " + link3);
+                                sendIntent.putExtra(Intent.EXTRA_TEXT, "Psst, biar ga dibilang kudet, mending download  Ngerti IT biar update ilmu Lo! Download sekarang di " + link3);
                                 sendIntent.setType("text/plain");
                                 startActivity(sendIntent);
                             });

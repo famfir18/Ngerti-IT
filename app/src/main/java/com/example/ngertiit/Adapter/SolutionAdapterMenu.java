@@ -57,14 +57,24 @@ public class SolutionAdapterMenu extends RecyclerView.Adapter<SolutionAdapterMen
         String em = "<em>";
         String closeEm = "</em>";
         String description = dataSolution.getDescription();
-        String descriptionSubs = description.substring(0,80) + "...";
+        if (description.length() >= 80) {
+            String descriptionSubs = description.substring(0,80) + "...";
 
-        if (descriptionSubs.contains(closeEm) || description.contains(em)){
-            descriptionSubs = descriptionSubs.replaceAll(em, "");
-            descriptionSubs = descriptionSubs.replaceAll(closeEm,"");
-            holder.tvDescription.setText(descriptionSubs);
+            if (descriptionSubs.contains(closeEm) || description.contains(em)){
+                descriptionSubs = descriptionSubs.replaceAll(em, "");
+                descriptionSubs = descriptionSubs.replaceAll(closeEm,"");
+                holder.tvDescription.setText(descriptionSubs);
+            } else {
+                holder.tvDescription.setText(descriptionSubs);
+            }
         } else {
-            holder.tvDescription.setText(descriptionSubs);
+            if (description.contains(closeEm) || description.contains(em)){
+                description = description.replaceAll(em, "");
+                description = description.replaceAll(closeEm,"");
+                holder.tvDescription.setText(description);
+            } else {
+                holder.tvDescription.setText(description);
+            }
         }
 
         Picasso.with(context)

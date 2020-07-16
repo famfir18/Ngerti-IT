@@ -67,7 +67,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyviewHo
             DataHistory dataHistory = mylist.get(position);
 
             @SuppressLint("SimpleDateFormat")
-            SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm");
+            SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy");
             formatter.setTimeZone(TimeZone.getTimeZone("Asia/Jakarta"));
             String date = dataHistory.getTanggal();
             Date date1= null;

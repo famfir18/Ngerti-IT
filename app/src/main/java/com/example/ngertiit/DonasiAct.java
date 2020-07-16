@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.ClipboardManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -65,7 +66,7 @@ public class DonasiAct extends AppCompatActivity {
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(true);
-            getSupportActionBar().setTitle("Donasi");
+            getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'>" + "Donasi" + "</font>"));
         }
 
         initEvent();
