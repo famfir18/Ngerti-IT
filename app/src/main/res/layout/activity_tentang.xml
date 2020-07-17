@@ -58,15 +58,15 @@
             android:layout_height="wrap_content"
             android:text="Current Version 1.x.x" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="350dp"
-            android:text="© 2020 Banyak Ngerti"
-            android:textSize="16dp"
-            android:layout_above="@id/banyakngerti"
-            android:layout_centerHorizontal="true"
-            android:textStyle="bold" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/banyakngerti"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="350dp"
+        android:text="© 2020 Banyakngerti"
+        android:textSize="16dp"
+        android:textStyle="bold" />
 
         <TextView
             android:id="@+id/banyakngerti"
