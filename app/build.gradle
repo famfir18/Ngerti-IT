@@ -116,4 +116,7 @@ dependencies {
 
     //Zoom image
     implementation 'com.otaliastudios:zoomlayout:1.7.0'
+
+    //Multiline collapsing
+    implementation 'net.opacapp:multiline-collapsingtoolbar:27.1.1'
 }

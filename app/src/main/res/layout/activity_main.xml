@@ -189,6 +189,7 @@
                     android:background="#2196F3" />
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:id="@+id/layout_donasi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -234,6 +235,7 @@
                 </LinearLayout>
 
                 <View
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="7dp"

@@ -2,6 +2,7 @@ package com.app.ngertiit;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
@@ -25,6 +26,8 @@ import com.app.ngertiit.Data.JSON.DataLifehacks;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -43,6 +46,8 @@ public class KontenLifehackAct extends AppCompatActivity {
     TextView tvTitle;
     @BindView(R.id.webViewLifehack)
     WebView webViewLifehack;
+    @BindView(R.id.card)
+    CardView card;
 
     public  static  final String ID_KONTEN = "id";
     String kontenId;
@@ -51,6 +56,8 @@ public class KontenLifehackAct extends AppCompatActivity {
     Dialog dialogImage;
     ProgressBar progressBar;
 
+    Dialog dialogLoading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,13 +65,21 @@ public class KontenLifehackAct extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        dialogLoading = new Dialog(this);
+        dialogLoading.setContentView(R.layout.dialog_loading);
+        dialogLoading.setCancelable(false);
+
+        Objects.requireNonNull(dialogLoading.getWindow()).setBackgroundDrawableResource(R.color.transparent);
+
+        dialogLoading.show();
+
         // In Activity's onCreate() for instance
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window w = getWindow();
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
 
-        collapsing.setExpandedTitleTextAppearance(R.style.CollapsedAppBar);
+        collapsing.setExpandedTitleTextAppearance(R.style.CollapsedAppBarTransparent);
 
         if (getIntent().getExtras() != null) {
             kontenId = getIntent().getStringExtra("idArtikel");
@@ -88,6 +103,8 @@ public class KontenLifehackAct extends AppCompatActivity {
             @Override
             public void onResponse(Call<DataLifehacks> call, Response<DataLifehacks> response) {
 
+                dialogLoading.dismiss();
+                card.setVisibility(View.VISIBLE);
                 WebSettings webSetting = webViewLifehack.getSettings();
                 webSetting.setBuiltInZoomControls(false);
 
@@ -181,6 +198,12 @@ public class KontenLifehackAct extends AppCompatActivity {
             @Override
             public void onFailure(Call<DataLifehacks> call, Throwable t) {
 
+                dialogLoading.setCancelable(true);
+                TextView gagal = dialogLoading.findViewById(R.id.tv_status);
+                ImageView imageGagal = dialogLoading.findViewById(R.id.iv_status);
+                gagal.setText("Loading gagal, mohon periksa koneksi anda lalu coba lagi");
+                imageGagal.setImageDrawable(getResources().getDrawable(R.drawable.ic_cross));
+                imageGagal.setVisibility(View.VISIBLE);
             }
         });
 

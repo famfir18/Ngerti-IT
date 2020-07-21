@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,6 +65,7 @@ public class SolutionAct extends AppCompatActivity implements SolutionAdapter.On
     TelephonyManager telephonyManager;
     String idDevice;
 
+    Dialog dialogLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +73,14 @@ public class SolutionAct extends AppCompatActivity implements SolutionAdapter.On
         setContentView(R.layout.activity_solution);
 
         ButterKnife.bind(this);
+
+        dialogLoading = new Dialog(this);
+        dialogLoading.setContentView(R.layout.dialog_loading);
+        dialogLoading.setCancelable(false);
+
+        Objects.requireNonNull(dialogLoading.getWindow()).setBackgroundDrawableResource(R.color.transparent);
+
+        dialogLoading.show();
 
         telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         idDevice = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -90,6 +101,7 @@ public class SolutionAct extends AppCompatActivity implements SolutionAdapter.On
         call.enqueue(new Callback<List<DataSolution>>() {
             @Override
             public void onResponse(Call<List<DataSolution>> call, Response<List<DataSolution>> response) {
+                dialogLoading.dismiss();
                 myLizt = response.body();
 
                 if (getIntent().getExtras() != null) {

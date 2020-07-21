@@ -1,19 +1,28 @@
 package com.app.ngertiit.Adapter;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.ngertiit.Data.JSON.DataSolution;
 import com.app.ngertiit.R;
+import com.app.ngertiit.WelcomeActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class SolutionAdapterMenu extends RecyclerView.Adapter<SolutionAdapterMenu.MyviewHolder> {
     Context context;
@@ -36,12 +45,19 @@ public class SolutionAdapterMenu extends RecyclerView.Adapter<SolutionAdapterMen
     @Override
     public SolutionAdapterMenu.MyviewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.view_content,parent,false);
+        ButterKnife.bind(view);
         return new MyviewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(SolutionAdapterMenu.MyviewHolder holder,
                                  int position) {
+
+        final Animation animScaleTitle = AnimationUtils.loadAnimation(context, R.anim.anim_scale_dialog);
+
+        for (int i = 0; i < position; i++){
+            holder.card.startAnimation(animScaleTitle);
+        }
 
         DataSolution dataSolution = mylist.get(position);
         String imageUrl = "https:banyakngerti.id" + dataSolution.getImage();
@@ -77,10 +93,16 @@ public class SolutionAdapterMenu extends RecyclerView.Adapter<SolutionAdapterMen
             }
         }
 
-        Picasso.with(context)
+        if (dataSolution.getCategory().equals("Windows")) {
+            holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_windows_hacks));
+        } else if (dataSolution.getCategory().equals("macOS")) {
+            holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_macos_hacks));
+        }
+
+        /*Picasso.with(context)
                 .load(imageUrl)
                 .into(holder.ivBanner);
-
+*/
 //        if (dataSolution.getCategory().equals("Windows")) {
 //            holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_windows_browser));
 //        } else if (dataSolution.getCategory().equals("macOS")) {
@@ -116,6 +138,7 @@ public class SolutionAdapterMenu extends RecyclerView.Adapter<SolutionAdapterMen
         TextView tvDescription;
         TextView tvTitle;
         ImageView ivBanner;
+        CardView card;
 
         public MyviewHolder(View itemView) {
             super(itemView);
@@ -123,6 +146,7 @@ public class SolutionAdapterMenu extends RecyclerView.Adapter<SolutionAdapterMen
             tvDescription = itemView.findViewById(R.id.tv_lifehack_desc);
             tvTitle = itemView.findViewById(R.id.tv_lifehack);
             ivBanner = itemView.findViewById(R.id.iv_banner);
+            card = itemView.findViewById(R.id.card);
         }
     }
 

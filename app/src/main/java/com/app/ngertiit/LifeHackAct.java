@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,12 +67,22 @@ public class LifeHackAct extends AppCompatActivity implements LifeHackAdapter.On
 
     LinearLayoutManager SolutionHorizontalLayout;
 
+    Dialog dialogLoading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_life_hack);
 
         ButterKnife.bind(this);
+
+        dialogLoading = new Dialog(this);
+        dialogLoading.setContentView(R.layout.dialog_loading);
+        dialogLoading.setCancelable(false);
+
+        Objects.requireNonNull(dialogLoading.getWindow()).setBackgroundDrawableResource(R.color.transparent);
+
+        dialogLoading.show();
 
         telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         idDevice = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -91,6 +103,7 @@ public class LifeHackAct extends AppCompatActivity implements LifeHackAdapter.On
         call.enqueue(new Callback<List<DataLifehacks>>() {
             @Override
             public void onResponse(Call<List<DataLifehacks>> call, Response<List<DataLifehacks>> response) {
+                dialogLoading.dismiss();
                 myLizt = response.body();
 
                 if (getIntent().getExtras() != null) {

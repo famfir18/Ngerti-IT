@@ -2,6 +2,8 @@ package com.app.ngertiit;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.core.widget.NestedScrollView;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -28,11 +30,13 @@ import android.widget.Toast;
 import com.app.ngertiit.Data.API.APIClient;
 import com.app.ngertiit.Data.API.RestService;
 import com.app.ngertiit.Data.JSON.DataSolution;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
+import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,6 +77,8 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
     LinearLayout layoutCara2;
     @BindView(R.id.layout_cara3)
     LinearLayout layoutCara3;
+    @BindView(R.id.card)
+    CardView card;
 
     public static final String ID_KONTEN = "id";
     String kontenId;
@@ -92,6 +98,8 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
     Dialog dialogImage;
     ProgressBar progressBar;
 
+    Dialog dialogLoading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +108,14 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
         ButterKnife.bind(this);
 
         expandLayout();
+
+        dialogLoading = new Dialog(this);
+        dialogLoading.setContentView(R.layout.dialog_loading);
+        dialogLoading.setCancelable(false);
+
+        Objects.requireNonNull(dialogLoading.getWindow()).setBackgroundDrawableResource(R.color.transparent);
+
+        dialogLoading.show();
 
         collapsing.setExpandedTitleTextAppearance(R.style.CollapsedAppBar);
 
@@ -139,6 +155,9 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
             @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<DataSolution> call, Response<DataSolution> response) {
+
+                dialogLoading.dismiss();
+                card.setVisibility(View.VISIBLE);
 
                 Gson gson = new Gson();
                 System.out.println("Response nyaaa " + gson.toJson(response));
@@ -219,6 +238,13 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onFailure(Call<DataSolution> call, Throwable t) {
+
+                dialogLoading.setCancelable(true);
+                TextView gagal = dialogLoading.findViewById(R.id.tv_status);
+                ImageView imageGagal = dialogLoading.findViewById(R.id.iv_status);
+                gagal.setText("Loading gagal, mohon periksa koneksi anda lalu coba lagi");
+                imageGagal.setImageDrawable(getResources().getDrawable(R.drawable.ic_cross));
+                imageGagal.setVisibility(View.VISIBLE);
 
                 Gson gson = new Gson();
                 Log.d("TAG","Response gagalnya = "+ gson.toJson(t.getCause()));

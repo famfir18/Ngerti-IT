@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -203,7 +205,11 @@ public class WelcomeActivity extends AppCompatActivity {
 
             // mengubah button lanjut 'NEXT' / 'GOT IT'
             if (position == layouts.length - 1) {
+
+                final Animation animScaleTitle = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.anim_scale_dialog);
+
                 // last page. make button text to GOT IT
+                btnNext.startAnimation(animScaleTitle);
                 btnNext.setText(getString(R.string.start));
                 btnNext.setVisibility(View.VISIBLE);
 //                btnSkip.setVisibility(View.GONE);

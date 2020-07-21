@@ -4,9 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.ngertiit.Data.JSON.DataLifehacks;
@@ -41,6 +44,12 @@ public class LifeHackAdapterMenu extends RecyclerView.Adapter<LifeHackAdapterMen
     @Override
     public void onBindViewHolder(LifeHackAdapterMenu.MyviewHolder holder,
                                  int position) {
+
+        final Animation animScaleTitle = AnimationUtils.loadAnimation(context, R.anim.anim_scale_dialog);
+
+        for (int i = 0; i < position; i++){
+            holder.card.startAnimation(animScaleTitle);
+        }
 
         DataLifehacks dataLifehacks = mylist.get(position);
         String imageUrl = dataLifehacks.getImage();
@@ -112,6 +121,7 @@ public class LifeHackAdapterMenu extends RecyclerView.Adapter<LifeHackAdapterMen
         TextView tvDescription;
         TextView tvTitle;
         ImageView ivBanner;
+        CardView card;
 
         public MyviewHolder(View itemView) {
             super(itemView);
@@ -119,6 +129,7 @@ public class LifeHackAdapterMenu extends RecyclerView.Adapter<LifeHackAdapterMen
             tvDescription = itemView.findViewById(R.id.tv_lifehack_desc);
             tvTitle = itemView.findViewById(R.id.tv_lifehack);
             ivBanner = itemView.findViewById(R.id.iv_banner);
+            card = itemView.findViewById(R.id.card);
         }
     }
 
