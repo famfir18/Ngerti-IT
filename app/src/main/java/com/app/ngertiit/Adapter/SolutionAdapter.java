@@ -68,34 +68,34 @@ public class SolutionAdapter extends RecyclerView.Adapter<SolutionAdapter.Myview
         String closeEm = "</em>";
         String description = dataSolution.getDescription();
         if (description.length() >= 80) {
-            String descriptionSubs = description.substring(0,80) + "...";
+            String descriptionSubs = description.substring(0, 80) + "...";
 
-            if (descriptionSubs.contains(closeEm) || description.contains(em)){
+            if (descriptionSubs.contains(closeEm) || description.contains(em)) {
                 descriptionSubs = descriptionSubs.replaceAll(em, "");
-                descriptionSubs = descriptionSubs.replaceAll(closeEm,"");
+                descriptionSubs = descriptionSubs.replaceAll(closeEm, "");
                 holder.tvDescription.setText(descriptionSubs);
             } else {
                 holder.tvDescription.setText(descriptionSubs);
             }
         } else {
-            if (description.contains(closeEm) || description.contains(em)){
+            if (description.contains(closeEm) || description.contains(em)) {
                 description = description.replaceAll(em, "");
-                description = description.replaceAll(closeEm,"");
+                description = description.replaceAll(closeEm, "");
                 holder.tvDescription.setText(description);
             } else {
                 holder.tvDescription.setText(description);
             }
         }
 
-        Picasso.with(context)
+        /*Picasso.with(context)
                 .load(imageUrl)
-                .into(holder.ivBanner);
+                .into(holder.ivBanner);*/
 
-//        if (dataSolution.getCategory().equals("Windows")) {
-//            holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_windows_browser));
-//        } else if (dataSolution.getCategory().equals("macOS")) {
-//            holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_macos_browser));
-//        }
+        if (dataSolution.getCategory().equals("Windows")) {
+            holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_windows_solution));
+        } else if (dataSolution.getCategory().equals("macOS")) {
+            holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_macos_solution));
+        }
     }
 
     @Override

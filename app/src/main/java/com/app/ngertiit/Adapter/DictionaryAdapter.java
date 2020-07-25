@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.ngertiit.Data.JSON.DataDictionary;
 import com.app.ngertiit.R;
+
+import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.util.List;
 
@@ -27,6 +30,7 @@ public class DictionaryAdapter extends RecyclerView.Adapter<DictionaryAdapter.My
     long DURATION = 250;
     private boolean on_attach = true;
 
+    boolean clicked = false;
 
     public DictionaryAdapter(Context context, List<DataDictionary> mylist,
                                  OnItemSelected onItemSelected){
@@ -42,7 +46,7 @@ public class DictionaryAdapter extends RecyclerView.Adapter<DictionaryAdapter.My
 
     @Override
     public DictionaryAdapter.MyviewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.view_kamus,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.view_konten_kamus,parent,false);
         return new MyviewHolder(view);
     }
 
@@ -54,11 +58,32 @@ public class DictionaryAdapter extends RecyclerView.Adapter<DictionaryAdapter.My
 
         DataDictionary dataDictionary = mylist.get(position);
 
-        holder.tvTitle.setText(dataDictionary.getTitle());
+        holder.contentPertama.setText(dataDictionary.getTitle());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onItemSelected.onSelected(dataDictionary);
+            }
+        });
+
+        holder.expandableLayout0.setOnExpansionUpdateListener(new ExpandableLayout.OnExpansionUpdateListener() {
+            @Override
+            public void onExpansionUpdate(float expansionFraction, int state) {
+                Log.d("ExpandableLayout0", "State: " + state);
+            }
+        });
+
+        holder.contentPertama.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!holder.expandableLayout0.isExpanded()) {
+                    holder.contentPertama.setBackgroundColor(context.getResources().getColor(R.color.white));
+                    holder.expandableLayout0.expand();
+                    clicked = true;
+                } else if (clicked = true){
+                    holder.contentPertama.setBackgroundColor(context.getResources().getColor(R.color.putih));
+                    holder.expandableLayout0.collapse();
+                }
             }
         });
 
@@ -139,13 +164,18 @@ public class DictionaryAdapter extends RecyclerView.Adapter<DictionaryAdapter.My
     public class MyviewHolder extends RecyclerView.ViewHolder {
 
         TextView tvDescription;
-        TextView tvTitle;
+        TextView contentPertama;
+        LinearLayout layout;
+
+        ExpandableLayout expandableLayout0;
 
         public MyviewHolder(View itemView) {
             super(itemView);
 
             tvDescription = itemView.findViewById(R.id.tv_lifehack);
-            tvTitle = itemView.findViewById(R.id.tv_kamus);
+            contentPertama = itemView.findViewById(R.id.expand_button_0);
+            expandableLayout0 = itemView.findViewById(R.id.expandable_layout_0);
+            layout = itemView.findViewById(R.id.layout);
         }
     }
 

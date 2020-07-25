@@ -25,47 +25,45 @@
                 android:background="@color/transparent"
                 android:orientation="vertical">
 
-
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:background="@color/transparent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="@color/transparent">
 
                     <ProgressBar
                         android:id="@+id/simpleProgressBar"
                         android:layout_width="40dp"
-                        android:layout_gravity="center"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:indeterminateDrawable="@drawable/custom_progressbar" />
 
                     <ImageView
                         android:id="@+id/iv_banner"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="centerCrop"/>
+                        android:scaleType="centerCrop" />
 
                     <ImageView
-                        android:layout_marginTop="5dp"
                         android:layout_width="45dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/splash"
                         android:layout_marginLeft="4dp"
-                        android:tint="@color/putih"/>
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/splash"
+                        android:tint="@color/putih" />
 
                     <TextView
                         android:id="@+id/tv_lifehack"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:textStyle="bold"
                         android:layout_marginTop="4dp"
-                        android:paddingLeft="6dp"
-                        android:paddingRight="6dp"
                         android:layout_marginBottom="4dp"
                         android:fontFamily="@font/montserrat"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="6dp"
                         android:textColor="#fff"
-                        android:textSize="11dp" />
-
+                        android:textSize="11dp"
+                        android:textStyle="bold" />
                 </FrameLayout>
             </LinearLayout>
 
@@ -77,19 +75,19 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:background="@color/transparent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="@color/transparent">
 
                     <TextView
                         android:id="@+id/tv_lifehack_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="6dp"
-                        android:paddingRight="6dp"
                         android:layout_marginTop="4dp"
-                        android:paddingBottom="3dp"
                         android:layout_marginBottom="4dp"
                         android:fontFamily="@font/montserrat"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="6dp"
+                        android:paddingBottom="3dp"
                         android:text="sopfijgopdifjoewijfiwjfowjfwojfweoifoifjweijfwoejfwoeifjwojweijfowejfwoiweijfowjefowijfoeijeppisv"
                         android:textColor="#666666"
                         android:textSize="11dp" />

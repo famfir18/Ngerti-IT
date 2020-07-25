@@ -35,6 +35,9 @@ public interface RestService {
     @GET("dictionary/all")
     Call<List<DataDictionary>> getDataDictionary();
 
+    @GET("dictionary/time")
+    Call<List<DataDictionary>> getDataDictionarybyTime();
+
     @POST("kritiksaran")
     Call<ResponseBody> postKritikSaran(@Body DataKritikSaran dataKritikSaran);
 

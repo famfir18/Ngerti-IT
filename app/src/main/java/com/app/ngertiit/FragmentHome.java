@@ -12,6 +12,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
@@ -73,6 +74,8 @@ public class FragmentHome extends Fragment
     TextView tvAllDiction;
     @BindView(R.id.scroller)
     NestedScrollView scroller;
+    @BindView(R.id.refresh)
+    SwipeRefreshLayout refresh;
 //    int[] sampleImages = {R.drawable.carousel_1, R.drawable.carousel_2, R.drawable.carousel_3};
 
     ShimmerFrameLayout shimmerCarousel;
@@ -106,6 +109,7 @@ public class FragmentHome extends Fragment
 
     Dialog dialogLoading;
 
+    TextView toolbarText;
 
     public FragmentHome() {}
 
@@ -136,6 +140,10 @@ public class FragmentHome extends Fragment
         getDataSolutions();
         getDataDictionary();
 
+        toolbarText = getActivity().findViewById(R.id.toolbar_text);
+        toolbarText.setText("Ngerti IT");
+        refresh.setRefreshing(false);
+
 //        telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         idDevice = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
 
@@ -152,7 +160,7 @@ public class FragmentHome extends Fragment
         rv_dictionary.setAdapter(dictionaryAdapterMenu);
 
         RestService apiService = APIClient.getClient().create(RestService.class);
-        Call<List<DataDictionary>> call = apiService.getDataDictionary();
+        Call<List<DataDictionary>> call = apiService.getDataDictionarybyTime();
 
         call.enqueue(new Callback<List<DataDictionary>>() {
             @Override
@@ -315,6 +323,15 @@ public class FragmentHome extends Fragment
     }
 
     private void initEvent() {
+
+        refresh.setOnRefreshListener(() -> {
+            getDataDictionary();
+            getDataLifehacks();
+            getDataSolutions();
+            showImageCarousel();
+
+            refresh.setRefreshing(false);
+        });
 
         Animation animScalein = AnimationUtils.loadAnimation(context, R.anim.anim_scale_in);
 

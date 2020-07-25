@@ -7,6 +7,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".FragmentHome">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroller"
         android:layout_width="match_parent"
@@ -206,5 +211,7 @@
     </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </FrameLayout>

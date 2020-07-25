@@ -3,16 +3,19 @@ package com.app.ngertiit;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.app.ngertiit.Adapter.DictionaryAdapter;
@@ -24,6 +27,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +42,8 @@ public class KamusAct extends AppCompatActivity implements DictionaryAdapter.OnI
     RecyclerView rv_dictionary;
     @BindView(R.id.layout_not_found)
     LinearLayout layoutNotFound;
+    @BindView(R.id.layout)
+    CoordinatorLayout layout;
 
     RecyclerView.LayoutManager SolutionRecyclerViewLayoutManager;
 
@@ -46,6 +52,8 @@ public class KamusAct extends AppCompatActivity implements DictionaryAdapter.OnI
     DictionaryAdapter adapter;
     List<DataDictionary> dictionaries;
     List<DataDictionary> dictionariesFiltered;
+
+    Dialog dialogLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +69,15 @@ public class KamusAct extends AppCompatActivity implements DictionaryAdapter.OnI
             Window w = getWindow();
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }*/
+
+        dialogLoading = new Dialog(this);
+        dialogLoading.setContentView(R.layout.dialog_loading);
+        dialogLoading.setCancelable(false);
+
+        Objects.requireNonNull(dialogLoading.getWindow()).setBackgroundDrawableResource(R.color.transparent);
+
+        layout.setVisibility(View.GONE);
+        dialogLoading.show();
 
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -86,6 +103,8 @@ public class KamusAct extends AppCompatActivity implements DictionaryAdapter.OnI
         call.enqueue(new Callback<List<DataDictionary>>() {
             @Override
             public void onResponse(Call<List<DataDictionary>> call, Response<List<DataDictionary>> response) {
+                layout.setVisibility(View.VISIBLE);
+                dialogLoading.dismiss();
                 dictionaries = response.body();
                 Log.d("TAG","Response = "+ dictionaries);
                 adapter.setMovieList(dictionaries);

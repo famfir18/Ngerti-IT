@@ -68,6 +68,10 @@
         <service
             android:name="com.novoda.merlin.MerlinService"
             android:exported="false" />
+
+        <meta-data
+            android:name="com.onesignal.NotificationOpened.DEFAULT"
+            android:value="DISABLE" />
     </application>
 
 </manifest>

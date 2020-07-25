@@ -55,6 +55,7 @@ public class FragmentHistory extends Fragment implements HistoryAdapter.OnItemSe
     String idDevice;
     List<DataHistory> historyList;
 
+    TextView toolbarText;
 
 //    Handler delay = new Handler();
 //    final static int DELAY_DIALOG = 500;
@@ -75,6 +76,8 @@ public class FragmentHistory extends Fragment implements HistoryAdapter.OnItemSe
 
         final Animation animScaleTitle = AnimationUtils.loadAnimation(context, R.anim.anim_scale_dialog);
 
+        toolbarText = getActivity().findViewById(R.id.toolbar_text);
+        toolbarText.setText("History");
 
         assert context != null;
         dialogLoading = new Dialog(context);

@@ -33,7 +33,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Myview
 
     @Override
     public RecyclerAdapter.MyviewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.view_kamus,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.view_konten_kamus,parent,false);
         return new MyviewHolder(view);
     }
 

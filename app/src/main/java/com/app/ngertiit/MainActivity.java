@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity
                     .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                     .unsubscribeWhenNotificationsAreDisabled(true)
                     .autoPromptLocation(true)
-//                    .setNotificationOpenedHandler(new NotificationHandler(application))
+                    .setNotificationOpenedHandler(new NotificationHandler(this))
                     .init();
 
             OneSignal.setSubscription(true);
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity
                 OneSignal.startInit(this)
                         .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                         .unsubscribeWhenNotificationsAreDisabled(true)
-//                        .setNotificationOpenedHandler(new NotificationHandler(application))
+                        .setNotificationOpenedHandler(new NotificationHandler(this))
                         .autoPromptLocation(true)
                         .init();
                 OneSignal.setSubscription(true);
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity
     public void onBackPressed() {
 
         Random random = new Random();
-        int randomz = random.nextInt(5);
+        int randomz = random.nextInt(7);
 
         final Animation animScaleTitle = AnimationUtils.loadAnimation(this, R.anim.anim_scale_dialog);
         final Animation animShake = AnimationUtils.loadAnimation(this, R.anim.anim_shake);

@@ -94,9 +94,9 @@ public class SolutionAdapterMenu extends RecyclerView.Adapter<SolutionAdapterMen
         }
 
         if (dataSolution.getCategory().equals("Windows")) {
-            holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_windows_hacks));
+            holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_windows_solution));
         } else if (dataSolution.getCategory().equals("macOS")) {
-            holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_macos_hacks));
+            holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_macos_solution));
         }
 
         /*Picasso.with(context)

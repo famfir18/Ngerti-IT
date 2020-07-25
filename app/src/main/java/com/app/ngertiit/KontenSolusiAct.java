@@ -100,6 +100,8 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
 
     Dialog dialogLoading;
 
+    boolean clicked = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -294,25 +296,47 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.expand_button_0:
-                expandableLayout0.expand();
+                if (!expandableLayout0.isExpanded()) {
+                    expandableLayout0.expand();
+                    clicked = true;
+                } else if (clicked = true){
+                    expandableLayout0.collapse();
+                }
+//                expandableLayout0.expand();
                 expandableLayout1.collapse();
                 expandableLayout2.collapse();
                 expandableLayout3.collapse();
                 break;
             case R.id.expand_button_1:
+                if (!expandableLayout1.isExpanded()) {
+                    expandableLayout1.expand();
+                    clicked = true;
+                } else if (clicked = true){
+                    expandableLayout1.collapse();
+                }
                 expandableLayout2.collapse();
-                expandableLayout1.expand();
+//                expandableLayout1.expand();
                 expandableLayout3.collapse();
                 expandableLayout0.collapse();
                 break;
             case R.id.expand_button_2:
-                expandableLayout2.expand();
+                if (!expandableLayout2.isExpanded()) {
+                    expandableLayout2.expand();
+                    clicked = true;
+                } else if (clicked = true){
+                    expandableLayout2.collapse();
+                }
                 expandableLayout1.collapse();
                 expandableLayout0.collapse();
                 expandableLayout3.collapse();
                 break;
             case R.id.expand_button_3:
-                expandableLayout3.expand();
+                if (!expandableLayout3.isExpanded()) {
+                    expandableLayout3.expand();
+                    clicked = true;
+                } else if (clicked = true){
+                    expandableLayout3.collapse();
+                }
                 expandableLayout1.collapse();
                 expandableLayout2.collapse();
                 expandableLayout0.collapse();
