@@ -9,7 +9,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class APIClient {
     public static final String BASE_URL = "https://swaradarmagita.gunadarma.ac.id/";
 
+    //URL LIVE
     public static final String URL_BASE = "https://banyakngerti.id/apis/semogacepetkaya/";
+
+    //URL Development
+//    public static final String URL_BASE = "http://25.67.180.195:8788/apis/semogacepetkaya/";
 
     public static Retrofit retrofit = null;
 

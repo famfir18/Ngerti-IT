@@ -6,10 +6,13 @@ import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.ngertiit.KamusAct;
+import com.app.ngertiit.KontenLifehackAct;
+import com.app.ngertiit.KontenSolusiAct;
 import com.app.ngertiit.LifeHackAct;
 import com.app.ngertiit.MainActivity;
 import com.app.ngertiit.SolutionAct;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.onesignal.OSNotificationOpenResult;
 import com.onesignal.OneSignal;
 
@@ -23,6 +26,8 @@ public class NotificationHandler implements OneSignal.NotificationOpenedHandler 
     private String titleNotif;
 
     private String idTask;
+
+    private String idArtikelString;
 
     public NotificationHandler(MainActivity application) {
         this.application = application;
@@ -41,44 +46,55 @@ public class NotificationHandler implements OneSignal.NotificationOpenedHandler 
         String lifehack = "Life";
         String kamus = "bahasa";
         String solusi = "Solusi";
-        String notif = result.notification.payload.body;
+        String notif = result.notification.payload.title;
 
         System.out.println("Notif Develop : " + notif);
 
+        try {
+            idTask = gson.toJson(result.notification.payload.additionalData);
+            JSONObject addDataJson = new JSONObject(idTask);
+            JSONObject addDataObj = addDataJson.getJSONObject("nameValuePairs");
+            idArtikelString = addDataObj.getString("id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         titleNotif = result.notification.payload.title;
+        System.out.println("Ini additional data " + idArtikelString);
 
             if (notif.contains(lifehack)){
                 System.out.println("DEVELOPER : Lifehack");
                 startLifehack();
-            }
-
-            if (notif.contains(solusi)){
+            } else if (notif.contains(solusi)){
                 System.out.println("DEVELOPER : Solusi");
                 // Launch Tasklist Detail (Tasklist)
                 startSolusi();
-            }
-
-            if (notif.contains(kamus)){
+            } else if (notif.contains(kamus)){
                 System.out.println("DEVELOPER : Kamus");
                 startKamus();
+            } else {
+                startMain();
             }
     }
 
     private void startLifehack() {
-        Intent intent = new Intent(application, LifeHackAct.class)
+        Intent intent = new Intent(application, KontenLifehackAct.class)
                 .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("idArtikel", idArtikelString);
         application.startActivity(intent);
     }
 
     private void startSolusi() {
-        Intent intent = new Intent(application, SolutionAct.class)
+        Intent intent = new Intent(application, KontenSolusiAct.class)
                 .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("idArtikel", idArtikelString);
         application.startActivity(intent);
     }
 
     private void startKamus() {
         Intent intent = new Intent(application, KamusAct.class)
                 .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.putExtra("idArtikel", idArtikelString);
         application.startActivity(intent);
     }
 
