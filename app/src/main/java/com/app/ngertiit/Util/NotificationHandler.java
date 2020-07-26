@@ -29,6 +29,8 @@ public class NotificationHandler implements OneSignal.NotificationOpenedHandler 
 
     private String idArtikelString;
 
+    private String tag;
+
     public NotificationHandler(MainActivity application) {
         this.application = application;
     }
@@ -43,9 +45,9 @@ public class NotificationHandler implements OneSignal.NotificationOpenedHandler 
         System.out.println("DEVELOPER : result : " + gson.toJson(result.notification.payload.body));
 
         // RegEx for notification
-        String lifehack = "Life";
-        String kamus = "bahasa";
-        String solusi = "Solusi";
+        String lifehack = "lifeh";
+        String kamus = "kamus";
+        String solusi = "sols";
         String notif = result.notification.payload.title;
 
         System.out.println("Notif Develop : " + notif);
@@ -55,21 +57,23 @@ public class NotificationHandler implements OneSignal.NotificationOpenedHandler 
             JSONObject addDataJson = new JSONObject(idTask);
             JSONObject addDataObj = addDataJson.getJSONObject("nameValuePairs");
             idArtikelString = addDataObj.getString("id");
+            tag = addDataObj.getString("tag");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         titleNotif = result.notification.payload.title;
-        System.out.println("Ini additional data " + idArtikelString);
+        System.out.println("Ini additional data " + tag);
 
-            if (notif.contains(lifehack)){
+            if (tag.contains(lifehack)){
                 System.out.println("DEVELOPER : Lifehack");
                 startLifehack();
-            } else if (notif.contains(solusi)){
+            } else if (tag.contains(solusi)){
                 System.out.println("DEVELOPER : Solusi");
                 // Launch Tasklist Detail (Tasklist)
                 startSolusi();
-            } else if (notif.contains(kamus)){
+            } else if (tag.contains(kamus)){
                 System.out.println("DEVELOPER : Kamus");
                 startKamus();
             } else {
