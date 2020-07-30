@@ -13,7 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchAll"></activity>
+        <activity android:name=".Maintenance"
+            android:noHistory="true">
+
+        </activity>
+        <activity android:name=".SearchAll" />
         <activity android:name=".KontenLifehackAct" />
         <activity android:name=".CategoryLifehack" />
         <activity

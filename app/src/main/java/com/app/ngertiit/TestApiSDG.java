@@ -66,7 +66,7 @@ public class TestApiSDG extends AppCompatActivity implements
         recyclerAdapter = new RecyclerAdapter(getApplicationContext(),myList, this);
         recyclerView.setAdapter(recyclerAdapter);
 
-        RestService apiService = APIClient.getClient().create(RestService.class);
+        RestService apiService = APIClient.getAPI().create(RestService.class);
         Call<List<DataTestSDG>> call = apiService.getDataSDG();
 
 
@@ -99,7 +99,7 @@ public class TestApiSDG extends AppCompatActivity implements
 
         Gson gson = new Gson();
 
-        RestService restService = APIClient.getClient().create(RestService.class);
+        RestService restService = APIClient.getAPI().create(RestService.class);
         Call<List<DataTestSDG>> call = restService.getDataSDG();
 
         call.enqueue(new Callback<List<DataTestSDG>>() {

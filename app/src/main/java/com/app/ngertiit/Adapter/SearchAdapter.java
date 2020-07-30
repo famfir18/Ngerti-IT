@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.ngertiit.Data.JSON.DataDictionary;
+import com.app.ngertiit.Data.JSON.DataSearch;
 import com.app.ngertiit.R;
 
 import java.util.ArrayList;
@@ -17,22 +18,21 @@ import java.util.List;
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyviewHolder> {
 
         Context context;
-        List<DataDictionary> dictionaryList;
+        List<DataSearch> searchList;
         OnItemSelected onItemSelected;
-        ArrayList<Object> arrayList;
+//        ArrayList<Object> arrayList;
 
-        public SearchAdapter(Context context, List<DataDictionary> dictionaryList, ArrayList<Object> arrayList,
+        public SearchAdapter(Context context, List<DataSearch> searchList,
                                 OnItemSelected onItemSelected){
 
-            this.arrayList = arrayList;
             this.context = context;
-            this.dictionaryList = dictionaryList;
+            this.searchList = searchList;
             this.onItemSelected = onItemSelected;
         }
 
-        public void setMovieList(ArrayList<Object> searchList) {
+        public void setMovieList(List<DataSearch> searchList) {
 
-            this.arrayList = searchList;
+            this.searchList = searchList;
             notifyDataSetChanged();
         }
 
@@ -47,13 +47,38 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyviewHold
                                      int position) {
 
             try {
-                DataDictionary dataDictionary = dictionaryList.get(position);
+                String div = "<div>";
+                String closeDiv = "</div>";
+                DataSearch dataSearch = searchList.get(position);
+                String description = dataSearch.getDescription();
+//                String descriptionSubs = description.substring(0,80) + "...";
 
-                holder.tvTitle.setText(dataDictionary.getTitle());
+                if (description.length() >= 80) {
+                    String descriptionSubs = description.substring(0,80) + "...";
+
+                    if (descriptionSubs.contains(closeDiv) || description.contains(div)){
+                        descriptionSubs = descriptionSubs.replaceAll(div, "");
+                        descriptionSubs = descriptionSubs.replaceAll(closeDiv,"");
+                        holder.tvDescription.setText(descriptionSubs);
+                    } else {
+                        holder.tvDescription.setText(descriptionSubs);
+                    }
+                } else {
+                    if (description.contains(closeDiv) || description.contains(div)){
+                        description = description.replaceAll(div, "");
+                        description = description.replaceAll(div,"");
+                        holder.tvDescription.setText(description);
+                    } else {
+                        holder.tvDescription.setText(description);
+                    }
+                }
+
+                holder.tvTitle.setText(dataSearch.getTitle());
+                holder.tvKategori.setText(dataSearch.getCategory());
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onItemSelected.onSelected(dataDictionary);
+                        onItemSelected.onSelected(dataSearch);
                     }
                 });
             } catch (Exception e) {
@@ -61,16 +86,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyviewHold
             }
         }
 
-        public void setFilter(List<DataDictionary> filterList){
+        /*public void setFilter(List<DataDictionary> filterList){
             dictionaryList = filterList;
             dictionaryList.addAll(filterList);
             notifyDataSetChanged();
-        }
+        }*/
 
         @Override
         public int getItemCount() {
-            if(arrayList != null){
-                return arrayList.size();
+            if(searchList != null){
+                return searchList.size();
             }
             return 0;
 
@@ -87,17 +112,21 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyviewHold
         }
 
         public interface OnItemSelected {
-            void onSelected(DataDictionary dataDictionary);
+            void onSelected(DataSearch dataSearch);
         }
 
         public class MyviewHolder extends RecyclerView.ViewHolder {
 
             TextView tvTitle;
+            TextView tvDescription;
+            TextView tvKategori;
 
             public MyviewHolder(View itemView) {
                 super(itemView);
 
                 tvTitle = itemView.findViewById(R.id.tv_kamus);
+                tvDescription = itemView.findViewById(R.id.tv_tanggal);
+                tvKategori = itemView.findViewById(R.id.tv_category);
             }
         }
 

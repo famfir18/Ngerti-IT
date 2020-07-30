@@ -95,7 +95,7 @@ public class SolutionAct extends AppCompatActivity implements SolutionAdapter.On
         solutionAdapter = new SolutionAdapter(this, myLizt, this);
         rv_solution.setAdapter(solutionAdapter);
 
-        RestService apiService = APIClient.getClient().create(RestService.class);
+        RestService apiService = APIClient.getAPI().create(RestService.class);
         Call<List<DataSolution>> call = apiService.getDataSolutions();
 
         call.enqueue(new Callback<List<DataSolution>>() {
@@ -236,7 +236,7 @@ public class SolutionAct extends AppCompatActivity implements SolutionAdapter.On
                 if (!nextText.equals("")) {
                     listFiltered.clear();
                 } else {
-                    RestService apiService = APIClient.getClient().create(RestService.class);
+                    RestService apiService = APIClient.getAPI().create(RestService.class);
                     Call<List<DataSolution>> call = apiService.getDataSolutions();
 
                     call.enqueue(new Callback<List<DataSolution>>() {

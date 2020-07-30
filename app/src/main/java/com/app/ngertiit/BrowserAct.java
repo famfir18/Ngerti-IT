@@ -3,6 +3,7 @@ package com.app.ngertiit;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.annotation.SuppressLint;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
@@ -96,10 +97,30 @@ public class BrowserAct extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Copied to clipboard", Toast.LENGTH_LONG).show();
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     public void loadLocalPage() {
         WebSettings webSetting = webView.getSettings();
         webSetting.setBuiltInZoomControls(false);
-        webView.setWebViewClient(new WebViewClient());
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                // open in Webview
+//                if (url.contains("android_asset") ){
+//                    // Can be clever about it like so where myshost is defined in your strings file
+//                    // if (Uri.parse(url).getHost().equals(getString(R.string.myhost)))
+//                    return false;
+//                }
+                // open rest of URLS in default browser
+                if (url.contains("donasi")){
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                }
+                return true;
+            }
+        });
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(link);
     }
 }

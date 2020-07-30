@@ -297,49 +297,68 @@ public class KontenSolusiAct extends AppCompatActivity implements View.OnClickLi
         switch (view.getId()) {
             case R.id.expand_button_0:
                 if (!expandableLayout0.isExpanded()) {
+                    view.setBackgroundColor(this.getResources().getColor(R.color.white));
+                    findViewById(R.id.expand_button_1).setBackgroundColor(this.getResources().getColor(R.color.putih));
+                    findViewById(R.id.expand_button_2).setBackgroundColor(this.getResources().getColor(R.color.putih));
+                    findViewById(R.id.expand_button_3).setBackgroundColor(this.getResources().getColor(R.color.putih));
                     expandableLayout0.expand();
+                    expandableLayout1.collapse();
+                    expandableLayout2.collapse();
+                    expandableLayout3.collapse();
                     clicked = true;
                 } else if (clicked = true){
+                    view.setBackgroundColor(this.getResources().getColor(R.color.putih));
                     expandableLayout0.collapse();
                 }
 //                expandableLayout0.expand();
-                expandableLayout1.collapse();
-                expandableLayout2.collapse();
-                expandableLayout3.collapse();
                 break;
             case R.id.expand_button_1:
                 if (!expandableLayout1.isExpanded()) {
+                    view.setBackgroundColor(this.getResources().getColor(R.color.white));
+                    findViewById(R.id.expand_button_0).setBackgroundColor(this.getResources().getColor(R.color.putih));
+                    findViewById(R.id.expand_button_2).setBackgroundColor(this.getResources().getColor(R.color.putih));
+                    findViewById(R.id.expand_button_3).setBackgroundColor(this.getResources().getColor(R.color.putih));
                     expandableLayout1.expand();
+                    expandableLayout2.collapse();
+                    expandableLayout3.collapse();
+                    expandableLayout0.collapse();
                     clicked = true;
                 } else if (clicked = true){
+                    view.setBackgroundColor(this.getResources().getColor(R.color.putih));
                     expandableLayout1.collapse();
                 }
-                expandableLayout2.collapse();
-//                expandableLayout1.expand();
-                expandableLayout3.collapse();
-                expandableLayout0.collapse();
                 break;
             case R.id.expand_button_2:
                 if (!expandableLayout2.isExpanded()) {
+                    view.setBackgroundColor(this.getResources().getColor(R.color.white));
+                    findViewById(R.id.expand_button_1).setBackgroundColor(this.getResources().getColor(R.color.putih));
+                    findViewById(R.id.expand_button_0).setBackgroundColor(this.getResources().getColor(R.color.putih));
+                    findViewById(R.id.expand_button_3).setBackgroundColor(this.getResources().getColor(R.color.putih));
                     expandableLayout2.expand();
+                    expandableLayout1.collapse();
+                    expandableLayout0.collapse();
+                    expandableLayout3.collapse();
                     clicked = true;
                 } else if (clicked = true){
+                    view.setBackgroundColor(this.getResources().getColor(R.color.putih));
                     expandableLayout2.collapse();
                 }
-                expandableLayout1.collapse();
-                expandableLayout0.collapse();
-                expandableLayout3.collapse();
                 break;
             case R.id.expand_button_3:
                 if (!expandableLayout3.isExpanded()) {
+                    view.setBackgroundColor(this.getResources().getColor(R.color.white));
+                    findViewById(R.id.expand_button_1).setBackgroundColor(this.getResources().getColor(R.color.putih));
+                    findViewById(R.id.expand_button_2).setBackgroundColor(this.getResources().getColor(R.color.putih));
+                    findViewById(R.id.expand_button_0).setBackgroundColor(this.getResources().getColor(R.color.putih));
                     expandableLayout3.expand();
+                    expandableLayout1.collapse();
+                    expandableLayout2.collapse();
+                    expandableLayout0.collapse();
                     clicked = true;
                 } else if (clicked = true){
+                    view.setBackgroundColor(this.getResources().getColor(R.color.putih));
                     expandableLayout3.collapse();
                 }
-                expandableLayout1.collapse();
-                expandableLayout2.collapse();
-                expandableLayout0.collapse();
                 break;
         }
     }

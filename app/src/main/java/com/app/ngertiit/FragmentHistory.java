@@ -114,7 +114,7 @@ public class FragmentHistory extends Fragment implements HistoryAdapter.OnItemSe
 //        Log.d("TAG","Data History = "+ gson.toJson(bodyHistory));
 
 
-        RestService apiService = APIClient.getClient().create(RestService.class);
+        RestService apiService = APIClient.getAPI().create(RestService.class);
         Call<List<DataHistory>> call = apiService.getHistory(idDevice);
 
         call.enqueue(new Callback<List<DataHistory>>() {

@@ -30,6 +30,7 @@ import com.app.ngertiit.Adapter.LifeHackAdapterMenu;
 import com.app.ngertiit.Adapter.SolutionAdapterMenu;
 import com.app.ngertiit.Data.API.APIClient;
 import com.app.ngertiit.Data.API.RestService;
+import com.app.ngertiit.Data.JSON.DataAppState;
 import com.app.ngertiit.Data.JSON.DataCarousels;
 import com.app.ngertiit.Data.JSON.DataDictionary;
 import com.app.ngertiit.Data.JSON.DataHistory;
@@ -159,7 +160,7 @@ public class FragmentHome extends Fragment
         dictionaryAdapterMenu = new DictionaryAdapterMenu(context, dictionaries, this);
         rv_dictionary.setAdapter(dictionaryAdapterMenu);
 
-        RestService apiService = APIClient.getClient().create(RestService.class);
+        RestService apiService = APIClient.getAPI().create(RestService.class);
         Call<List<DataDictionary>> call = apiService.getDataDictionarybyTime();
 
         call.enqueue(new Callback<List<DataDictionary>>() {
@@ -184,7 +185,7 @@ public class FragmentHome extends Fragment
         solutionAdapterMenu = new SolutionAdapterMenu(context, myLizt, this);
         rv_solution.setAdapter(solutionAdapterMenu);
 
-        RestService apiService = APIClient.getClient().create(RestService.class);
+        RestService apiService = APIClient.getAPI().create(RestService.class);
         Call<List<DataSolution>> call = apiService.getDataSolutions();
 
         call.enqueue(new Callback<List<DataSolution>>() {
@@ -210,7 +211,7 @@ public class FragmentHome extends Fragment
         lifeHackAdapterMenu = new LifeHackAdapterMenu(context, myList,this);
         rv_lifehack.setAdapter(lifeHackAdapterMenu);
 
-        RestService apiService = APIClient.getClient().create(RestService.class);
+        RestService apiService = APIClient.getAPI().create(RestService.class);
         Call<List<DataLifehacks>> call = apiService.getDataLifehacks();
 
         call.enqueue(new Callback<List<DataLifehacks>>() {

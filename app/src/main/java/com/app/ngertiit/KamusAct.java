@@ -97,7 +97,7 @@ public class KamusAct extends AppCompatActivity implements DictionaryAdapter.OnI
         adapter = new DictionaryAdapter(this, dictionaries, this);
         rv_dictionary.setAdapter(adapter);
 
-        RestService apiService = APIClient.getClient().create(RestService.class);
+        RestService apiService = APIClient.getAPI().create(RestService.class);
         Call<List<DataDictionary>> call = apiService.getDataDictionary();
 
         call.enqueue(new Callback<List<DataDictionary>>() {
@@ -159,7 +159,7 @@ public class KamusAct extends AppCompatActivity implements DictionaryAdapter.OnI
                 if (!nextText.equals("")) {
                     dictionariesFiltered.clear();
                 } else {
-                    RestService apiService = APIClient.getClient().create(RestService.class);
+                    RestService apiService = APIClient.getAPI().create(RestService.class);
                     Call<List<DataDictionary>> call = apiService.getDataDictionary();
 
                     call.enqueue(new Callback<List<DataDictionary>>() {

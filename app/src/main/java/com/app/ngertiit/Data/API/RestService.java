@@ -1,10 +1,12 @@
 package com.app.ngertiit.Data.API;
 
+import com.app.ngertiit.Data.JSON.DataAppState;
 import com.app.ngertiit.Data.JSON.DataCarousels;
 import com.app.ngertiit.Data.JSON.DataDictionary;
 import com.app.ngertiit.Data.JSON.DataHistory;
 import com.app.ngertiit.Data.JSON.DataKritikSaran;
 import com.app.ngertiit.Data.JSON.DataLifehacks;
+import com.app.ngertiit.Data.JSON.DataSearch;
 import com.app.ngertiit.Data.JSON.DataSolution;
 import com.app.ngertiit.Data.JSON.DataTestSDG;
 
@@ -28,6 +30,9 @@ public interface RestService {
 
     @GET("lifehacks/all")
     Call<List<DataLifehacks>> getDataLifehacks();
+
+    @GET("search/{context}")
+    Call<List<DataSearch>> getDataSearch(@Path("context") String context);
 
     @GET("solutions/all")
     Call<List<DataSolution>> getDataSolutions();
@@ -56,4 +61,6 @@ public interface RestService {
     @GET("dictionary/{id_artikel}/")
     Call<DataDictionary> getDataDictionaryFiltered(@Path("id_artikel") String id);
 
+    @GET("appstate")
+    Call<DataAppState> getDataAppState();
 }

@@ -97,7 +97,7 @@ public class LifeHackAct extends AppCompatActivity implements LifeHackAdapter.On
         lifeHackAdapter = new LifeHackAdapter(this, myLizt, this);
         rv_solution.setAdapter(lifeHackAdapter);
 
-        RestService apiService = APIClient.getClient().create(RestService.class);
+        RestService apiService = APIClient.getAPI().create(RestService.class);
         Call<List<DataLifehacks>> call = apiService.getDataLifehacks();
 
         call.enqueue(new Callback<List<DataLifehacks>>() {
@@ -230,7 +230,7 @@ public class LifeHackAct extends AppCompatActivity implements LifeHackAdapter.On
                 if (!nextText.equals("")) {
                     listFiltered.clear();
                 } else {
-                    RestService apiService = APIClient.getClient().create(RestService.class);
+                    RestService apiService = APIClient.getAPI().create(RestService.class);
                     Call<List<DataLifehacks>> call = apiService.getDataLifehacks();
 
                     call.enqueue(new Callback<List<DataLifehacks>>() {

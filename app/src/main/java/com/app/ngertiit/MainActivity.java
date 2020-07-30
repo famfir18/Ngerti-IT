@@ -277,7 +277,7 @@ public class MainActivity extends AppCompatActivity
 
         switch (item.getItemId()){
             case R.id.home_menu:
-                search.setVisibility(View.GONE);
+                search.setVisibility(View.VISIBLE);
                 layoutFragmentSetting.setVisibility(View.GONE);
                 fragment = new FragmentHome();
                 break;
