@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class APIClient {
 
     //URL LIVE
-    public static final String URL_BASE = "http://banyakngerti.id/apis/semogacepetkaya/";
+    public static final String URL_BASE = "https://banyakngerti.id/apis/semogacepetkaya/";
 
     //URL Development
 //    public static final String URL_BASE = "http://25.67.180.195:8788/apis/semogacepetkaya/";
@@ -21,10 +21,14 @@ public class APIClient {
 
 
     public static Retrofit getAPI() {
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(URL_BASE)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
         }
 
