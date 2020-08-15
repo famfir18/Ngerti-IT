@@ -45,7 +45,7 @@ public class LifeHackAdapterMenu extends RecyclerView.Adapter<LifeHackAdapterMen
     public void onBindViewHolder(LifeHackAdapterMenu.MyviewHolder holder,
                                  int position) {
 
-        final Animation animScaleTitle = AnimationUtils.loadAnimation(context, R.anim.anim_scale_dialog);
+        final Animation animScaleTitle = AnimationUtils.loadAnimation(context, R.anim.anim_bounce);
 
         for (int i = 0; i < position; i++){
             holder.card.startAnimation(animScaleTitle);

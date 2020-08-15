@@ -1,7 +1,5 @@
 package com.app.ngertiit.Adapter;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.ngertiit.Data.JSON.DataSolution;
 import com.app.ngertiit.R;
-import com.app.ngertiit.WelcomeActivity;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SolutionAdapterMenu extends RecyclerView.Adapter<SolutionAdapterMenu.MyviewHolder> {
@@ -53,7 +48,7 @@ public class SolutionAdapterMenu extends RecyclerView.Adapter<SolutionAdapterMen
     public void onBindViewHolder(SolutionAdapterMenu.MyviewHolder holder,
                                  int position) {
 
-        final Animation animScaleTitle = AnimationUtils.loadAnimation(context, R.anim.anim_scale_dialog);
+        final Animation animScaleTitle = AnimationUtils.loadAnimation(context, R.anim.anim_bounce);
 
         for (int i = 0; i < position; i++){
             holder.card.startAnimation(animScaleTitle);

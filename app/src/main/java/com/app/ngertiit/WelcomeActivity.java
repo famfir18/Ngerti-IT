@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +17,20 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import net.cachapa.expandablelayout.ExpandableLayout;
+
+import java.util.Objects;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -38,10 +45,74 @@ public class WelcomeActivity extends AppCompatActivity {
     Dialog dialogConfirm;
     CardView carDialog;
 
+    Dialog dialogDisclaimer;
+    Button yes;
+    Button no;
+
+    CheckBox checkBox;
+
+    TextView contentPertama;
+    ExpandableLayout expandableLayout0;
+
+    Boolean clicked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        dialogDisclaimer = new Dialog(this);
+        dialogDisclaimer.setContentView(R.layout.dialog_disclaimer);
+        dialogDisclaimer.setCancelable(false);
+        Objects.requireNonNull(dialogDisclaimer.getWindow()).setBackgroundDrawableResource(R.color.transparent);
+
+        no = dialogDisclaimer.findViewById(R.id.btnNo);
+        checkBox = dialogDisclaimer.findViewById(R.id.checkBox);
+
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkBox.isChecked()){
+                    no.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bg_button_accent));
+                    no.setEnabled(true);
+                } else {
+                    no.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bg_button_grey));
+                    no.setEnabled(false);
+                }
+            }
+        });
+
+
+        no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchHomeScreen();
+            }
+        });
+
+        contentPertama = dialogDisclaimer.findViewById(R.id.expand_button_0);
+        expandableLayout0 = dialogDisclaimer.findViewById(R.id.expandable_layout_0);
+
+        expandableLayout0.setOnExpansionUpdateListener(new ExpandableLayout.OnExpansionUpdateListener() {
+            @Override
+            public void onExpansionUpdate(float expansionFraction, int state) {
+                Log.d("ExpandableLayout0", "State: " + state);
+            }
+        });
+
+        contentPertama.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!expandableLayout0.isExpanded()) {
+                    contentPertama.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.white));
+                    expandableLayout0.expand();
+                    clicked = true;
+                } else if (clicked = true){
+                    contentPertama.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.putih));
+                    expandableLayout0.collapse();
+                }
+            }
+        });
+
 
         // mengecek lauch activity - sebelum memanggil setContentView()
         prefManager = new PrefManager(this);
@@ -130,8 +201,8 @@ public class WelcomeActivity extends AppCompatActivity {
                     // move to next screen
                     viewPager.setCurrentItem(current);
                 } else {
-
-                    launchHomeScreen();
+                    dialogDisclaimer.show();
+//                    launchHomeScreen();
                    /* ActivityCompat.requestPermissions(WelcomeActivity.this,
                             new String[]{Manifest.permission.READ_PHONE_STATE},
                             1);
@@ -206,7 +277,7 @@ public class WelcomeActivity extends AppCompatActivity {
             // mengubah button lanjut 'NEXT' / 'GOT IT'
             if (position == layouts.length - 1) {
 
-                final Animation animScaleTitle = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.anim_scale_dialog);
+                final Animation animScaleTitle = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.anim_bounce);
 
                 // last page. make button text to GOT IT
                 btnNext.startAnimation(animScaleTitle);

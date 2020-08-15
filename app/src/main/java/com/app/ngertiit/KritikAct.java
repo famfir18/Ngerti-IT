@@ -119,7 +119,7 @@ public class KritikAct extends AppCompatActivity {
                 Snackbar.make(v, "Katanya mau kasih kritik saran, kok kosyong??", Snackbar.LENGTH_SHORT)
                         .show();
             } else {
-                final Animation animScaleTitle = AnimationUtils.loadAnimation(this, R.anim.anim_scale_dialog);
+                final Animation animScaleTitle = AnimationUtils.loadAnimation(this, R.anim.anim_bounce);
 
                 submitKritikSaran();
                 /*etNama.getText().clear();

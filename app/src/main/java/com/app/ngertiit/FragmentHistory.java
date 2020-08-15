@@ -74,7 +74,7 @@ public class FragmentHistory extends Fragment implements HistoryAdapter.OnItemSe
         ButterKnife.bind(this,view);
         context = getContext();
 
-        final Animation animScaleTitle = AnimationUtils.loadAnimation(context, R.anim.anim_scale_dialog);
+        final Animation animScaleTitle = AnimationUtils.loadAnimation(context, R.anim.anim_bounce);
 
         toolbarText = getActivity().findViewById(R.id.toolbar_text);
         toolbarText.setText("History");

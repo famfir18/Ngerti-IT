@@ -94,6 +94,7 @@
                         android:elevation="6dp"
                         android:gravity="center"
                         android:padding="16dp"
+                        android:fontFamily="@font/montserrat"
                         android:textStyle="bold"
                         android:text="Cara Pertama"
                         android:textColor="@color/black" />
@@ -143,6 +144,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/putih"
                         android:elevation="6dp"
+                        android:fontFamily="@font/montserrat"
                         android:gravity="center"
                         android:textStyle="bold"
                         android:padding="16dp"
@@ -195,6 +197,7 @@
                         android:background="@color/putih"
                         android:elevation="6dp"
                         android:gravity="center"
+                        android:fontFamily="@font/montserrat"
                         android:padding="16dp"
                         android:textStyle="bold"
                         android:text="Cara Ketiga"
@@ -247,6 +250,7 @@
                         android:elevation="6dp"
                         android:gravity="center"
                         android:textStyle="bold"
+                        android:fontFamily="@font/montserrat"
                         android:padding="16dp"
                         android:text="Cara Keempat"
                         android:textColor="@color/black" />

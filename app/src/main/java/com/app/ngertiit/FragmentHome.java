@@ -297,7 +297,7 @@ public class FragmentHome extends Fragment
                             });
                         } else if (position == 2) {
                             imageView.setOnClickListener(v -> {
-                                Intent i = new Intent(context, SolutionAct.class);
+                                Intent i = new Intent(context, LifeHackAct.class);
                                 startActivity(i);
                             });
 

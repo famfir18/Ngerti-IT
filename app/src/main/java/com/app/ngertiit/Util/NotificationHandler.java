@@ -43,6 +43,8 @@ public class NotificationHandler implements OneSignal.NotificationOpenedHandler 
 
     String idDevice;
 
+    Integer idArtikel = null;
+
     public NotificationHandler(MainActivity application) {
         this.application = application;
     }
@@ -62,6 +64,7 @@ public class NotificationHandler implements OneSignal.NotificationOpenedHandler 
         String lifehack = "lifeh";
         String kamus = "kamus";
         String solusi = "sols";
+        String event = "event";
         String notif = result.notification.payload.title;
         String titleKonten = result.notification.payload.body;
 
@@ -81,12 +84,14 @@ public class NotificationHandler implements OneSignal.NotificationOpenedHandler 
         titleNotif = result.notification.payload.title;
         System.out.println("Ini additional data " + tag);
 
-        int idArtikel = Integer.parseInt(idArtikelString);
+        if (idArtikelString.matches(".*\\d.*")){
+            idArtikel = Integer.parseInt(idArtikelString);
+        }
         String idUser = idDevice;
 
         DataHistory dataHistory = new DataHistory();
 
-        if (!tag.equals(kamus)){
+        if (!tag.equals(kamus) && !tag.equals(event)){
             dataHistory.setIdArtikel(idArtikel);
             dataHistory.setIdUser(idUser);
             dataHistory.setJudulArtikel(titleKonten);
@@ -124,6 +129,7 @@ public class NotificationHandler implements OneSignal.NotificationOpenedHandler 
             }
         });
 
+        if (!tag.isEmpty()){
             if (tag.contains(lifehack)){
                 System.out.println("DEVELOPER : Lifehack");
                 startLifehack();
@@ -134,9 +140,13 @@ public class NotificationHandler implements OneSignal.NotificationOpenedHandler 
             } else if (tag.contains(kamus)){
                 System.out.println("DEVELOPER : Kamus");
                 startKamus();
-            } else {
-                startMain();
+            } else if (tag.contains(event)){
+                System.out.println("Mengandung Event " + idArtikelString);
+                startEvent();
             }
+        } else {
+            startMain();
+        }
     }
 
     private void startLifehack() {
@@ -163,6 +173,13 @@ public class NotificationHandler implements OneSignal.NotificationOpenedHandler 
     private void startMain() {
         Intent intent = new Intent(application, MainActivity.class)
                 .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+        application.startActivity(intent);
+    }
+
+    private void startEvent() {
+        Intent intent = new Intent(application, MainActivity.class)
+                .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("idArtikel", idArtikelString);
         application.startActivity(intent);
     }
 }

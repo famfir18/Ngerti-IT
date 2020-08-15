@@ -6,24 +6,38 @@ import androidx.fragment.app.Fragment;
 
 import android.app.Application;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.app.ngertiit.Data.API.APIClient;
+import com.app.ngertiit.Data.API.RestService;
+import com.app.ngertiit.Data.JSON.DataEvent;
+import com.app.ngertiit.Data.JSON.DataSolution;
 import com.app.ngertiit.Util.NotificationHandler;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
 import com.onesignal.OneSignal;
+import com.squareup.picasso.Picasso;
+
+import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.util.Objects;
 import java.util.Random;
@@ -31,6 +45,9 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import maes.tech.intentanim.CustomIntent;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -41,6 +58,8 @@ public class MainActivity extends AppCompatActivity
     Switch switchNotif;
     @BindView(R.id.layout_update)
     LinearLayout layoutNotif;
+    @BindView(R.id.layout_disclaimer)
+    LinearLayout layoutDisclaimer;
     @BindView(R.id.layout_fragment_setting)
     ScrollView layoutFragmentSetting;
     @BindView(R.id.layout_donasi)
@@ -56,10 +75,27 @@ public class MainActivity extends AppCompatActivity
 
 
     Dialog dialogExit;
+    Dialog dialogEvent;
+    Dialog dialogDisclaimer;
+
     String updateYes;
     String updateNo;
 
+    ImageView imageEvent;
+    ProgressBar progressBar;
     Application application;
+
+    String eventId;
+
+    PrefManager prefManager;
+    CheckBox checkBox;
+    TextView closeEvent;
+
+    Boolean clicked = false;
+
+    String status;
+    String id;
+    String imageUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,13 +104,118 @@ public class MainActivity extends AppCompatActivity
 
         ButterKnife.bind(this);
 
+        Gson gson = new Gson();
+        RestService restService = APIClient.getAPI().create(RestService.class);
+        Call<DataEvent> call = restService.getDataEventToday();
+
+        call.enqueue(new Callback<DataEvent>() {
+            @Override
+            public void onResponse(Call<DataEvent> call, Response<DataEvent> response) {
+                System.out.println("RES[ONNYA " + gson.toJson(response.body()));
+                status = response.body().getStatus();
+                imageUrl = response.body().getImageUrl();
+                id = response.body().getId();
+
+                imageEvent = dialogEvent.findViewById(R.id.image_event);
+                progressBar = dialogEvent.findViewById(R.id.loading_indicator);
+                checkBox = dialogEvent.findViewById(R.id.checkBox);
+                closeEvent = dialogEvent.findViewById(R.id.btn_close);
+
+                SharedPreferences sharedPrefz = getSharedPreferences("checkEvent", MODE_PRIVATE);
+                Boolean wkwk = sharedPrefz.getBoolean("checkEvent", false);
+
+                checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                    Boolean checked = false;
+                    if (checkBox.isChecked()){
+                        System.out.println( "KECEK NIH WOY");
+                        checked = true;
+                    }
+                    SharedPreferences.Editor editor = getSharedPreferences("checkEvent", MODE_PRIVATE).edit();
+                    editor.putBoolean("checkEvent", true);
+                    editor.commit();
+                });
+
+                if (status.equals("1004")){
+                    if (!wkwk){
+                        dialogEvent.show();
+                    }
+                }
+
+                Picasso.with(getApplicationContext())
+                        .load(imageUrl)
+                        .into(imageEvent, new com.squareup.picasso.Callback() {
+                            @Override
+                            public void onSuccess() {
+                                progressBar.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onError() {
+//                        progressBar.setVisibility(View.GONE);
+                                Toast.makeText(MainActivity.this, "Gagal memuat gambar", Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+                        });
+            }
+
+            @Override
+            public void onFailure(Call<DataEvent> call, Throwable t) {
+
+            }
+        });
+
         bnMain.setItemIconTintList(null);
         bnMain.setOnNavigationItemSelectedListener(this);
 
+        if (getIntent().getExtras() != null) {
+            eventId = getIntent().getStringExtra("idArtikel");
+            System.out.println("Ini ID Event" + eventId);
+        }
 
         loadFragment(new FragmentHome());
 
         dialogExit = new Dialog(this);
+        dialogEvent = new Dialog(this);
+        dialogDisclaimer = new Dialog(this);
+
+
+        dialogExit.setContentView(R.layout.dialog_exit);
+        dialogEvent.setContentView(R.layout.dialog_event);
+        dialogDisclaimer.setContentView(R.layout.dialog_disclaimer);
+        Objects.requireNonNull(dialogExit.getWindow()).setBackgroundDrawableResource(R.color.transparent);
+        Objects.requireNonNull(dialogEvent.getWindow()).setBackgroundDrawableResource(R.color.transparent);
+        Objects.requireNonNull(dialogDisclaimer.getWindow()).setBackgroundDrawableResource(R.color.transparent);
+
+        CheckBox checkBoxDisclaimer = dialogDisclaimer.findViewById(R.id.checkBox);
+        Button btnNo = dialogDisclaimer.findViewById(R.id.btnNo);
+
+        btnNo.setVisibility(View.GONE);
+        checkBoxDisclaimer.setChecked(true);
+        checkBoxDisclaimer.setEnabled(false);
+
+        TextView contentPertama = dialogDisclaimer.findViewById(R.id.expand_button_0);
+        ExpandableLayout expandableLayout0 = dialogDisclaimer.findViewById(R.id.expandable_layout_0);
+
+        expandableLayout0.setOnExpansionUpdateListener(new ExpandableLayout.OnExpansionUpdateListener() {
+            @Override
+            public void onExpansionUpdate(float expansionFraction, int state) {
+                Log.d("ExpandableLayout0", "State: " + state);
+            }
+        });
+
+        contentPertama.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!expandableLayout0.isExpanded()) {
+                    contentPertama.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.white));
+                    expandableLayout0.expand();
+                    clicked = true;
+                } else if (clicked = true){
+                    contentPertama.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.putih));
+                    expandableLayout0.collapse();
+                }
+            }
+        });
 
         if (switchNotif.isChecked()){
             // OneSignal Initialization
@@ -174,6 +315,13 @@ public class MainActivity extends AppCompatActivity
                 CustomIntent.customType(MainActivity.this,"bottom-to-up");
             }
         });
+
+        layoutDisclaimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogDisclaimer.show();
+            }
+        });
     }
 
 
@@ -183,7 +331,7 @@ public class MainActivity extends AppCompatActivity
         Random random = new Random();
         int randomz = random.nextInt(7);
 
-        final Animation animScaleTitle = AnimationUtils.loadAnimation(this, R.anim.anim_scale_dialog);
+        final Animation animScaleTitle = AnimationUtils.loadAnimation(this, R.anim.anim_bounce);
         final Animation animShake = AnimationUtils.loadAnimation(this, R.anim.anim_shake);
 
         Button yes;

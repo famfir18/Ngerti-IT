@@ -3,6 +3,7 @@ package com.app.ngertiit.Data.API;
 import com.app.ngertiit.Data.JSON.DataAppState;
 import com.app.ngertiit.Data.JSON.DataCarousels;
 import com.app.ngertiit.Data.JSON.DataDictionary;
+import com.app.ngertiit.Data.JSON.DataEvent;
 import com.app.ngertiit.Data.JSON.DataHistory;
 import com.app.ngertiit.Data.JSON.DataKritikSaran;
 import com.app.ngertiit.Data.JSON.DataLifehacks;
@@ -63,4 +64,10 @@ public interface RestService {
 
     @GET("appstate")
     Call<DataAppState> getDataAppState();
+
+    @GET("event/today")
+    Call<DataEvent> getDataEventToday();
+
+    @GET("event/{id}")
+    Call<DataEvent> getDataEventNotif(@Path("id") String id);
 }

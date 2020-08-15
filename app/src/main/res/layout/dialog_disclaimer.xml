@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_dialog_exit"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:background="#CD222424"
+    app:cardCornerRadius="20dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/montserrat"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="Penerimaan Persyaratan"
+            android:layout_marginTop="10dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp">
+
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimary"
+                android:text="Dengan menggunakan aplikasi ini, anda setuju dengan syarat dan ketentuan berikut :" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/expand_button_0"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/putih"
+                        android:elevation="6dp"
+                        android:fontFamily="@font/montserrat"
+                        android:padding="16dp"
+                        android:text="Disclaimer"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <net.cachapa.expandablelayout.ExpandableLayout
+                            android:id="@+id/expandable_layout_0"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:el_duration="500"
+                            app:el_expanded="false">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:fontFamily="@font/montserrat"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="10dp"
+                                    android:paddingRight="10dp"
+                                    android:text="Disclaimer (Bahasa)"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginBottom="10dp"
+                                    android:fontFamily="@font/montserrat"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="10dp"
+                                    android:paddingRight="10dp"
+                                    android:text="Dengan mengunduh, mengakses, atau menggunakan Aplikasi Seluler Ngerti IT atau halaman mana pun dari aplikasi ini, Anda menyatakan persetujuan Anda terhadap penyangkalan ini. Konten aplikasi ini, termasuk namun tidak terbatas pada, semua data, informasi, teks, grafik, tautan, dan materi lainnya disediakan untuk kenyamanan pengguna aplikasi kami dan dimaksudkan untuk digunakan hanya untuk tujuan informasi. Kami tidak bertanggung jawab atas keputusan yang diambil oleh pembaca hanya berdasarkan informasi yang diberikan dalam aplikasi ini."
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginBottom="20dp"
+                                    android:fontFamily="@font/montserrat"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="10dp"
+                                    android:paddingRight="10dp"
+                                    android:text="Kami SECARA TEGAS MENOLAK SEMUA JAMINAN APAPUN, BAIK TERSURAT MAUPUN TERSIRAT. Kami tidak menjamin bahwa (1) APLIKASI ATAU KONTEN AKAN MEMENUHI ATAU MEMUASKAN KEBUTUHAN ANDA (2) KAMI TIDAK BERTANGGUNG JAWAB ATAS KERUSAKAN PONSEL ATAU TABLET ATAU LAPTOP ATAU PC ATAU KEHILANGAN DATA YANG AKIBAT DARI PENGGUNAAN ANDA DARI APLIKASI ATAU ISINYA."
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:fontFamily="@font/montserrat"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="10dp"
+                                    android:paddingRight="10dp"
+                                    android:text="Disclaimer (English)"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginBottom="10dp"
+                                    android:fontFamily="@font/montserrat"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="10dp"
+                                    android:paddingRight="10dp"
+                                    android:text="By downloading, accessing or using Ngerti IT Mobile App or any page of this app, you signify your assent to this disclaimer. The contents of this app, including without limitation, all data, information, text, graphics, links and other materials are provided as a convenience to our app users and are meant to be used for informational purposes only. We do not take responsibility for decisions taken by the reader based solely on the information provided in this app."
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginBottom="20dp"
+                                    android:fontFamily="@font/montserrat"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="10dp"
+                                    android:paddingRight="10dp"
+                                    android:text="We STRICTLY DISCLAIM ALL WARRANTIES OF ANY KIND, WHETHER EXPRESSED OR IMPLIED. We cannot guarantee that (1) THE APP OR THE CONTENT WILL MEET OR SATISFY YOUR REQUIREMENTS (2) WE SHALL HAVE NO RESPONSIBILITY FOR ANY DAMAGE TO YOUR PHONE OR TABLET OR LAPTOP OR PC OR LOSS OF DATA THAT RESULTS FROM YOUR USE OF THE APP OR ITS CONTENT."
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp" />
+
+                            </LinearLayout>
+
+                        </net.cachapa.expandablelayout.ExpandableLayout>
+
+                    </ScrollView>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_button_grey"
+                    android:enabled="false"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:text="Lanjutkan"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
