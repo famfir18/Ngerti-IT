@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
@@ -20,7 +21,11 @@ public class CategorySolution extends AppCompatActivity {
     @BindView(R.id.ln_macos)
     LinearLayout macos;
     @BindView(R.id.ln_windows)
-    LinearLayout windows;
+    LinearLayout windows;@BindView(R.id.ln_android)
+    LinearLayout androiD;
+    @BindView(R.id.ln_ios)
+    LinearLayout ios;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,26 @@ public class CategorySolution extends AppCompatActivity {
             Intent i = new Intent(CategorySolution.this,SolutionAct.class);
             i.putExtra("Windows", "Windows");
             startActivity(i);
+        });
+
+        androiD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                v.startAnimation(animScalein);
+                Intent i = new Intent(CategorySolution.this,SolutionAct.class);
+                i.putExtra("Android", "Android");
+                startActivity(i);
+            }
+        });
+
+        ios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                v.startAnimation(animScalein);
+                Intent i = new Intent(CategorySolution.this,SolutionAct.class);
+                i.putExtra("iOS", "iOS");
+                startActivity(i);
+            }
         });
     }
 

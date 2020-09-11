@@ -86,12 +86,21 @@ public class LifeHackAdapterMenu extends RecyclerView.Adapter<LifeHackAdapterMen
             }
         }
 
-        if (dataLifehacks.getCategory().equals("Windows")) {
-             holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_windows_hacks));
-        } else if (dataLifehacks.getCategory().equals("macOS")) {
-             holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_macos_hacks));
-            }
+        switch (dataLifehacks.getCategory()) {
+            case "Windows":
+                holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_windows_hacks));
+                break;
+            case "macOS":
+                holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_macos_hacks));
+                break;
+            case "Android":
+                holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_android_hacks));
+                break;
+            case "iOS":
+                holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_ios_hacks));
+                break;
         }
+    }
 
     @Override
     public int getItemCount() {

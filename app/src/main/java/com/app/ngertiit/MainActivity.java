@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.app.ActivityManager;
 import android.app.Application;
 import android.app.Dialog;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -17,7 +19,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,7 +31,6 @@ import android.widget.Toast;
 import com.app.ngertiit.Data.API.APIClient;
 import com.app.ngertiit.Data.API.RestService;
 import com.app.ngertiit.Data.JSON.DataEvent;
-import com.app.ngertiit.Data.JSON.DataSolution;
 import com.app.ngertiit.Util.NotificationHandler;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
@@ -72,7 +72,8 @@ public class MainActivity extends AppCompatActivity
     LinearLayout layoutTentang;
     @BindView(R.id.search)
     ImageButton search;
-
+    @BindView(R.id.layout_rate)
+    LinearLayout layoutRate;
 
     Dialog dialogExit;
     Dialog dialogEvent;
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity
 
     ImageView imageEvent;
     ProgressBar progressBar;
+
     Application application;
 
     String eventId;
@@ -103,6 +105,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+
+        application =  (Application) getApplicationContext();
 
         Gson gson = new Gson();
         RestService restService = APIClient.getAPI().create(RestService.class);
@@ -139,6 +143,8 @@ public class MainActivity extends AppCompatActivity
                     if (!wkwk){
                         dialogEvent.show();
                     }
+                } else if (status.equals("1003")){
+                    sharedPrefz.edit().clear().commit();
                 }
 
                 Picasso.with(getApplicationContext())
@@ -223,7 +229,7 @@ public class MainActivity extends AppCompatActivity
                     .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                     .unsubscribeWhenNotificationsAreDisabled(true)
                     .autoPromptLocation(true)
-                    .setNotificationOpenedHandler(new NotificationHandler(this))
+                    .setNotificationOpenedHandler(new NotificationHandler(application))
                     .init();
 
             OneSignal.setSubscription(true);
@@ -237,7 +243,7 @@ public class MainActivity extends AppCompatActivity
                 OneSignal.startInit(this)
                         .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                         .unsubscribeWhenNotificationsAreDisabled(true)
-                        .setNotificationOpenedHandler(new NotificationHandler(this))
+                        .setNotificationOpenedHandler(new NotificationHandler(application))
                         .autoPromptLocation(true)
                         .init();
                 OneSignal.setSubscription(true);
@@ -272,6 +278,18 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,Intent.ShortcutIconResource.fromContext(getApplicationContext(), R.mipmap.ic_launcher));
         intent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
         getApplicationContext().sendBroadcast(intent);
+    }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                Log.i ("Service status", "Running");
+                return true;
+            }
+        }
+        Log.i ("Service status", "Not running");
+        return false;
     }
 
     private void initView() {
@@ -320,6 +338,14 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 dialogDisclaimer.show();
+            }
+        });
+
+        layoutRate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent viewIntent = new Intent("android.intent.action.VIEW", Uri.parse("https://play.google.com/store/apps/details?id=com.app.ngertiit"));
+                startActivity(viewIntent);
             }
         });
     }

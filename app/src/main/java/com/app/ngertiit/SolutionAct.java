@@ -27,6 +27,7 @@ import com.app.ngertiit.Adapter.SolutionAdapter;
 import com.app.ngertiit.Data.API.APIClient;
 import com.app.ngertiit.Data.API.RestService;
 import com.app.ngertiit.Data.JSON.DataHistory;
+import com.app.ngertiit.Data.JSON.DataLifehacks;
 import com.app.ngertiit.Data.JSON.DataSolution;
 import com.google.gson.Gson;
 
@@ -55,10 +56,14 @@ public class SolutionAct extends AppCompatActivity implements SolutionAdapter.On
     List<DataSolution> myLizt;
     List<DataSolution> listWindows;
     List<DataSolution> listMacOS;
+    List<DataSolution> listAndroid;
+    List<DataSolution> listiOS;
     List<DataSolution> listFiltered;
 
     String windows;
     String macOS;
+    String androiD;
+    String ios;
 
     SolutionAdapter solutionAdapter;
 
@@ -107,6 +112,8 @@ public class SolutionAct extends AppCompatActivity implements SolutionAdapter.On
                 if (getIntent().getExtras() != null) {
                     windows = getIntent().getExtras().getString("Windows");
                     macOS = getIntent().getExtras().getString("macOS");
+                    androiD = getIntent().getExtras().getString("Android");
+                    ios = getIntent().getExtras().getString("iOS");
                 }
 
                 if (myLizt != null){
@@ -129,6 +136,24 @@ public class SolutionAct extends AppCompatActivity implements SolutionAdapter.On
                                     listMacOS.add(myLizt.get(i));
                                     System.out.println("Kontol 2 = " + listMacOS.size());
                                     solutionAdapter.setMovieList(listMacOS);
+                                }
+                            }
+                        } else if (getIntent().getExtras().containsKey(androiD)) {
+                            for (int i = 0; i < myLizt.size(); i++) {
+                                if (myLizt.get(i).getCategory().equals("Android")) {
+                                    System.out.println("Kontol 1 = " + myLizt.get(i).getCategory());
+                                    listAndroid.add(myLizt.get(i));
+                                    System.out.println("Kontol 2 = " + listAndroid.size());
+                                    solutionAdapter.setMovieList(listAndroid);
+                                }
+                            }
+                        } else if (getIntent().getExtras().containsKey(ios)) {
+                            for (int i = 0; i < myLizt.size(); i++) {
+                                if (myLizt.get(i).getCategory().equals("IOS")) {
+                                    System.out.println("Kontol 1 = " + myLizt.get(i).getCategory());
+                                    listiOS.add(myLizt.get(i));
+                                    System.out.println("Kontol 2 = " + listiOS.size());
+                                    solutionAdapter.setMovieList(listiOS);
                                 }
                             }
                         }
@@ -156,6 +181,8 @@ public class SolutionAct extends AppCompatActivity implements SolutionAdapter.On
         myLizt = new ArrayList();
         listWindows = new ArrayList();
         listMacOS = new ArrayList();
+        listiOS = new ArrayList();
+        listAndroid = new ArrayList();
         listFiltered = new ArrayList();
 
         setSupportActionBar(toolbar);

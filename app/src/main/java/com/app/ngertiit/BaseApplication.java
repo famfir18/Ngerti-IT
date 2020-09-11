@@ -1,10 +1,11 @@
-package com.app.ngertiit.Util;
+package com.app.ngertiit;
 
 import android.app.Application;
 import android.content.Context;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.app.ngertiit.Util.NotificationHandler;
 import com.onesignal.OneSignal;
 
 public abstract class BaseApplication extends Application {
@@ -23,7 +24,7 @@ public abstract class BaseApplication extends Application {
         OneSignal.startInit(this)
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .unsubscribeWhenNotificationsAreDisabled(true)
-                .setNotificationOpenedHandler(new NotificationHandler(this))
+//                .setNotificationOpenedHandler(new NotificationHandler(this))
                 .init();
     }
 }

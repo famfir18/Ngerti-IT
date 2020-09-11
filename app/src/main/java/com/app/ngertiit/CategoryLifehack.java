@@ -22,6 +22,10 @@ public class CategoryLifehack extends AppCompatActivity {
     LinearLayout macos;
     @BindView(R.id.ln_windows)
     LinearLayout windows;
+    @BindView(R.id.ln_android)
+    LinearLayout androiD;
+    @BindView(R.id.ln_ios)
+    LinearLayout ios;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,26 @@ public class CategoryLifehack extends AppCompatActivity {
 //                v.startAnimation(animScalein);
                 Intent i = new Intent(CategoryLifehack.this,LifeHackAct.class);
                 i.putExtra("Windows", "Windows");
+                startActivity(i);
+            }
+        });
+
+        androiD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                v.startAnimation(animScalein);
+                Intent i = new Intent(CategoryLifehack.this,LifeHackAct.class);
+                i.putExtra("Android", "Android");
+                startActivity(i);
+            }
+        });
+
+        ios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                v.startAnimation(animScalein);
+                Intent i = new Intent(CategoryLifehack.this,LifeHackAct.class);
+                i.putExtra("iOS", "iOS");
                 startActivity(i);
             }
         });

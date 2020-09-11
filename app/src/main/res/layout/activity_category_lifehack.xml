@@ -7,59 +7,69 @@
     android:background="@color/white"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/bg_toolbar"
-        android:theme="@style/ThemeOverlay.AppCompat.Light">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/nameUser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/default_text"
-            android:textSize="18sp"
-            android:fontFamily="@font/montserrat"
-            android:textStyle="bold"
-            android:text="Life-hack buat apa.."/>
-
-    </androidx.appcompat.widget.Toolbar>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        card_view:cardCornerRadius="10dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_height="wrap_content">
         <LinearLayout
-            android:id="@+id/ln_windows"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical" >
 
-            <LinearLayout
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
-                android:orientation="vertical">
+                android:layout_height="?attr/actionBarSize"
+                android:background="@drawable/bg_toolbar"
+                android:theme="@style/ThemeOverlay.AppCompat.Light">
 
-                <ImageView
+                <TextView
+                    android:id="@+id/nameUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Life-hack Buat Apa...."
+                    android:textColor="@color/default_text"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="30dp"
+                card_view:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:id="@+id/ln_windows"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/banner_windows" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp"
+                        android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@color/putih"
-                android:gravity="center"
-                android:orientation="vertical">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/banner_windows" />
 
-                <!--<TextView
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@color/putih"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <!--<TextView
                     android:id="@+id/tv_lifehack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -73,61 +83,60 @@
                     android:textColor="@color/default_text"
                     android:textSize="25dp" />-->
 
-                <TextView
-                    android:id="@+id/tv_lifehack_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="6dp"
-                    android:layout_gravity="bottom"
-                    android:layout_marginBottom="4dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="Life-hack serta trik untuk PC / laptop bersistem operasi Microsoft Windows"
-                    android:textColor="#666666"
-                    android:textSize="12dp" />
+                        <TextView
+                            android:id="@+id/tv_lifehack_desc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="4dp"
+                            android:fontFamily="@font/montserrat"
+                            android:paddingLeft="11dp"
+                            android:paddingRight="6dp"
+                            android:text="Life-hack serta trik untuk PC / laptop bersistem operasi Microsoft Windows"
+                            android:textColor="#666666"
+                            android:textSize="12dp" />
 
-            </LinearLayout>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        card_view:cardCornerRadius="10dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:id="@+id/ln_macos"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            android:orientation="vertical">
-
-            <LinearLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="30dp"
+                card_view:cardCornerRadius="10dp">
 
-                <ImageView
+                <LinearLayout
+                    android:id="@+id/ln_macos"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/banner_macos" />
+
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/banner_macos" />
 
 
+                    </LinearLayout>
 
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@color/putih"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center"
-                android:background="@color/putih"
-                android:orientation="vertical">
-
-                <!--<TextView
+                        <!--<TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
@@ -140,22 +149,156 @@
                     android:textColor="#666666"
                     android:textSize="25dp" />-->
 
-                <TextView
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="4dp"
+                            android:fontFamily="@font/montserrat"
+                            android:paddingLeft="11dp"
+                            android:paddingRight="6dp"
+                            android:text="Life-hack serta trik untuk PC / laptop bersistem operasi Apple macOS"
+                            android:textColor="#666666"
+                            android:textSize="12dp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="30dp"
+                card_view:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:id="@+id/ln_android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_banner_android" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@color/putih"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <!--<TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="6dp"
                     android:layout_gravity="bottom"
-                    android:layout_marginBottom="4dp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="Life-hack serta trik untuk PC / laptop bersistem operasi Apple macOS"
+                    android:text="macOS"
                     android:textColor="#666666"
-                    android:textSize="12dp" />
+                    android:textSize="25dp" />-->
 
-            </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="4dp"
+                            android:fontFamily="@font/montserrat"
+                            android:paddingLeft="11dp"
+                            android:paddingRight="6dp"
+                            android:text="Life-hack serta trik untuk Smartphone bersistem operasi Google Android"
+                            android:textColor="#666666"
+                            android:textSize="12dp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="30dp"
+                card_view:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:id="@+id/ln_ios"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_banner_ios" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@color/putih"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <!--<TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="macOS"
+                    android:textColor="#666666"
+                    android:textSize="25dp" />-->
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="4dp"
+                            android:fontFamily="@font/montserrat"
+                            android:paddingLeft="11dp"
+                            android:paddingRight="6dp"
+                            android:text="Life-hack serta trik untuk Smartphone bersistem operasi Apple iOS"
+                            android:textColor="#666666"
+                            android:textSize="12dp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
+    </ScrollView>
 
 
 </LinearLayout>

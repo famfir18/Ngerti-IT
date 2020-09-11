@@ -2,10 +2,7 @@ package com.app.ngertiit.Util;
 
 import android.app.Application;
 import android.content.Intent;
-import android.provider.Settings;
 import android.util.Log;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.ngertiit.Data.API.APIClient;
 import com.app.ngertiit.Data.API.RestService;
@@ -13,11 +10,8 @@ import com.app.ngertiit.Data.JSON.DataHistory;
 import com.app.ngertiit.KamusAct;
 import com.app.ngertiit.KontenLifehackAct;
 import com.app.ngertiit.KontenSolusiAct;
-import com.app.ngertiit.LifeHackAct;
 import com.app.ngertiit.MainActivity;
-import com.app.ngertiit.SolutionAct;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.onesignal.OSNotificationOpenResult;
 import com.onesignal.OneSignal;
 
@@ -31,7 +25,7 @@ import retrofit2.Response;
 
 public class NotificationHandler implements OneSignal.NotificationOpenedHandler {
 
-    private MainActivity application;
+    private Application application;
 
     private String titleNotif;
 
@@ -45,7 +39,7 @@ public class NotificationHandler implements OneSignal.NotificationOpenedHandler 
 
     Integer idArtikel = null;
 
-    public NotificationHandler(MainActivity application) {
+    public NotificationHandler(Application application) {
         this.application = application;
     }
 
@@ -53,7 +47,7 @@ public class NotificationHandler implements OneSignal.NotificationOpenedHandler 
     @Override
     public void notificationOpened(OSNotificationOpenResult result) {
 
-        idDevice = Settings.Secure.getString(application.getContentResolver(), Settings.Secure.ANDROID_ID);
+//        idDevice = Settings.Secure.getString(mainActivity.getContentResolver(), Settings.Secure.ANDROID_ID);
 
         // Get data from notification
         Gson gson = new Gson();

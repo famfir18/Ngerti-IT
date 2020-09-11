@@ -54,10 +54,14 @@ public class LifeHackAct extends AppCompatActivity implements LifeHackAdapter.On
     List<DataLifehacks> myLizt;
     List<DataLifehacks> listWindows;
     List<DataLifehacks> listMacOS;
+    List<DataLifehacks> listAndroid;
+    List<DataLifehacks> listiOS;
     List<DataLifehacks> listFiltered;
 
     String windows;
     String macOS;
+    String androiD;
+    String ios;
 
     TelephonyManager telephonyManager;
     String idDevice;
@@ -109,6 +113,8 @@ public class LifeHackAct extends AppCompatActivity implements LifeHackAdapter.On
                 if (getIntent().getExtras() != null) {
                     windows = getIntent().getExtras().getString("Windows");
                     macOS = getIntent().getExtras().getString("macOS");
+                    androiD = getIntent().getExtras().getString("Android");
+                    ios = getIntent().getExtras().getString("iOS");
                 }
 
                 if (myLizt != null){
@@ -131,6 +137,24 @@ public class LifeHackAct extends AppCompatActivity implements LifeHackAdapter.On
                                     listMacOS.add(myLizt.get(i));
                                     System.out.println("Kontol 2 = " + listMacOS.size());
                                     lifeHackAdapter.setMovieList(listMacOS);
+                                }
+                            }
+                        } else if (getIntent().getExtras().containsKey(androiD)) {
+                            for (int i = 0; i < myLizt.size(); i++) {
+                                if (myLizt.get(i).getCategory().equals("Android")) {
+                                    System.out.println("Kontol 1 = " + myLizt.get(i).getCategory());
+                                    listAndroid.add(myLizt.get(i));
+                                    System.out.println("Kontol 2 = " + listAndroid.size());
+                                    lifeHackAdapter.setMovieList(listAndroid);
+                                }
+                            }
+                        } else if (getIntent().getExtras().containsKey(ios)) {
+                            for (int i = 0; i < myLizt.size(); i++) {
+                                if (myLizt.get(i).getCategory().equals("IOS")) {
+                                    System.out.println("Kontol 1 = " + myLizt.get(i).getCategory());
+                                    listiOS.add(myLizt.get(i));
+                                    System.out.println("Kontol 2 = " + listiOS.size());
+                                    lifeHackAdapter.setMovieList(listiOS);
                                 }
                             }
                         }
@@ -158,6 +182,8 @@ public class LifeHackAct extends AppCompatActivity implements LifeHackAdapter.On
         myLizt = new ArrayList();
         listWindows = new ArrayList();
         listMacOS = new ArrayList();
+        listAndroid = new ArrayList();
+        listiOS = new ArrayList();
         listFiltered = new ArrayList();
 
         setSupportActionBar(toolbar);

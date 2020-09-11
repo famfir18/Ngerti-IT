@@ -88,10 +88,19 @@ public class SolutionAdapterMenu extends RecyclerView.Adapter<SolutionAdapterMen
             }
         }
 
-        if (dataSolution.getCategory().equals("Windows")) {
-            holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_windows_solution));
-        } else if (dataSolution.getCategory().equals("macOS")) {
-            holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_macos_solution));
+        switch (dataSolution.getCategory()) {
+            case "Windows":
+                holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_windows_solution));
+                break;
+            case "macOS":
+                holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_macos_solution));
+                break;
+            case "Android":
+                holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_android_solution));
+                break;
+            case "iOS":
+                holder.ivBanner.setImageDrawable(context.getResources().getDrawable(R.drawable.banner_ios_solution));
+                break;
         }
 
         /*Picasso.with(context)
