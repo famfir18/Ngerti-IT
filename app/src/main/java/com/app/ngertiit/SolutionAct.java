@@ -149,7 +149,7 @@ public class SolutionAct extends AppCompatActivity implements SolutionAdapter.On
                             }
                         } else if (getIntent().getExtras().containsKey(ios)) {
                             for (int i = 0; i < myLizt.size(); i++) {
-                                if (myLizt.get(i).getCategory().equals("IOS")) {
+                                if (myLizt.get(i).getCategory().equals("iOS")) {
                                     System.out.println("Kontol 1 = " + myLizt.get(i).getCategory());
                                     listiOS.add(myLizt.get(i));
                                     System.out.println("Kontol 2 = " + listiOS.size());

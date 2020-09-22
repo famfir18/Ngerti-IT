@@ -5,7 +5,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -15,6 +17,7 @@ import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -27,6 +30,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,6 +53,8 @@ public class KontenLifehackAct extends AppCompatActivity {
     @BindView(R.id.card)
     CardView card;
 
+    Dialog dialogRate;
+
     public  static  final String ID_KONTEN = "id";
     String kontenId;
     ImageView imageView;
@@ -64,6 +70,9 @@ public class KontenLifehackAct extends AppCompatActivity {
         setContentView(R.layout.activity_konten_lifehack);
 
         ButterKnife.bind(this);
+
+        dialogRate = new Dialog(this);
+        dialogRate.setContentView(R.layout.dialog_loading);
 
         dialogLoading = new Dialog(this);
         dialogLoading.setContentView(R.layout.dialog_loading);
@@ -207,6 +216,20 @@ public class KontenLifehackAct extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        Random random = new Random();
+        int randomz = random.nextInt(5);
+
+        if (randomz == 2){
+            Intent intent = new Intent();
+            intent.putExtra("editTextValue", "value_here");
+            setResult(RESULT_OK, intent);
+        }
+        finish();
     }
 
     @Override
