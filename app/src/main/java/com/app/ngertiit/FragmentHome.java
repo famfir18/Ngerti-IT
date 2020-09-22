@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -23,7 +22,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -54,9 +52,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.app.Activity.RESULT_OK;
-import static android.content.Context.MODE_PRIVATE;
 
 
 public class FragmentHome extends Fragment
@@ -116,9 +111,6 @@ public class FragmentHome extends Fragment
     Dialog dialogLoading;
 
     TextView toolbarText;
-
-    Dialog dialogRate;
-    
 
     public FragmentHome() {}
 
@@ -374,9 +366,6 @@ public class FragmentHome extends Fragment
 
     private void initView() {
 
-        dialogRate = new Dialog(context);
-        dialogRate.setContentView(R.layout.dialog_rate);
-
         /*myListData = new MyListData[] {
                 new MyListData("Email", android.R.drawable.ic_dialog_email),
                 new MyListData("Info", android.R.drawable.ic_dialog_info),
@@ -498,55 +487,7 @@ public class FragmentHome extends Fragment
 
         Intent i = new Intent(context, KontenLifehackAct.class);
         i.putExtra("idArtikel", idArtikelString);
-        startActivityForResult(i,1);
-    }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            if(resultCode == RESULT_OK) {
-
-                Button yes;
-                Button no;
-
-                Objects.requireNonNull(dialogRate.getWindow()).setBackgroundDrawableResource(R.color.transparent);
-
-                yes = dialogRate.findViewById(R.id.btnYes);
-                no = dialogRate.findViewById(R.id.btnNo);
-
-                SharedPreferences sharedPrefz = getActivity().getSharedPreferences("checkRated", Context.MODE_PRIVATE);
-                String wkwk = sharedPrefz.getString("stringRated", "Belom");
-
-                yes.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        SharedPreferences.Editor editor = getActivity().getSharedPreferences("checkRated", Context.MODE_PRIVATE).edit();
-                        editor.putString("stringRated", "Udah");
-                        editor.commit();
-                        String url = "https://play.google.com/store/apps/details?id=com.app.ngertiit";
-                        Intent i = new Intent(Intent.ACTION_VIEW);
-                        i.setData(Uri.parse(url));
-                        startActivity(i);
-                        dialogRate.dismiss();
-                    }
-                });
-
-                no.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialogRate.dismiss();
-                    }
-                });
-
-//                dialogRate.show();
-
-                if (wkwk.equals("Belom")) {
-                    dialogRate.show();
-                } else if (wkwk.equals("Udah")){
-                    System.out.println("gaperlu lagi");
-                }
-            }
-        }
+        startActivity(i);
     }
 
     @Override
