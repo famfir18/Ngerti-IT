@@ -376,6 +376,7 @@ public class FragmentHome extends Fragment
 
         dialogRate = new Dialog(context);
         dialogRate.setContentView(R.layout.dialog_rate);
+        dialogRate.setCancelable(false);
 
         /*myListData = new MyListData[] {
                 new MyListData("Email", android.R.drawable.ic_dialog_email),
