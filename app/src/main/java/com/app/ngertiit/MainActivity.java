@@ -460,6 +460,12 @@ public class MainActivity extends AppCompatActivity
                 search.setVisibility(View.GONE);
                 fragment = new FragmentHistory();
                 break;
+            case R.id.forum_menu:
+                layoutFragmentSetting.setVisibility(View.GONE);
+                search.setVisibility(View.GONE);
+                Intent i = new Intent(MainActivity.this, ForumActivity.class);
+                startActivity(i);
+                break;
             case R.id.setting_menu:
                 layoutFragmentSetting.setVisibility(View.VISIBLE);
                 search.setVisibility(View.GONE);
