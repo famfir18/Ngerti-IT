@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.app.ngertiit">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,20 +19,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ForumActivity"></activity>
 
-        <receiver
-            android:name=".Util.Restarter"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="restartservice" />
-            </intent-filter>
-        </receiver>
-
         <activity android:name=".Maintenance"></activity>
-
-        <service
-            android:name=".Util.YourService"
-            android:enabled="true"></service>
 
         <activity android:name=".SearchAll" />
         <activity android:name=".KontenLifehackAct" />
@@ -92,7 +80,7 @@
 
         <meta-data
             android:name="com.onesignal.NotificationOpened.DEFAULT"
-            android:value="DISABLE" />
+            android:value="Enable" />
     </application>
 
 </manifest>
