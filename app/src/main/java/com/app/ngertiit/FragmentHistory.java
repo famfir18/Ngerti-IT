@@ -3,6 +3,7 @@ package com.app.ngertiit;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -127,7 +128,10 @@ public class FragmentHistory extends Fragment implements HistoryAdapter.OnItemSe
                     Log.d("TAG","Response Berhasil = "+ gson.toJson(historyList));
                     adapter.setMovieList(historyList);
                 } else  if (response.body().get(0).getStatus().equals("1001")){
+                    MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.onichan);
+                    mediaPlayer.start();
                     dialogLoading.dismiss();
+//                    mediaPlayer.setLooping(true);
                     layoutGagal.setVisibility(View.VISIBLE);
                 }
             }

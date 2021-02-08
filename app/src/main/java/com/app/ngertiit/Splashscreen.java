@@ -1,6 +1,7 @@
 package com.app.ngertiit;
 
 import android.app.Dialog;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -19,6 +20,8 @@ import com.google.gson.Gson;
 
 import java.util.Objects;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,6 +34,8 @@ public class Splashscreen extends Activity {
 
     Dialog dialogLoading;
 
+    @BindView(R.id.pse)
+    ImageView pse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +47,20 @@ public class Splashscreen extends Activity {
         setContentView(R.layout.activity_splashscreen);
 //        mProgress = findViewById(R.id.simpleProgressBar);
 
+        ButterKnife.bind(this);
+
         dialogLoading = new Dialog(this);
         dialogLoading.setContentView(R.layout.dialog_loading);
         dialogLoading.setCancelable(true);
+
+        pse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://pse.kominfo.go.id/sistem/3452"));
+                startActivity(intent);
+            }
+        });
+
 
         new Handler().postDelayed(new Runnable() {
 

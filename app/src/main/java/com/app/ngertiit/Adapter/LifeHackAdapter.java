@@ -68,7 +68,7 @@ public class LifeHackAdapter extends RecyclerView.Adapter<LifeHackAdapter.Myview
         String description = dataLifehacks.getDescription();
 
         if (description.length() >= 80) {
-            String descriptionSubs = description.substring(0,80) + "...";
+            String descriptionSubs = description/*.substring(0,80) + "..."*/;
 
             if (descriptionSubs.contains(closeDiv) || description.contains(div)){
                 descriptionSubs = descriptionSubs.replaceAll(div, "");

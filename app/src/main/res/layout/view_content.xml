@@ -88,6 +88,8 @@
                         android:paddingLeft="6dp"
                         android:paddingRight="6dp"
                         android:paddingBottom="3dp"
+                        android:ellipsize="end"
+                        android:maxLines="5"
                         android:text="sopfijgopdifjoewijfiwjfowjfwojfweoifoifjweijfwoejfwoeifjwojweijfowejfwoiweijfowjefowijfoeijeppisv"
                         android:textColor="#666666"
                         android:textSize="11dp" />

@@ -68,7 +68,7 @@ public class SolutionAdapter extends RecyclerView.Adapter<SolutionAdapter.Myview
         String closeEm = "</em>";
         String description = dataSolution.getDescription();
         if (description.length() >= 80) {
-            String descriptionSubs = description.substring(0, 80) + "...";
+            String descriptionSubs = description/*.substring(0, 80) + "..."*/;
 
             if (descriptionSubs.contains(closeEm) || description.contains(em)) {
                 descriptionSubs = descriptionSubs.replaceAll(em, "");
