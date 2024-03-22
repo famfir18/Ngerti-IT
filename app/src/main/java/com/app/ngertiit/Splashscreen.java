@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,6 +18,9 @@ import com.app.ngertiit.Data.API.APIClient;
 import com.app.ngertiit.Data.API.RestService;
 import com.app.ngertiit.Data.JSON.DataAppState;
 import com.google.gson.Gson;
+import com.onesignal.Continue;
+import com.onesignal.OneSignal;
+import com.onesignal.debug.LogLevel;
 
 import java.util.Objects;
 
@@ -25,6 +29,7 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 
 public class Splashscreen extends Activity {
 
@@ -36,6 +41,9 @@ public class Splashscreen extends Activity {
 
     @BindView(R.id.pse)
     ImageView pse;
+
+    // NOTE: Replace the below with your own ONESIGNAL_APP_ID
+    private static final String ONESIGNAL_APP_ID = "b595c9ff-db01-4633-8416-76b30da34f27";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +69,31 @@ public class Splashscreen extends Activity {
             }
         });
 
+        // Verbose Logging set to help debug issues, remove before releasing your app.
+        OneSignal.getDebug().setLogLevel(LogLevel.VERBOSE);
+
+        // OneSignal Initialization
+        OneSignal.initWithContext(this, ONESIGNAL_APP_ID);
+
+        Log.d("famfir", "Success");
+
+        // requestPermission will show the native Android notification permission prompt.
+        // NOTE: It's recommended to use a OneSignal In-App Message to prompt instead.
+        OneSignal.getNotifications().requestPermission(true, Continue.with(r -> {
+            if (r.isSuccess()) {
+                Timber.tag("famfir").d("success");
+                if (r.getData()) {
+                    // `requestPermission` completed successfully and the user has accepted permission
+                }
+                else {
+                    // `requestPermission` completed successfully but the user has rejected permission
+                }
+            }
+            else {
+                Timber.tag("famfir").d("success");
+                // `requestPermission` completed unsuccessfully, check `r.getThrowable()` for more info on the failure reason
+            }
+        }));
 
         new Handler().postDelayed(new Runnable() {
 

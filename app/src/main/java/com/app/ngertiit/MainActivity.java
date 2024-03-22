@@ -31,10 +31,11 @@ import android.widget.Toast;
 import com.app.ngertiit.Data.API.APIClient;
 import com.app.ngertiit.Data.API.RestService;
 import com.app.ngertiit.Data.JSON.DataEvent;
-import com.app.ngertiit.Util.NotificationHandler;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
+import com.onesignal.Continue;
 import com.onesignal.OneSignal;
+import com.onesignal.debug.LogLevel;
 import com.squareup.picasso.Picasso;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
@@ -48,6 +49,7 @@ import maes.tech.intentanim.CustomIntent;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -222,43 +224,6 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-
-        if (switchNotif.isChecked()){
-            // OneSignal Initialization
-            OneSignal.startInit(this)
-                    .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-                    .unsubscribeWhenNotificationsAreDisabled(true)
-                    .autoPromptLocation(true)
-                    .setNotificationOpenedHandler(new NotificationHandler(application))
-                    .init();
-
-            OneSignal.setSubscription(true);
-        }else if (!switchNotif.isChecked()){
-            System.out.println("Ga kekirim notifnya");
-            OneSignal.setSubscription(false);
-        }
-
-        switchNotif.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (switchNotif.isChecked()){
-                OneSignal.startInit(this)
-                        .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-                        .unsubscribeWhenNotificationsAreDisabled(true)
-                        .setNotificationOpenedHandler(new NotificationHandler(application))
-                        .autoPromptLocation(true)
-                        .init();
-                OneSignal.setSubscription(true);
-
-                SharedPreferences.Editor editor = getSharedPreferences("check", MODE_PRIVATE).edit();
-                editor.putBoolean("check", true);
-                editor.commit();
-            } else if (!switchNotif.isChecked()){
-                System.out.println("Ga kekirim notifnya");
-                OneSignal.setSubscription(false);
-
-                SharedPreferences.Editor editor = getSharedPreferences("check", MODE_PRIVATE).edit();
-                editor.putBoolean("check", false);
-                editor.commit();
-            }});
 
         SharedPreferences sharedPrefs = getSharedPreferences("check", MODE_PRIVATE);
         switchNotif.setChecked(sharedPrefs.getBoolean("check", true));

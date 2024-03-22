@@ -1,4 +1,3 @@
-apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 apply plugin: 'com.android.application'
 apply from: '../config/git-version.gradle'
 
@@ -15,12 +14,6 @@ android {
         // Make generated archive contain version name and code.
         archivesBaseName = "Ngerti IT (Alpha Version)-${versionName}.${versionCode}"
         testInstrumentationRunner "androidFx.test.runner.AndroidJUnitRunner"
-
-        manifestPlaceholders = [
-                onesignal_app_id               : 'b595c9ff-db01-4633-8416-76b30da34f27',
-                // Project number pulled from dashboard, local value is ignored.
-                onesignal_google_project_number: 'REMOTE'
-        ]
     }
     buildTypes {
         release {
@@ -111,7 +104,7 @@ dependencies {
     implementation 'com.github.corouteam:GlideToVectorYou:v1.2.0'
 
     //OneSignal
-    implementation 'com.onesignal:OneSignal:3.10.6'
+    implementation 'com.onesignal:OneSignal:[5.0.0, 5.99.99]'
 
     // Network Indicator
     implementation 'com.novoda:merlin:1.2.0'
